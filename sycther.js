@@ -218,17 +218,15 @@ function main() {
   const playerCount = (new URL(document.URL))
     .searchParams
     .get(FORM_PARAM_PLAYER_COUNT);
-  if (playerCount === null) {
-    // User hasn't selected a player count yet...
-    renderButtons();
-    return;
+  if (playerCount !== null) {
+    // Player count selected
+    hideTitle();
+    renderBoards(playerCount);
+    renderGlobalSection();
   }
 
-  hideTitle();
+  // we render the buttons anyway
   renderButtons(playerCount);
-
-  renderBoards(playerCount);
-  renderGlobalSection();
 };
 
 window.onload = main;
