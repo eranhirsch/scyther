@@ -2,13 +2,13 @@ const FORM_PARAM_PLAYER_COUNT = 'playerCount';
 const SHUFFLE_TIMES = 10007;
 
 const FACTIONS = [
-  {label: 'Polania Republic', icon: '🐻', location: 1},
-  {label: 'Saxony Empire', icon: '🐺', location: 2},
-  {label: 'Crimean Khanate', icon: '🦅', location: 3},
-  {label: 'Togawa Shogunate', icon: '🐒', location: 4},
-  {label: 'Rusviet Union', icon: '🐅', location: 5},
-  {label: 'Nordic Kingdom', icon: '🐂', location: 6},
-  {label: 'Clan Albion', icon: '🐗', location: 7},
+  {label: 'Polania Republic', icon: '🐻', location: 1, className: 'polania'},
+  {label: 'Saxony Empire', icon: '🐺', location: 2, className: 'saxony'},
+  {label: 'Crimean Khanate', icon: '🦅', location: 3, className: 'crimea'},
+  {label: 'Togawa Shogunate', icon: '🐒', location: 4, className: 'togawa'},
+  {label: 'Rusviet Union', icon: '🐅', location: 5, className: 'rusviet'},
+  {label: 'Nordic Kingdom', icon: '🐂', location: 6, className: 'nordic'},
+  {label: 'Clan Albion', icon: '🐗', location: 7, className: 'albion'},
 ];
 
 const PLAYER_BOARDS = [
@@ -110,6 +110,7 @@ function pickBoards(playerCount) {
 
 function renderBoardSelection(boardSelection, proximity) {
   const item = document.createElement('li');
+  item.className = boardSelection.faction.className;
 
   // const symbol = document.createElement('span');
   // symbol.textContent =

@@ -25,12 +25,44 @@ body.container {
   line-height: 0.9;
   list-style-type: none;
   margin-bottom: 15%;
-  margin-top: 8%;
+  margin-top: 10%;
   padding-inline-start: 0;
 }
 
 ol#playersSection li {
   margin-top: 20px;
+}
+
+ol#playersSection li:first-child {
+    margin-top:0;
+}
+
+.polania {
+  color: #ffffff;
+}
+
+.saxony {
+  color: #000000;
+}
+
+.crimea {
+  color: rgba(185, 168, 30, 1);
+}
+
+.togawa {
+  color: #904bab;
+}
+
+.rusviet {
+  color: #c14747;
+}
+
+.nordic {
+  color: #2c78bd;
+}
+
+.albion {
+  color: #539832;
 }
 
 .proximity {
