@@ -9,9 +9,10 @@ html {
 }
 
 body.container {
-  background-color: transparent;
-  margin: 10px;
+  background-color: rgba(255, 255, 255, 0.60);
+  padding: 10px;
   text-align: center;
+  height: 100%;
 }
 
 #title {
@@ -20,14 +21,21 @@ body.container {
 }
 
 #playersSection {
-  font-size: larger;
-  line-height: 200%;
+  font-size: 20px;
+  line-height: 0.9;
   list-style-type: none;
   padding-inline-start: 0;
-  padding: 30px 0;
+  margin-top: 8%;
+  margin-bottom: 15%;
+}
+
+ol#playersSection li {
+  margin-top: 20px;
 }
 
 .proximity {
   font-size: small;
-  font-weight: lighter;
+  color: darkgray;
+  font-weight: bold;
+  font-variant-caps: all-petite-caps;
 }

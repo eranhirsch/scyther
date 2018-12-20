@@ -127,10 +127,11 @@ function renderBoardSelection(boardSelection, proximity) {
   item.appendChild(factionLabel);
 
   if (!!proximity) {
+    item.appendChild(document.createElement('br'));
     const proximityLabel = document.createElement('span');
     proximityLabel.className = 'proximity';
     proximityLabel.textContent =
-      ' (Proximity: ' + parseFloat(proximity).toFixed(1) + ')';
+      '(Proximity: ' + parseFloat(proximity).toFixed(1) + ')';
     item.appendChild(proximityLabel);
   }
 
