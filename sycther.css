@@ -1,0 +1,22 @@
+#playersSection {
+  font-size: larger;
+  line-height: 200%;
+  list-style-type: none;
+  padding-inline-start: 0;
+  padding: 30px 0;
+}
+
+body.container {
+  margin: 10px;
+  text-align: center;
+}
+
+.proximity {
+  font-size: small;
+  font-weight: lighter;
+}
+
+#title {
+  font-family: monospace;
+  padding: 45px 0;
+}
