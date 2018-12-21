@@ -20,7 +20,7 @@ body.container {
   padding: 45px 0;
 }
 
-#playersSection {
+#players {
   font-size: 20px;
   line-height: 0.9;
   list-style-type: none;
@@ -29,12 +29,12 @@ body.container {
   padding-inline-start: 0;
 }
 
-ol#playersSection li {
+ol#players li {
   margin-top: 20px;
 }
 
-ol#playersSection li:first-child {
-    margin-top:0;
+ol#players li:first-child {
+  margin-top:0;
 }
 
 .polania {
@@ -42,7 +42,7 @@ ol#playersSection li:first-child {
 }
 
 .saxony {
-  color: #000000;
+  color: #4c4c4c;
 }
 
 .crimea {

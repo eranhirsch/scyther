@@ -140,7 +140,7 @@ function renderBoardSelection(boardSelection, proximity) {
 }
 
 function renderBoards(playerCount) {
-  var playersSection = document.getElementById('playersSection');
+  var playersSection = document.getElementById('players');
   if (playersSection === null) {
     console.log("No player section!");
     return;
@@ -164,34 +164,45 @@ function renderGlobalDefinition(container, title, selection) {
   container.appendChild(definitionElem);
 }
 
-function renderGlobalSection() {
-  var globalSelection = document.getElementById('globalSection');
-  if (globalSelection === null) {
-    console.log("No global section!");
+function renderScoringSection() {
+  var scoring = document.getElementById('scoring');
+  if (scoring === null) {
+    console.log("No scoring section!");
     return;
   }
   renderGlobalDefinition(
-    globalSelection,
+    scoring,
     'Building Bonus',
     pickFromArray(BUILDING_BONUSES),
   );
-  globalSelection.appendChild(document.createElement('br'));
   renderGlobalDefinition(
-    globalSelection,
+    scoring,
     'Resolution',
     pickFromArray(RESOLUTION_TILES),
   );
-  globalSelection.appendChild(document.createElement('br'));
+}
+
+function renderAirshipSection() {
+  var airship = document.getElementById('airship');
+  if (airship === null) {
+    console.log("No airship section!");
+    return;
+  }
   renderGlobalDefinition(
-    globalSelection,
+    airship,
     'Airship Passive',
     pickFromArray(AIRSHIP_PASSIVE_ABILITIES),
   );
   renderGlobalDefinition(
-    globalSelection,
+    airship,
     'Airship Aggressive',
     pickFromArray(AIRSHIP_AGRESSIVE_ABILITIES),
   );
+}
+
+function renderGlobalSection() {
+  renderScoringSection();
+  renderAirshipSection();
 }
 
 function renderButtons(playerCount) {

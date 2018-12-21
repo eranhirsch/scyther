@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="./sycther.css">
   </head>
   <body class="container">
-    <h1 id="title">SCYTHER</h1>
+    <h1 id="title" class="row">SCYTHER</h1>
     <form id="buttons" class="row">
       <input
         id="buttonTemplate"
@@ -21,7 +21,10 @@
         name="playerCount"
       />
     </form>
-    <ol id="playersSection" class="row"></ol>
-    <dl id="globalSection" class="row dl-horizontal"></dl>
+    <ol id="players" class="row"></ol>
+    <div id="global" class="row">
+      <dl id="scoring" class="col"></dl>
+      <dl id="airship" class="col"></dl>
+    </div>
   </body>
 </html>
