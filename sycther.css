@@ -9,7 +9,7 @@ html {
 }
 
 body.container {
-  background-color: rgba(255, 255, 255, 0.60);
+  background-color: rgba(255, 255, 252, 0.85);
   height: 100%;
   padding: 10px;
   text-align: center;
@@ -20,9 +20,18 @@ body.container {
   padding: 45px 0;
 }
 
+#buttons input[type=submit] {
+  background-color: rgba(222, 209, 211, 0.05);;
+  margin: 0 2px;
+}
+
+#buttons input[type=submit].selectedButton {
+  background-color: rgba(222, 209, 211, 0.50);
+}
+
 #players {
   font-size: 20px;
-  line-height: 0.9;
+  line-height: 0.7;
   list-style-type: none;
   margin-bottom: 15%;
   margin-top: 10%;
@@ -38,11 +47,11 @@ ol#players li:first-child {
 }
 
 .polania {
-  color: #ffffff;
+  color: #d0d0d0;
 }
 
 .saxony {
-  color: #4c4c4c;
+  color: #636363;
 }
 
 .crimea {

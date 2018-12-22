@@ -216,7 +216,7 @@ function renderButtons(playerCount) {
     button.value = i;
 
     if (playerCount == i) {
-      button.className = button.className.replace('btn-default', 'btn-success');
+      button.className += ' selectedButton';
     }
 
     form.appendChild(button);
