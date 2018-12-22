@@ -24,23 +24,6 @@ body {
   padding: 45px 0;
 }
 
-#buttons {
-  /* display: inline-block; */
-}
-
-#buttons input[type=submit]:first-child {
-  margin: 0;
-}
-
-#buttons input[type=submit] {
-  background-color: rgba(222, 209, 211, 0.05);;
-  margin: 0 2px;
-}
-
-#buttons input[type=submit].selectedButton {
-  background-color: rgba(222, 209, 211, 0.50);
-}
-
 #players {
   /* display: inline-block; */
   font-size: 20px;

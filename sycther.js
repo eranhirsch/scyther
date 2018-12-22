@@ -205,7 +205,7 @@ function renderButtons(playerCount) {
     button.value = i;
 
     if (playerCount == i) {
-      button.className += ' selectedButton';
+      button.className = button.className.replace(/btn-light/, 'btn-primary');
     }
 
     form.appendChild(button);
