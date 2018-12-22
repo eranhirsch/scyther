@@ -22,19 +22,25 @@
 
     <!-- Main Structure -->
     <div id="root" class="container">
-      <h1 id="title" class="row">SCYTHER</h1>
-      <form id="buttons" class="row">
-        <input
-          id="buttonTemplate"
-          class="btn btn-default btn-lg"
-          type="hidden"
-          name="playerCount"
-        />
-      </form>
-      <ol id="players" class="row"></ol>
+      <div class="row">
+        <h1 class="col-sm" id="title">SCYTHER</h1>
+      </div>
+      <div class="row">
+        <form id="buttons" class="col-sm">
+          <input
+            id="buttonTemplate"
+            class="btn btn-default btn-lg"
+            type="hidden"
+            name="playerCount"
+          />
+        </form>
+      </div>
+      <div class="row">
+        <ol id="players" class="col-sm"></ol>
+      </div>
       <div id="global" class="row">
-        <dl id="scoring" class="col"></dl>
-        <dl id="airship" class="col"></dl>
+        <dl id="scoring" class="col-sm"></dl>
+        <dl id="airship" class="col-sm"></dl>
       </div>
     </div>
 

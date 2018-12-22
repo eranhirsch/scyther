@@ -19,13 +19,13 @@ body {
 }
 
 #title {
-  display: inline-block;
+  /* display: inline-block; */
   font-family: monospace;
   padding: 45px 0;
 }
 
 #buttons {
-  display: inline-block;
+  /* display: inline-block; */
 }
 
 #buttons input[type=submit]:first-child {
@@ -42,7 +42,7 @@ body {
 }
 
 #players {
-  display: inline-block;
+  /* display: inline-block; */
   font-size: 20px;
   line-height: 1;
   list-style-type: none;
