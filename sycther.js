@@ -110,30 +110,19 @@ function pickBoards(playerCount) {
 
 function renderBoardSelection(boardSelection, proximity) {
   const item = document.createElement('li');
-  item.className = boardSelection.faction.className;
 
-  // const symbol = document.createElement('span');
-  // symbol.textContent =
-  //   boardSelection.faction.icon + ' ' + boardSelection.playerBoard.icon;
-  // item.appendChild(symbol);
-  // symbol.insertAdjacentHTML('afterend', '&nbsp;');
-
-  const playerBoardLabel = document.createElement('span');
-  playerBoardLabel.textContent = boardSelection.playerBoard.label;
-  item.appendChild(playerBoardLabel);
-  playerBoardLabel.insertAdjacentHTML('afterend', '&nbsp;');
-
-  const factionLabel = document.createElement('span');
-  factionLabel.textContent = boardSelection.faction.label;
-  item.appendChild(factionLabel);
+  const labelElem = document.createElement('div');
+  labelElem.textContent =
+    boardSelection.playerBoard.label + ' ' + boardSelection.faction.label;
+  labelElem.className = boardSelection.faction.className;
+  item.appendChild(labelElem);
 
   if (!!proximity) {
-    item.appendChild(document.createElement('br'));
-    const proximityLabel = document.createElement('span');
-    proximityLabel.className = 'proximity';
-    proximityLabel.textContent =
+    const proximityElem = document.createElement('div');
+    proximityElem.className = 'proximity';
+    proximityElem.textContent =
       '(Proximity: ' + parseFloat(proximity).toFixed(1) + ')';
-    item.appendChild(proximityLabel);
+    item.appendChild(proximityElem);
   }
 
   return item;
