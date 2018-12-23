@@ -110,6 +110,7 @@ function pickBoards(playerCount) {
 
 function renderBoardSelection(boardSelection, proximity) {
   const item = document.createElement('li');
+  item.className = 'list-group-item';
 
   const labelElem = document.createElement('div');
   labelElem.textContent =
@@ -205,7 +206,7 @@ function renderButtons(playerCount) {
     button.value = i;
 
     if (playerCount == i) {
-      button.className = button.className.replace(/btn-light/, 'btn-primary');
+      button.className += ' selected';
     }
 
     form.appendChild(button);
