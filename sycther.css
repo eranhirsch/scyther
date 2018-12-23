@@ -9,7 +9,7 @@ html {
 }
 
 body {
-  background-color: rgba(255, 255, 252, 0.85);
+  background-color: rgba(255, 255, 252, 0.60);
   height: 100%;
 }
 
@@ -39,7 +39,7 @@ body {
 }
 
 ol#players li {
-  background-color: rgba(255, 255, 255, 0.25);
+  background-color: rgba(255, 255, 255, 0.30);
   margin-top: 10px;
 }
 
@@ -48,7 +48,7 @@ ol#players li:first-child {
 }
 
 .polania {
-  color: #d0d0d0;
+  color: #bbbbbb;
 }
 
 .saxony {
