@@ -110,7 +110,7 @@ function pickBoards(playerCount) {
 
 function renderBoardSelection(boardSelection, proximity) {
   const item = document.createElement('li');
-  item.className = 'list-group-item';
+  item.className = 'list-group-item shadow-sm rounded';
 
   const labelElem = document.createElement('div');
   labelElem.textContent =
