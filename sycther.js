@@ -1,6 +1,3 @@
-const FORM_PARAM_PLAYER_COUNT = 'playerCount';
-const SHUFFLE_TIMES = 10007;
-
 function getIntInRange(from, to) {
   return from + Math.floor(Math.random() * (to-from+1));
 }
@@ -158,7 +155,7 @@ function hideTitle() {
 function main() {
   const playerCount = (new URL(document.URL))
     .searchParams
-    .get(FORM_PARAM_PLAYER_COUNT);
+    .get('playerCount');
   if (playerCount !== null) {
     // Player count selected
     hideTitle();
