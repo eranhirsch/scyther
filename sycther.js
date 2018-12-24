@@ -148,8 +148,11 @@ function renderButtons(playerCount) {
   }
 }
 
-function hideTitle() {
-  document.getElementById('title').hidden = true;
+function showForm(shouldShow /* boolean */) {
+  document.getElementById('title').hidden = !shouldShow;
+  document.getElementById('buttons').hidden = !shouldShow;
+  document.getElementById('players').hidden = shouldShow;
+  document.getElementById('global').hidden = shouldShow;
 }
 
 function main() {
@@ -158,13 +161,13 @@ function main() {
     .get('playerCount');
   if (playerCount !== null) {
     // Player count selected
-    hideTitle();
+    showForm(false);
     renderBoards(playerCount);
     renderGlobalSection();
+  } else {
+    showForm(true);
+    renderButtons(playerCount);
   }
-
-  // we render the buttons anyway
-  renderButtons(playerCount);
 };
 
 window.onload = main;
