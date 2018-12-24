@@ -1,3 +1,8 @@
+const SECTION_IDS = {
+  GLOBAL: 'global',
+  PLAYERS: 'players',
+}
+
 function getIntInRange(from, to) {
   return from + Math.floor(Math.random() * (to-from+1));
 }
@@ -65,7 +70,7 @@ function renderBoardSelection(boardSelection, proximity) {
 }
 
 function renderBoards(playerCount) {
-  var playersSection = document.getElementById('players');
+  var playersSection = document.getElementById(SECTION_IDS.PLAYERS);
   if (playersSection === null) {
     console.log("No player section!");
     return;
@@ -79,55 +84,61 @@ function renderBoards(playerCount) {
   });
 }
 
-function renderGlobalDefinition(container, title, selection) {
-  var titleElem = document.createElement('dt');
-  titleElem.textContent = title;
-  container.appendChild(titleElem);
+function renderGlobalItem(icon, labelElem) {
+  var itemElem = document.createElement('li');
+  itemElem.className = 'list-group-item';
 
-  var definitionElem = document.createElement('dd');
-  definitionElem.textContent = selection;
-  container.appendChild(definitionElem);
+  var iconElem = document.createElement('span');
+  iconElem.className = 'icon';
+  iconElem.textContent = icon;
+  itemElem.appendChild(iconElem);
+  itemElem.appendChild(labelElem);
+
+  return itemElem;
 }
 
-function renderScoringSection() {
-  var scoring = document.getElementById('scoring');
-  if (scoring === null) {
-    console.log("No scoring section!");
-    return;
-  }
-  renderGlobalDefinition(
-    scoring,
-    'Building Bonus',
-    pickFromArray(DATA.buildingBonuses),
-  );
-  renderGlobalDefinition(
-    scoring,
-    'Resolution',
-    pickFromArray(DATA.resolutions),
-  );
+function renderSimpleLabel(label = '') {
+  var labelElem = document.createElement('span');
+  labelElem.className = 'label';
+  labelElem.textContent = label;
+  return labelElem;
 }
 
-function renderAirshipSection() {
-  var airship = document.getElementById('airship');
-  if (airship === null) {
-    console.log("No airship section!");
-    return;
-  }
-  renderGlobalDefinition(
-    airship,
-    'Airship Passive',
-    pickFromArray(DATA.airshipAbilities.passive),
-  );
-  renderGlobalDefinition(
-    airship,
-    'Airship Aggressive',
-    pickFromArray(DATA.airshipAbilities.aggressive),
-  );
+function renderAirshipLabel() {
+  var labelElem = renderSimpleLabel();
+
+  var passiveElem = document.createElement('span');
+  passiveElem.className = 'passive';
+  passiveElem.textContent = pickFromArray(DATA.airshipAbilities.passive);
+  labelElem.appendChild(passiveElem);
+
+  labelElem.insertAdjacentHTML('beforeend', "&nbsp;+&nbsp;")
+
+  var aggressiveElem = document.createElement('span');
+  aggressiveElem.className = 'aggressive';
+  aggressiveElem.textContent = pickFromArray(DATA.airshipAbilities.aggressive);
+  labelElem.appendChild(aggressiveElem);
+
+  return labelElem;
 }
 
 function renderGlobalSection() {
-  renderScoringSection();
-  renderAirshipSection();
+  var globalSection = document.getElementById(SECTION_IDS.GLOBAL);
+  if (globalSection === null) {
+    console.log("No global section!");
+    return;
+  }
+
+  globalSection.appendChild(renderGlobalItem(
+    '🏠',
+    renderSimpleLabel(pickFromArray(DATA.buildingBonuses)),
+  ));
+  globalSection.appendChild(renderGlobalItem(
+    '🏆',
+    renderSimpleLabel(pickFromArray(DATA.resolutions)),
+  ));
+  globalSection.appendChild(renderGlobalItem('🚢', renderAirshipLabel()),
+  );
 }
 
 function renderButtons() {
@@ -149,9 +160,8 @@ function changePhase(isInputPhase /* boolean */) {
 }
 
 function resetView() {
-  document.getElementById('scoring').innerHTML = '';
-  document.getElementById('airship').innerHTML = '';
-  document.getElementById('players').innerHTML = '';
+  document.getElementById(SECTION_IDS.GLOBAL).innerHTML = '';
+  document.getElementById(SECTION_IDS.PLAYERS).innerHTML = '';
 }
 
 function addEventHandling() {

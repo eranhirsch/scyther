@@ -9,7 +9,7 @@ html {
 }
 
 body {
-  background-color: rgba(255, 255, 252, 0.60);
+  background-color: rgba(255, 255, 252, 0.15);
   height: 100%;
 }
 
@@ -34,7 +34,7 @@ body {
 }
 
 ol#players li {
-  background-color: rgba(255, 255, 255, 0.30);
+  background-color: rgba(255, 255, 255, 0.45);
   margin-top: 10px;
 }
 
@@ -75,6 +75,10 @@ ol#players li:first-child {
   font-size: small;
   font-variant-caps: all-petite-caps;
   font-weight: bold;
+}
+
+#global li {
+  background-color: rgba(255, 255, 255, 0.45);
 }
 
 #controls {
