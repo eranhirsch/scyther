@@ -108,14 +108,14 @@ function renderAirshipLabel() {
   var labelElem = renderSimpleLabel();
 
   var passiveElem = document.createElement('span');
-  passiveElem.className = 'passive';
+  passiveElem.className = 'airship-passive';
   passiveElem.textContent = pickFromArray(DATA.airshipAbilities.passive);
   labelElem.appendChild(passiveElem);
 
   labelElem.insertAdjacentHTML('beforeend', "&nbsp;+&nbsp;")
 
   var aggressiveElem = document.createElement('span');
-  aggressiveElem.className = 'aggressive';
+  aggressiveElem.className = 'airship-aggressive';
   aggressiveElem.textContent = pickFromArray(DATA.airshipAbilities.aggressive);
   labelElem.appendChild(aggressiveElem);
 
