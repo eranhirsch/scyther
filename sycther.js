@@ -5,14 +5,6 @@ function getIntInRange(from, to) {
   return from + Math.floor(Math.random() * (to-from+1));
 }
 
-function shuffleArray(array) {
-  for (var i = 0; i < SHUFFLE_TIMES; i++) {
-    var item = array.shift();
-    var target_location = getIntInRange(1, array.length);
-    array.splice(target_location, 0, item);
-  }
-}
-
 function pickFromArray(array) {
   return array[getIntInRange(0, array.length - 1)];
 }
@@ -37,11 +29,19 @@ function proximityScore(faction, others) {
 }
 
 function pickBoards(playerCount) {
-  shuffleArray(DATA.factions);
-  shuffleArray(DATA.playerBoards);
+  var factions = DATA.factions.slice();
+  var playerBoards = DATA.playerBoards.slice();
   out = [];
   for (var i = 0; i < playerCount; i++) {
-    out.push({faction: DATA.factions[i], playerBoard: DATA.playerBoards[i]});
+    var factionIdx = getIntInRange(0, factions.length - 1);
+    var faction = factions[factionIdx];
+    factions.splice(factionIdx, 1);
+
+    var boardIdx = getIntInRange(0, playerBoards.length - 1);
+    var board = playerBoards[boardIdx];
+    playerBoards.splice(boardIdx, 1);
+
+    out.push({faction: faction, playerBoard: board});
   }
   return out;
 }
