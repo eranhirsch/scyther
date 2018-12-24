@@ -77,10 +77,13 @@ ol#players li:first-child {
 }
 
 #global li {
-  padding-top: 0.35rem;
-  padding-bottom: 0.35rem;
+  padding: 0.35rem 1.1rem;
   font-size: smaller;
   background-color: rgba(255, 255, 255, 0.45);
+}
+
+#global .icon {
+  margin-right: 0.3rem;
 }
 
 #global .airship-passive {
