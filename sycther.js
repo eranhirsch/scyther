@@ -130,7 +130,7 @@ function renderGlobalSection() {
   renderAirshipSection();
 }
 
-function renderButtons(playerCount) {
+function renderButtons() {
   var template = document.getElementById('buttonTemplate');
   template.removeAttribute('id');
   var form = template.parentNode;
@@ -139,11 +139,6 @@ function renderButtons(playerCount) {
     var button = template.cloneNode();
     button.type = 'submit';
     button.value = i;
-
-    if (playerCount == i) {
-      button.className += ' selected';
-    }
-
     form.appendChild(button);
   }
 }
@@ -153,18 +148,41 @@ function changePhase(isInputPhase /* boolean */) {
   $(isInputPhase ? '.output-phase' : '.input-phase').hide();
 }
 
+function resetView() {
+  document.getElementById('scoring').innerHTML = '';
+  document.getElementById('airship').innerHTML = '';
+  document.getElementById('players').innerHTML = '';
+}
+
+function addEventHandling() {
+  var reshuffle = document.getElementById('reshuffle');
+  reshuffle.onclick = function() {
+    resetView();
+    randomize();
+  };
+}
+
+function randomize() {
+  const playerCount = (new URL(document.URL))
+    .searchParams
+    .get('playerCount');
+  renderBoards(playerCount);
+  renderGlobalSection();
+}
+
 function main() {
+  addEventHandling();
+
   const playerCount = (new URL(document.URL))
     .searchParams
     .get('playerCount');
   if (playerCount !== null) {
     // Player count selected
     changePhase(false);
-    renderBoards(playerCount);
-    renderGlobalSection();
+    randomize();
   } else {
     changePhase(true);
-    renderButtons(playerCount);
+    renderButtons();
   }
 };
 
