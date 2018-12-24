@@ -84,11 +84,11 @@ ol#players li:first-child {
 }
 
 #global .airship-passive {
-  color: #2541dc;
+  color: #253ec3;
 }
 
 #global .airship-aggressive {
-  color: #dc4a25;
+  color: #c32f25;
 }
 
 #controls {
