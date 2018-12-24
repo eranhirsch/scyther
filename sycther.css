@@ -83,6 +83,14 @@ ol#players li:first-child {
   background-color: rgba(255, 255, 255, 0.45);
 }
 
+#global .airship-passive {
+  color: #2541dc;
+}
+
+#global .airship-aggressive {
+  color: #dc4a25;
+}
+
 #controls {
   margin-bottom: 15px;
 }
