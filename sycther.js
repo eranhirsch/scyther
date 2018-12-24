@@ -159,6 +159,7 @@ function addEventHandling() {
   reshuffle.onclick = function() {
     resetView();
     randomize();
+    reshuffle.blur();
   };
 }
 
