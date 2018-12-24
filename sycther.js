@@ -148,11 +148,9 @@ function renderButtons(playerCount) {
   }
 }
 
-function showForm(shouldShow /* boolean */) {
-  document.getElementById('title').hidden = !shouldShow;
-  document.getElementById('buttons').hidden = !shouldShow;
-  document.getElementById('players').hidden = shouldShow;
-  document.getElementById('global').hidden = shouldShow;
+function changePhase(isInputPhase /* boolean */) {
+  $(isInputPhase ? '.input-phase' : '.output-phase').show();
+  $(isInputPhase ? '.output-phase' : '.input-phase').hide();
 }
 
 function main() {
@@ -161,11 +159,11 @@ function main() {
     .get('playerCount');
   if (playerCount !== null) {
     // Player count selected
-    showForm(false);
+    changePhase(false);
     renderBoards(playerCount);
     renderGlobalSection();
   } else {
-    showForm(true);
+    changePhase(true);
     renderButtons(playerCount);
   }
 };
