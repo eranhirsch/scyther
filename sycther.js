@@ -1,68 +1,6 @@
 const FORM_PARAM_PLAYER_COUNT = 'playerCount';
 const SHUFFLE_TIMES = 10007;
 
-const FACTIONS = [
-  {label: 'Polania Republic', icon: '🐻', location: 1, className: 'polania'},
-  {label: 'Saxony Empire', icon: '🐺', location: 2, className: 'saxony'},
-  {label: 'Crimean Khanate', icon: '🦅', location: 3, className: 'crimea'},
-  {label: 'Togawa Shogunate', icon: '🐒', location: 4, className: 'togawa'},
-  {label: 'Rusviet Union', icon: '🐅', location: 5, className: 'rusviet'},
-  {label: 'Nordic Kingdom', icon: '🐂', location: 6, className: 'nordic'},
-  {label: 'Clan Albion', icon: '🐗', location: 7, className: 'albion'},
-];
-
-const PLAYER_BOARDS = [
-  {label: 'Industrial', icon: '🏭'},
-  {label: 'Engineering', icon: '📐'},
-  {label: 'Militant', icon: '🔫'},
-  {label: 'Patriotic', icon: '🏴'},
-  {label: 'Mechanical', icon: '⚙️'},
-  {label: 'Innovative', icon: '💡'},
-  {label: 'Agricultural', icon: '🚜'},
-];
-
-const BUILDING_BONUSES = [
-  'Adjacent Tunnels',
-  'Adjacent Lakes',
-  'Adjacent Encounters',
-  'On Tunnels',
-  'In a Row',
-  'On Farms and Tundras',
-];
-
-const RESOLUTION_TILES = [
-  'Spoils of War',
-  'Land Rush',
-  'Deja Vu',
-  'Factory Explosion',
-  'Doomsday Clock',
-  'Mission Possible',
-  'King of the Hill',
-  'Backup Plan',
-];
-
-const AIRSHIP_AGRESSIVE_ABILITIES = [
-  'Bombard',
-  'Bounty',
-  'Siege Engine',
-  'Distract',
-  'Espionage',
-  'Blitzkrieg',
-  'Toll',
-  'War Correspondent',
-];
-
-const AIRSHIP_PASSIVE_ABILITIES = [
-  'Ferry',
-  'Boost',
-  'Drill',
-  'Hero',
-  'Safe Haven',
-  'Reap',
-  'Craft',
-  'Negotiate',
-];
-
 function getIntInRange(from, to) {
   return from + Math.floor(Math.random() * (to-from+1));
 }
@@ -84,7 +22,7 @@ function factionDistance(a, b) {
   var smallerLocation = Math.min(a.location, b.location);
 
   var clockwiseDistance = biggerLocation - smallerLocation;
-  var counterClockwiseDistance = FACTIONS.length - clockwiseDistance;
+  var counterClockwiseDistance = DATA.factions.length - clockwiseDistance;
   var bestDistance = Math.min(clockwiseDistance, counterClockwiseDistance);
 
   return bestDistance;
@@ -99,11 +37,11 @@ function proximityScore(faction, others) {
 }
 
 function pickBoards(playerCount) {
-  shuffleArray(FACTIONS);
-  shuffleArray(PLAYER_BOARDS);
+  shuffleArray(DATA.factions);
+  shuffleArray(DATA.playerBoards);
   out = [];
   for (var i = 0; i < playerCount; i++) {
-    out.push({faction: FACTIONS[i], playerBoard: PLAYER_BOARDS[i]});
+    out.push({faction: DATA.factions[i], playerBoard: DATA.playerBoards[i]});
   }
   return out;
 }
@@ -163,12 +101,12 @@ function renderScoringSection() {
   renderGlobalDefinition(
     scoring,
     'Building Bonus',
-    pickFromArray(BUILDING_BONUSES),
+    pickFromArray(DATA.buildingBonuses),
   );
   renderGlobalDefinition(
     scoring,
     'Resolution',
-    pickFromArray(RESOLUTION_TILES),
+    pickFromArray(DATA.resolutions),
   );
 }
 
@@ -181,12 +119,12 @@ function renderAirshipSection() {
   renderGlobalDefinition(
     airship,
     'Airship Passive',
-    pickFromArray(AIRSHIP_PASSIVE_ABILITIES),
+    pickFromArray(DATA.airshipAbilities.passive),
   );
   renderGlobalDefinition(
     airship,
     'Airship Aggressive',
-    pickFromArray(AIRSHIP_AGRESSIVE_ABILITIES),
+    pickFromArray(DATA.airshipAbilities.aggressive),
   );
 }
 
@@ -200,7 +138,7 @@ function renderButtons(playerCount) {
   template.removeAttribute('id');
   var form = template.parentNode;
   form.removeChild(template);
-  for (var i=1; i <= FACTIONS.length; i++) {
+  for (var i=1; i <= DATA.factions.length; i++) {
     var button = template.cloneNode();
     button.type = 'submit';
     button.value = i;
