@@ -6,7 +6,7 @@ const SECTION_IDS = {
 };
 
 const ELEMENT_CLASSES = {
-  INPUT_BUTTON: 'btn btn-light btn-lg',
+  INPUT_BUTTON: 'btn btn-dark btn-lg',
   BOARD_SELECTION: 'list-group-item shadow-sm rounded',
   GLOBAL_ITEM: 'list-group-item',
 };

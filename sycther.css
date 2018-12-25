@@ -21,8 +21,11 @@ body {
 }
 
 #title {
+  color: white;
   font-family: monospace;
-  padding: 45px 0;
+  letter-spacing: 1rem;
+  padding-bottom: 13rem;
+  padding-top: 12rem;
 }
 
 #input label {
