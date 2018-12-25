@@ -57,11 +57,11 @@ ol#players li:first-child {
   color: #904bab;
 }
 
-.rusviet {
+.rusviet, .airship-aggressive {
   color: #c14747;
 }
 
-.nordic {
+.nordic, .airship-passive {
   color: #2c78bd;
 }
 
@@ -84,14 +84,6 @@ ol#players li:first-child {
 
 #global .icon {
   margin-right: 0.3rem;
-}
-
-#global .airship-passive {
-  color: #253ec3;
-}
-
-#global .airship-aggressive {
-  color: #c32f25;
 }
 
 #controls {
