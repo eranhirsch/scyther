@@ -24,7 +24,8 @@ body {
   color: white;
   font-family: monospace;
   letter-spacing: 1rem;
-  padding: 12rem 0;
+  padding-bottom: 13rem;
+  padding-top: 11rem;
 }
 
 #input label {
@@ -32,7 +33,7 @@ body {
 }
 
 #players {
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
   font-size: 18px;
   line-height: 1;
 }
