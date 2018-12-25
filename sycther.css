@@ -29,12 +29,11 @@ body {
 #players {
   font-size: 18px;
   line-height: 1;
-  margin-bottom: 30px;
 }
 
 ol#players li {
   background-color: rgba(255, 255, 255, 0.45);
-  margin-top: 10px;
+  margin-top: 0.5rem;
 }
 
 ol#players li:first-child {
@@ -74,6 +73,10 @@ ol#players li:first-child {
   font-size: small;
   font-variant-caps: all-petite-caps;
   font-weight: bold;
+}
+
+#global {
+  margin-top: 1rem;
 }
 
 #global li {
