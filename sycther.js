@@ -1,4 +1,5 @@
 const SECTION_IDS = {
+  ROOT: 'root',
   GLOBAL: 'global',
   PLAYERS: 'players',
   INPUT_FORM: 'input',
@@ -194,9 +195,15 @@ function renderInputForm() {
   renderButtons();
 }
 
+function show() {
+  var root = document.getElementById(SECTION_IDS.ROOT);
+  root.className = root.className.replace(/hide-all/, '');
+}
+
 function main() {
   document.getElementById('reshuffle').onclick = renderOutput;
   renderInputForm();
+  show();
 };
 
 window.onload = main;

@@ -17,6 +17,10 @@ body {
   text-align: center;
 }
 
+#root.hide-all {
+  display: none !important;
+}
+
 #title {
   font-family: monospace;
   padding: 45px 0;
