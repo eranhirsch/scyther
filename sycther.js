@@ -157,7 +157,10 @@ function renderGlobalSection() {
 
 function renderButtons() {
   var group = document.getElementById(SECTION_IDS.INPUT_FORM);
-  for (var i=1; i <= DATA.factions.length; i++) {
+
+  // No need for an entry for 1 (the automa requires 2 factions) and no need for
+  // the maximum as you can always deduce that from the remaining boards.
+  for (var i=2; i < DATA.factions.length; i++) {
     var button = document.createElement('input');
     button.type = 'radio';
     button.name = 'player_count';
