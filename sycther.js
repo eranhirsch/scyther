@@ -158,6 +158,11 @@ function renderGlobalSection() {
 function renderButtons() {
   var group = document.getElementById(SECTION_IDS.INPUT_FORM);
 
+  if (group.children.length > 0) {
+    // already has buttons;
+    return;
+  }
+
   // No need for an entry for 1 (the automa requires 2 factions) and no need for
   // the maximum as you can always deduce that from the remaining boards.
   for (var i=2; i < DATA.factions.length; i++) {
@@ -205,6 +210,7 @@ function show() {
 
 function main() {
   document.getElementById('reshuffle').onclick = renderOutput;
+  document.getElementById('close').onclick = renderInputForm;
   renderInputForm();
   show();
 };

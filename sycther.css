@@ -13,7 +13,6 @@ body {
 }
 
 #root {
-  padding-top: 15px;
   text-align: center;
 }
 
@@ -31,6 +30,7 @@ body {
 }
 
 #players {
+  margin-top: 0.65rem;
   font-size: 18px;
   line-height: 1;
 }
