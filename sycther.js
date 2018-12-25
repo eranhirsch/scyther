@@ -1,7 +1,20 @@
 const SECTION_IDS = {
   GLOBAL: 'global',
   PLAYERS: 'players',
-}
+  INPUT_FORM: 'input',
+};
+
+const ELEMENT_CLASSES = {
+  INPUT_BUTTON: 'btn btn-light btn-lg',
+  BOARD_SELECTION: 'list-group-item shadow-sm rounded',
+  GLOBAL_ITEM: 'list-group-item',
+};
+
+const GET_PARAMS = {
+  PLAYER_COUNT: 'pc',
+};
+
+var G_PLAYER_COUNT = null;
 
 function getIntInRange(from, to) {
   return from + Math.floor(Math.random() * (to-from+1));
@@ -50,7 +63,7 @@ function pickBoards(playerCount) {
 
 function renderBoardSelection(boardSelection, proximity) {
   const item = document.createElement('li');
-  item.className = 'list-group-item shadow-sm rounded';
+  item.className = ELEMENT_CLASSES.BOARD_SELECTION;
 
   const labelElem = document.createElement('div');
   labelElem.textContent =
@@ -69,14 +82,14 @@ function renderBoardSelection(boardSelection, proximity) {
   return item;
 }
 
-function renderBoards(playerCount) {
+function renderBoards() {
   var playersSection = document.getElementById(SECTION_IDS.PLAYERS);
   if (playersSection === null) {
     console.log("No player section!");
     return;
   }
 
-  var boards = pickBoards(playerCount);
+  var boards = pickBoards(G_PLAYER_COUNT);
 
   boards.forEach(function(selection) {
     var proximity = proximityScore(selection.faction, boards);
@@ -86,7 +99,7 @@ function renderBoards(playerCount) {
 
 function renderGlobalItem(icon, labelElem) {
   var itemElem = document.createElement('li');
-  itemElem.className = 'list-group-item';
+  itemElem.className = ELEMENT_CLASSES.GLOBAL_ITEM;
 
   var iconElem = document.createElement('span');
   iconElem.className = 'icon';
@@ -142,59 +155,48 @@ function renderGlobalSection() {
 }
 
 function renderButtons() {
-  var template = document.getElementById('buttonTemplate');
-  template.removeAttribute('id');
-  var form = template.parentNode;
-  form.removeChild(template);
+  var group = document.getElementById(SECTION_IDS.INPUT_FORM);
   for (var i=1; i <= DATA.factions.length; i++) {
-    var button = template.cloneNode();
-    button.type = 'submit';
+    var button = document.createElement('input');
+    button.type = 'radio';
+    button.name = 'player_count';
     button.value = i;
-    form.appendChild(button);
+
+    var buttonLabel = document.createElement('label');
+    buttonLabel.className = ELEMENT_CLASSES.INPUT_BUTTON;
+    buttonLabel.onclick = function(event) {
+      G_PLAYER_COUNT = event.currentTarget.firstElementChild.value;
+      $('.input-phase').hide();
+      $('.output-phase').show();
+      renderOutput();
+    };
+    buttonLabel.appendChild(button);
+    buttonLabel.insertAdjacentHTML('beforeend', i);
+
+    group.appendChild(buttonLabel);
   }
 }
 
-function changePhase(isInputPhase /* boolean */) {
-  $(isInputPhase ? '.input-phase' : '.output-phase').show();
-  $(isInputPhase ? '.output-phase' : '.input-phase').hide();
-}
-
-function resetView() {
+function resetOutputView() {
   document.getElementById(SECTION_IDS.GLOBAL).innerHTML = '';
   document.getElementById(SECTION_IDS.PLAYERS).innerHTML = '';
 }
 
-function addEventHandling() {
-  var reshuffle = document.getElementById('reshuffle');
-  reshuffle.onclick = function() {
-    resetView();
-    randomize();
-    reshuffle.blur();
-  };
-}
-
-function randomize() {
-  const playerCount = (new URL(document.URL))
-    .searchParams
-    .get('playerCount');
-  renderBoards(playerCount);
+function renderOutput() {
+  resetOutputView();
+  renderBoards();
   renderGlobalSection();
 }
 
-function main() {
-  addEventHandling();
+function renderInputForm() {
+  $('.input-phase').show();
+  $('.output-phase').hide();
+  renderButtons();
+}
 
-  const playerCount = (new URL(document.URL))
-    .searchParams
-    .get('playerCount');
-  if (playerCount !== null) {
-    // Player count selected
-    changePhase(false);
-    randomize();
-  } else {
-    changePhase(true);
-    renderButtons();
-  }
+function main() {
+  document.getElementById('reshuffle').onclick = renderOutput;
+  renderInputForm();
 };
 
 window.onload = main;
