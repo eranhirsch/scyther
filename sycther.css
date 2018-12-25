@@ -80,17 +80,22 @@ ol#players li:first-child {
 }
 
 #global {
-  margin-top: 1rem;
+  margin-top: 0.8rem;
 }
 
 #global li {
-  padding: 0.35rem 1.1rem;
-  font-size: smaller;
   background-color: rgba(255, 255, 255, 0.45);
+  font-size: smaller;
+  padding: 0.25rem 0.9rem;
 }
 
 #global .icon {
+  font-size: large;
   margin-right: 0.3rem;
+}
+
+#global .label {
+  vertical-align: text-bottom;
 }
 
 #controls {
