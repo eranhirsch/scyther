@@ -8,7 +8,7 @@ html {
 }
 
 body {
-  background-color: rgba(255, 255, 252, 0.15);
+  background-color: rgba(255, 255, 252, 0.10);
   height: 100%;
 }
 
@@ -43,7 +43,7 @@ body {
 }
 
 ol#players li {
-  background-color: rgba(255, 255, 255, 0.45);
+  background-color: rgba(255, 255, 255, 0.60);
   margin-top: 0.5rem;
 }
 
