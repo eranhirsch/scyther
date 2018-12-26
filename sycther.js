@@ -208,7 +208,16 @@ function show() {
   root.className = root.className.replace(/hide-all/, '');
 }
 
+function registerServiceWorker() {
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('sw.js');
+    });
+  }
+}
+
 function main() {
+  registerServiceWorker();
   document.getElementById('reshuffle').onclick = renderOutput;
   document.getElementById('close').onclick = renderInputForm;
   renderInputForm();
