@@ -209,24 +209,17 @@ function show() {
 }
 
 function registerServiceWorker() {
-  if (!('serviceWorker' in navigator)) {
-    console.log("SW not supported");
-    return;
-  }
-
-  console.log("Registering sw");
-  window.addEventListener('load', function() {
-    console.log("on load for sw");
+  if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js');
-  });
+  }
 }
 
 function main() {
+  registerServiceWorker();
   document.getElementById('reshuffle').onclick = renderOutput;
   document.getElementById('close').onclick = renderInputForm;
   renderInputForm();
   show();
 };
 
-registerServiceWorker();
 window.onload = main;
