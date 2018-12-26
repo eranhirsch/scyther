@@ -203,6 +203,11 @@ function renderInputForm() {
   renderButtons();
 }
 
+function show() {
+  var root = document.getElementById(SECTION_IDS.ROOT);
+  root.className = root.className.replace(/hide-all/, '');
+}
+
 function registerServiceWorker() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js');
@@ -214,6 +219,7 @@ function main() {
   document.getElementById('reshuffle').onclick = renderOutput;
   document.getElementById('close').onclick = renderInputForm;
   renderInputForm();
+  show();
 };
 
 window.onload = main;

@@ -16,6 +16,10 @@ body {
   text-align: center;
 }
 
+#root.hide-all {
+  display: none !important;
+}
+
 #close {
   font-size: 2rem;
 }
