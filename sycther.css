@@ -28,8 +28,11 @@ body {
   color: white;
   font-family: monospace;
   letter-spacing: 1rem;
-  padding-bottom: 69%;
-  padding-top: 49%;
+  padding-top: 12rem;
+}
+
+#input {
+  margin-bottom: 5.7rem;
 }
 
 #input label {
