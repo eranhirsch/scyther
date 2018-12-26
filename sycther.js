@@ -15,7 +15,7 @@ const GET_PARAMS = {
   PLAYER_COUNT: 'pc',
 };
 
-var G_PLAYER_COUNT = null;
+const PLAYER_COUNT_GROUP_NAME = 'player_count';
 
 function getIntInRange(from, to) {
   return from + Math.floor(Math.random() * (to-from+1));
@@ -83,6 +83,11 @@ function renderBoardSelection(boardSelection, proximity) {
   return item;
 }
 
+function getPlayerCount() {
+  var selector = "input[name='" + PLAYER_COUNT_GROUP_NAME + "']";
+  return $(selector + ":active, " + selector + ":checked").val();
+}
+
 function renderBoards() {
   var playersSection = document.getElementById(SECTION_IDS.PLAYERS);
   if (playersSection === null) {
@@ -90,7 +95,7 @@ function renderBoards() {
     return;
   }
 
-  var boards = pickBoards(G_PLAYER_COUNT);
+  var boards = pickBoards(getPlayerCount());
 
   boards.forEach(function(selection) {
     var proximity = proximityScore(selection.faction, boards);
@@ -157,6 +162,11 @@ function renderGlobalSection() {
 
 function renderButtons() {
   var group = document.getElementById(SECTION_IDS.INPUT_FORM);
+  group.onclick = function(event) {
+    $('.input-phase').hide();
+    $('.output-phase').show();
+    renderOutput();
+  };
 
   if (group.children.length > 0) {
     // already has buttons;
@@ -168,17 +178,11 @@ function renderButtons() {
   for (var i=2; i < DATA.factions.length; i++) {
     var button = document.createElement('input');
     button.type = 'radio';
-    button.name = 'player_count';
+    button.name = PLAYER_COUNT_GROUP_NAME;
     button.value = i;
 
     var buttonLabel = document.createElement('label');
     buttonLabel.className = ELEMENT_CLASSES.INPUT_BUTTON;
-    buttonLabel.onclick = function(event) {
-      G_PLAYER_COUNT = event.currentTarget.firstElementChild.value;
-      $('.input-phase').hide();
-      $('.output-phase').show();
-      renderOutput();
-    };
     buttonLabel.appendChild(button);
     buttonLabel.insertAdjacentHTML('beforeend', i);
 
