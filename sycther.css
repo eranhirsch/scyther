@@ -20,6 +20,10 @@ body {
   display: none !important;
 }
 
+#close {
+  font-size: 2rem;
+}
+
 #title {
   color: white;
   font-family: monospace;
