@@ -1,21 +1,51 @@
 const DATA = {
   factions: [
-    {label: 'Polania Republic', location: 1, className: 'polania'},
-    {label: 'Saxony Empire', location: 2, className: 'saxony'},
-    {label: 'Crimean Khanate', location: 3, className: 'crimea'},
-    {label: 'Togawa Shogunate', location: 4, className: 'togawa'},
-    {label: 'Rusviet Union', location: 5, className: 'rusviet'},
-    {label: 'Nordic Kingdom', location: 6, className: 'nordic'},
-    {label: 'Clan Albion', location: 7, className: 'albion'},
+    {
+      label: 'Polania Republic',
+      location: 1,
+      className: 'polania',
+    },
+    {
+      label: 'Saxony Empire',
+      location: 2,
+      className: 'saxony',
+    },
+    {
+      label: 'Crimean Khanate',
+      location: 3,
+      className: 'crimea',
+    },
+    {
+      label: 'Togawa Shogunate',
+      location: 4,
+      className: 'togawa',
+      invadersOnly: true,
+    },
+    {
+      label: 'Rusviet Union',
+      location: 5,
+      className: 'rusviet',
+    },
+    {
+      label: 'Nordic Kingdom',
+      location: 6,
+      className: 'nordic',
+    },
+    {
+      label: 'Clan Albion',
+      location: 7,
+      className: 'albion',
+      invadersOnly: true,
+    },
   ],
 
   playerBoards: [
     {label: 'Industrial'},
     {label: 'Engineering'},
-    {label: 'Militant'},
+    {label: 'Militant', invadersOnly: true},
     {label: 'Patriotic'},
     {label: 'Mechanical'},
-    {label: 'Innovative'},
+    {label: 'Innovative', invadersOnly: true},
     {label: 'Agricultural'},
   ],
 

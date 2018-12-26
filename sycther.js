@@ -3,6 +3,8 @@ const SECTION_IDS = {
   GLOBAL: 'global',
   PLAYERS: 'players',
   INPUT_FORM: 'input',
+  INVADERS_SWITCH: 'invadersSwitch',
+  WIND_GAMBIT_SWITCH: 'windGambitSwitch',
 };
 
 const ELEMENT_CLASSES = {
@@ -40,11 +42,31 @@ function proximityScore(faction, others) {
   }) / (others.length - 1);
 }
 
-function pickBoards(playerCount) {
+function shouldIncludeInvadersBoards() {
+  return document.getElementById(SECTION_IDS.INVADERS_SWITCH).checked;
+}
+
+function shouldIncludeAirships() {
+  return document.getElementById(SECTION_IDS.WIND_GAMBIT_SWITCH).checked;
+}
+
+function shouldIncludeResolutions() {
+  return document.getElementById(SECTION_IDS.WIND_GAMBIT_SWITCH).checked;
+}
+
+function pickBoards() {
   var factions = DATA.factions.slice();
   var playerBoards = DATA.playerBoards.slice();
+  if (!shouldIncludeInvadersBoards()) {
+    factions = factions.filter(function(faction) {
+      return !faction.invadersOnly;
+    });
+    playerBoards = playerBoards.filter(function(playerBoard) {
+      return !playerBoard.invadersOnly;
+    });
+  }
   out = [];
-  for (var i = 0; i < playerCount; i++) {
+  for (var i = 0; i < getPlayerCount(); i++) {
     var factionIdx = getIntInRange(0, factions.length - 1);
     var faction = factions[factionIdx];
     factions.splice(factionIdx, 1);
@@ -91,7 +113,7 @@ function renderBoards() {
     return;
   }
 
-  var boards = pickBoards(getPlayerCount());
+  var boards = pickBoards();
 
   boards.forEach(function(selection) {
     var proximity = proximityScore(selection.faction, boards);
@@ -148,12 +170,15 @@ function renderGlobalSection() {
     '🏠',
     renderSimpleLabel(pickFromArray(DATA.buildingBonuses)),
   ));
-  globalSection.appendChild(renderGlobalItem(
-    '🏆',
-    renderSimpleLabel(pickFromArray(DATA.resolutions)),
-  ));
-  globalSection.appendChild(renderGlobalItem('🚢', renderAirshipLabel()),
-  );
+  if (shouldIncludeResolutions()) {
+    globalSection.appendChild(renderGlobalItem(
+      '🏆',
+      renderSimpleLabel(pickFromArray(DATA.resolutions)),
+    ));
+  }
+  if (shouldIncludeAirships()) {
+    globalSection.appendChild(renderGlobalItem('🚢', renderAirshipLabel()));
+  }
 }
 
 function renderButtons() {
