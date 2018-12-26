@@ -11,10 +11,6 @@ const ELEMENT_CLASSES = {
   GLOBAL_ITEM: 'list-group-item',
 };
 
-const GET_PARAMS = {
-  PLAYER_COUNT: 'pc',
-};
-
 const PLAYER_COUNT_GROUP_NAME = 'player_count';
 
 function getIntInRange(from, to) {
