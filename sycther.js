@@ -7,7 +7,7 @@ const SECTION_IDS = {
 
 const ELEMENT_CLASSES = {
   INPUT_BUTTON: 'btn btn-dark btn-lg',
-  BOARD_SELECTION: 'list-group-item shadow-sm rounded',
+  BOARD_SELECTION: 'list-group-item',
   GLOBAL_ITEM: 'list-group-item',
 };
 
@@ -66,17 +66,17 @@ function renderBoardSelection(boardSelection, proximity) {
   const item = document.createElement('li');
   item.className = ELEMENT_CLASSES.BOARD_SELECTION;
 
-  const labelElem = document.createElement('div');
+  const labelElem = document.createElement('span');
   labelElem.textContent =
     boardSelection.playerBoard.label + ' ' + boardSelection.faction.label;
   labelElem.className = boardSelection.faction.className;
   item.appendChild(labelElem);
 
   if (!!proximity) {
-    const proximityElem = document.createElement('div');
+    const proximityElem = document.createElement('span');
     proximityElem.className = 'proximity';
     proximityElem.textContent =
-      '(Proximity: ' + parseFloat(proximity).toFixed(1) + ')';
+      '\xA0(' + parseFloat(proximity).toFixed(1) + ')';
     item.appendChild(proximityElem);
   }
 
