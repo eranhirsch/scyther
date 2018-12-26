@@ -43,7 +43,7 @@ body {
 }
 
 ol#players li {
-  background-color: rgba(255, 255, 255, 0.60);
+  background-color: rgba(255, 255, 255, 0.75);
   margin-top: 0.5rem;
 }
 
@@ -52,11 +52,11 @@ ol#players li:first-child {
 }
 
 .polania {
-  color: #bbbbbb;
+  color: #ababab;
 }
 
 .saxony {
-  color: #636363;
+  color: #525252;
 }
 
 .crimea {
@@ -91,7 +91,7 @@ ol#players li:first-child {
 }
 
 #global li {
-  background-color: rgba(255, 255, 255, 0.45);
+  background-color: rgba(255, 255, 255, 0.75);
   font-size: smaller;
   padding: 0.25rem 0.9rem;
 }
