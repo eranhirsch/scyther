@@ -1,11 +1,4 @@
-self.addEventListener('install', function(event) {
-  console.log(event);
-});
-
-self.addEventListener('activate', function(event) {
-  console.log(event);
-});
-
 self.addEventListener('fetch', function(event) {
-  console.log(event);
+  // Do nothing, just needed for the "add to homescreen" feature
+  // @see: https://developers.google.com/web/fundamentals/app-install-banners/
 });
