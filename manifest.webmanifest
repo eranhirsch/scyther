@@ -1,0 +1,11 @@
+{
+  "name": "Scyther",
+  "short_name": "Scyther",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "Randomizer for the Scythe board game",
+  "icons": [{"src": "favicon.png"}],
+  "orientation": "portrait",
+  "scope": "/",
+}
