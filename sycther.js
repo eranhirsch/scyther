@@ -264,8 +264,20 @@ function saveSettings() {
       return out;
     }, {});
 
-  console.log(formState);
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(formState));
+}
+
+function loadSettings() {
+  if (!window.localStorage) {
+    console.log('No Local Storage');
+    return;
+  }
+
+  Object.entries(JSON.parse(window.localStorage.getItem(STORAGE_KEY))).forEach(
+    function(setting) {
+      document.getElementById(setting[0]).checked = setting[1];
+    }
+  );
 }
 
 function main() {
@@ -274,6 +286,7 @@ function main() {
   document.getElementById('reshuffle').onclick = renderOutput;
   document.getElementById('close').onclick = renderInputForm;
   renderInputForm();
+  loadSettings();
   show();
 }
 
