@@ -16,7 +16,7 @@ const ELEMENT_CLASSES = {
 const PLAYER_COUNT_GROUP_NAME = 'player_count';
 
 function getIntInRange(from, to) {
-  return from + Math.floor(Math.random() * (to-from+1));
+  return from + Math.floor(Math.random() * (to - from + 1));
 }
 
 function pickFromArray(array) {
@@ -35,11 +35,16 @@ function factionDistance(a, b) {
 }
 
 function proximityScore(faction, others) {
-  return others.map(function(other) {
-    return factionDistance(faction, other.faction);
-  }).reduce(function(accumulator, currVal) {
-    return accumulator + currVal;
-  }) / (others.length - 1);
+  return (
+    others
+      .map(function(other) {
+        return factionDistance(faction, other.faction);
+      })
+      .reduce(function(accumulator, currVal) {
+        return accumulator + currVal;
+      }) /
+    (others.length - 1)
+  );
 }
 
 function shouldIncludeInvadersBoards() {
@@ -103,13 +108,13 @@ function renderBoardSelection(boardSelection, proximity) {
 
 function getPlayerCount() {
   var selector = "input[name='" + PLAYER_COUNT_GROUP_NAME + "']";
-  return $(selector + ":active, " + selector + ":checked").val();
+  return $(selector + ':active, ' + selector + ':checked').val();
 }
 
 function renderBoards() {
   var playersSection = document.getElementById(SECTION_IDS.PLAYERS);
   if (playersSection === null) {
-    console.log("No player section!");
+    console.log('No player section!');
     return;
   }
 
@@ -149,7 +154,7 @@ function renderAirshipLabel() {
   passiveElem.textContent = pickFromArray(DATA.airshipAbilities.passive);
   labelElem.appendChild(passiveElem);
 
-  labelElem.insertAdjacentHTML('beforeend', "&nbsp;&&nbsp;")
+  labelElem.insertAdjacentHTML('beforeend', '&nbsp;&&nbsp;');
 
   var aggressiveElem = document.createElement('span');
   aggressiveElem.className = 'airship-aggressive';
@@ -162,19 +167,20 @@ function renderAirshipLabel() {
 function renderGlobalSection() {
   var globalSection = document.getElementById(SECTION_IDS.GLOBAL);
   if (globalSection === null) {
-    console.log("No global section!");
+    console.log('No global section!');
     return;
   }
 
-  globalSection.appendChild(renderGlobalItem(
-    '🏠',
-    renderSimpleLabel(pickFromArray(DATA.buildingBonuses)),
-  ));
+  globalSection.appendChild(
+    renderGlobalItem(
+      '🏠',
+      renderSimpleLabel(pickFromArray(DATA.buildingBonuses))
+    )
+  );
   if (shouldIncludeResolutions()) {
-    globalSection.appendChild(renderGlobalItem(
-      '🏆',
-      renderSimpleLabel(pickFromArray(DATA.resolutions)),
-    ));
+    globalSection.appendChild(
+      renderGlobalItem('🏆', renderSimpleLabel(pickFromArray(DATA.resolutions)))
+    );
   }
   if (shouldIncludeAirships()) {
     globalSection.appendChild(renderGlobalItem('🚢', renderAirshipLabel()));
@@ -196,7 +202,7 @@ function renderButtons() {
 
   // No need for an entry for 1 (the automa requires 2 factions) and no need for
   // the maximum as you can always deduce that from the remaining boards.
-  for (var i=2; i < DATA.factions.length; i++) {
+  for (var i = 2; i < DATA.factions.length; i++) {
     var button = document.createElement('input');
     button.type = 'radio';
     button.name = PLAYER_COUNT_GROUP_NAME;
@@ -245,6 +251,6 @@ function main() {
   document.getElementById('close').onclick = renderInputForm;
   renderInputForm();
   show();
-};
+}
 
 window.onload = main;
