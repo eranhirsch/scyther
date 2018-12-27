@@ -34,41 +34,39 @@
       <div class="row input-phase">
         <h1 class="col" id="title">SCYTHER</h1>
       </div>
-      <div id="settings" class="fixed-bottom input-phase">
-        <div class="row">
-          <div class="col">
-            <div class="custom-control custom-switch">
-              <input
-                type="checkbox"
-                class="custom-control-input"
-                id="invadersSwitch"
-                checked
-              />
-              <label class="custom-control-label" for="invadersSwitch">
-                Invaders from Afar
-              </label>
-            </div>
-            <div class="custom-control custom-switch">
-              <input
-                type="checkbox"
-                class="custom-control-input"
-                id="windGambitSwitch"
-                checked
-              />
-              <label class="custom-control-label" for="windGambitSwitch">
-                The Wind Gambit
-              </label>
-            </div>
+      <div class="row input-phase">
+        <form id="settings" class="col">
+          <div class="custom-control custom-switch">
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              id="invadersSwitch"
+              checked
+            />
+            <label class="custom-control-label" for="invadersSwitch">
+              Invaders from Afar
+            </label>
           </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <div
-              id="input"
-              class="btn-group btn-group-toggle"
-              data-toggle="buttons"
-            >
-            </div>
+          <div class="custom-control custom-switch">
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              id="windGambitSwitch"
+              checked
+            />
+            <label class="custom-control-label" for="windGambitSwitch">
+              The Wind Gambit
+            </label>
+          </div>
+        </form>
+      </div>
+      <div class="row fixed-bottom">
+        <div class="col">
+          <div
+            id="input"
+            class="btn-group btn-group-toggle"
+            data-toggle="buttons"
+          >
           </div>
         </div>
       </div>
