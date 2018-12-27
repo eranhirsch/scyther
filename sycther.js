@@ -273,11 +273,15 @@ function loadSettings() {
     return;
   }
 
-  Object.entries(JSON.parse(window.localStorage.getItem(STORAGE_KEY))).forEach(
-    function(setting) {
-      document.getElementById(setting[0]).checked = setting[1];
-    }
-  );
+  var formState = JSON.parse(window.localStorage.getItem(STORAGE_KEY));
+  if (formState === null) {
+    // Nothing stored yet...
+    return;
+  }
+
+  Object.entries(formState).forEach(function(setting) {
+    document.getElementById(setting[0]).checked = setting[1];
+  });
 }
 
 function main() {
