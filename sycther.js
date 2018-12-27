@@ -5,6 +5,7 @@ const SECTION_IDS = {
   INPUT_FORM: 'input',
   INVADERS_SWITCH: 'invadersSwitch',
   WIND_GAMBIT_SWITCH: 'windGambitSwitch',
+  SETTINGS_FORM: 'settings',
 };
 
 const ELEMENT_CLASSES = {
@@ -14,6 +15,8 @@ const ELEMENT_CLASSES = {
 };
 
 const PLAYER_COUNT_GROUP_NAME = 'player_count';
+
+const STORAGE_KEY = 'scyther_store';
 
 function getIntInRange(from, to) {
   return from + Math.floor(Math.random() * (to - from + 1));
@@ -245,8 +248,29 @@ function registerServiceWorker() {
   }
 }
 
+function saveSettings() {
+  if (!window.localStorage) {
+    console.log('No Local Storage');
+    return;
+  }
+
+  var formState = $('#' + SECTION_IDS.SETTINGS_FORM + " input[type='checkbox']")
+    .map(function(_, elem) {
+      return {id: elem.id, checked: elem.checked};
+    })
+    .get()
+    .reduce(function(out, elem) {
+      out[elem.id] = elem.checked;
+      return out;
+    }, {});
+
+  console.log(formState);
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(formState));
+}
+
 function main() {
   registerServiceWorker();
+  document.getElementById(SECTION_IDS.SETTINGS_FORM).onchange = saveSettings;
   document.getElementById('reshuffle').onclick = renderOutput;
   document.getElementById('close').onclick = renderInputForm;
   renderInputForm();
