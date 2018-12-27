@@ -92,4 +92,4 @@ const DATA = {
       'Negotiate',
     ],
   },
-}
+};
