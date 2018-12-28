@@ -5,6 +5,7 @@ const SECTION_IDS = {
   INPUT_FORM: 'input',
   INVADERS_SWITCH: 'invadersSwitch',
   WIND_GAMBIT_SWITCH: 'windGambitSwitch',
+  PROXIMITY_SWITCH: 'proximityCheckbox',
   SETTINGS_FORM: 'settings',
 };
 
@@ -60,6 +61,10 @@ function shouldIncludeAirships() {
 
 function shouldIncludeResolutions() {
   return document.getElementById(SECTION_IDS.WIND_GAMBIT_SWITCH).checked;
+}
+
+function withProximityScores() {
+  return document.getElementById(SECTION_IDS.PROXIMITY_SWITCH).checked;
 }
 
 function pickBoards() {
@@ -124,7 +129,9 @@ function renderBoards() {
   var boards = pickBoards();
 
   boards.forEach(function(selection) {
-    var proximity = proximityScore(selection.faction, boards);
+    var proximity = withProximityScores()
+      ? proximityScore(selection.faction, boards)
+      : null;
     playersSection.appendChild(renderBoardSelection(selection, proximity));
   });
 }
