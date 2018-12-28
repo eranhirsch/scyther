@@ -36,6 +36,11 @@ body {
   color: white;
 }
 
+#settings .custom-control-input:checked~.custom-control-label::before {
+  background-color: #bc5652;
+  border-color: #bc5652;
+}
+
 #input {
   margin-bottom: 5.7rem;
 }
