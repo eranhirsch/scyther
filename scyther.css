@@ -37,17 +37,12 @@ body {
 }
 
 #settings .custom-control-input:checked~.custom-control-label::before {
-  background-color: #bc5652;
-  border-color: #bc5652;
+  background-color: #dc3545;
+  border-color: #dc3545;
 }
 
 #input {
   margin-bottom: 5.7rem;
-}
-
-#input label {
-  /* This color is taken from the bootstrap definition of btn-dark */
-  background-color: rgba(52, 58, 64, 0.75);
 }
 
 #players {

@@ -10,7 +10,7 @@ const SECTION_IDS = {
 };
 
 const ELEMENT_CLASSES = {
-  INPUT_BUTTON: 'btn btn-dark btn-lg',
+  INPUT_BUTTON: 'btn btn-danger btn-lg',
   BOARD_SELECTION: 'list-group-item',
   GLOBAL_ITEM: 'list-group-item',
 };
