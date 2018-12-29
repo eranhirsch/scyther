@@ -118,18 +118,24 @@ function renderBoardSelection(boardSelection, proximity) {
   const item = document.createElement('li');
   item.className = ELEMENT_CLASSES.BOARD_SELECTION;
 
-  const labelElem = document.createElement('span');
-  if (boardSelection.isAutoma) {
-    labelElem.textContent = 'Automa: ' + boardSelection.faction.label;
-  } else {
-    labelElem.textContent =
-      boardSelection.playerBoard.label + ' ' + boardSelection.faction.label;
-  }
+  const boardElem = document.createElement('span');
+  boardElem.className = 'player-board';
+  boardElem.textContent = boardSelection.isAutoma
+    ? 'Automa:'
+    : boardSelection.playerBoard.label;
 
+  const factionElem = document.createElement('span');
+  factionElem.className = 'faction';
+  factionElem.textContent = boardSelection.faction.label;
+
+  const labelElem = document.createElement('span');
   labelElem.className = boardSelection.faction.className;
   if (boardSelection.isAutoma) {
     labelElem.className += ' automa';
   }
+  labelElem.appendChild(boardElem);
+  labelElem.insertAdjacentHTML('beforeend', '&nbsp;');
+  labelElem.appendChild(factionElem);
 
   item.appendChild(labelElem);
 

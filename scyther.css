@@ -32,8 +32,8 @@ body {
 }
 
 #settings {
-  padding-top: 3rem;
   color: white;
+  padding-top: 3rem;
 }
 
 #settings .custom-control-input:checked~.custom-control-label::before {
@@ -42,9 +42,9 @@ body {
 }
 
 #players {
-  margin-top: 0.25rem;
   font-size: 1.1rem;
   line-height: 1rem;
+  margin-top: 0.25rem;
 }
 
 ol#players li {
@@ -53,6 +53,13 @@ ol#players li {
 
 ol#players li:first-child {
   margin-top: 0;
+}
+
+ol#players .player-board {
+  font-family: monospace, monospace;
+  font-size: 1.25rem;
+  font-style: italic;
+  font-variant-caps: small-caps;
 }
 
 .polania {
@@ -90,7 +97,6 @@ ol#players li:first-child {
 .proximity {
   color: darkgray;
   font-size: small;
-  font-variant-caps: all-petite-caps;
 }
 
 #global {
