@@ -129,7 +129,7 @@ function renderBoardSelection(boardSelection, proximity) {
 
 function getPlayerCount() {
   var selector = "input[name='" + PLAYER_COUNT_GROUP_NAME + "']";
-  return $(selector + ':active, ' + selector + ':checked').val();
+  return $(selector + ':active').val() || $(select + ':checked').val();
 }
 
 function renderBoards() {
