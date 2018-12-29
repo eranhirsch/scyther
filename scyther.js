@@ -245,13 +245,9 @@ function renderOutput() {
   renderGlobalSection();
 }
 
-function renderInputForm() {
-  // Switch views
+function switchToInputForm() {
   $('.input-phase').show();
   $('.output-phase').hide();
-
-  // Re-render buttons (TODO: why?!)
-  renderButtons();
 }
 
 function show() {
@@ -307,7 +303,7 @@ function registerEventHandlers() {
   settings.addEventListener('change', saveSettings);
   settings.addEventListener('change', renderButtons);
 
-  document.getElementById('close').onclick = renderInputForm;
+  document.getElementById('close').onclick = switchToInputForm;
 
   // Output rendering events events
   document.getElementById('reshuffle').onclick = renderOutput;
@@ -321,7 +317,8 @@ function main() {
   registerEventHandlers();
 
   // We always start with the input form!
-  renderInputForm();
+  renderButtons();
+  switchToInputForm();
 
   // When finished loading all the components, show the view
   show();
