@@ -231,22 +231,26 @@ function renderButtons() {
   }
 }
 
-function resetOutputView() {
-  document.getElementById(SECTION_IDS.GLOBAL).innerHTML = '';
-  document.getElementById(SECTION_IDS.PLAYERS).innerHTML = '';
-}
-
 function renderOutput() {
+  // Switch views
   $('.input-phase').hide();
   $('.output-phase').show();
-  resetOutputView();
+
+  // Reset previous values
+  document.getElementById(SECTION_IDS.GLOBAL).innerHTML = '';
+  document.getElementById(SECTION_IDS.PLAYERS).innerHTML = '';
+
+  // Render new values
   renderBoards();
   renderGlobalSection();
 }
 
 function renderInputForm() {
+  // Switch views
   $('.input-phase').show();
   $('.output-phase').hide();
+
+  // Re-render buttons (TODO: why?!)
   renderButtons();
 }
 
