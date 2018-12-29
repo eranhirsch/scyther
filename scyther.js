@@ -210,7 +210,7 @@ function renderGlobalSection() {
   }
 }
 
-function renderButtons() {
+function renderPlayerCountButtons() {
   var group = document.getElementById(SECTION_IDS.INPUT_FORM);
   group.innerHTML = '';
 
@@ -317,7 +317,7 @@ function main() {
   registerEventHandlers();
 
   // We always start with the input form!
-  renderButtons();
+  renderPlayerCountButtons();
   switchToInputForm();
 
   // When finished loading all the components, show the view
