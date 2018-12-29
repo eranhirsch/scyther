@@ -126,7 +126,7 @@ function renderBoardSelection(boardSelection, proximity) {
 
   const factionElem = document.createElement('span');
   factionElem.className = 'faction';
-  factionElem.textContent = boardSelection.faction.label;
+  factionElem.textContent = boardSelection.faction.label.replace(' ', '\xa0');
 
   const labelElem = document.createElement('span');
   labelElem.className = boardSelection.faction.className;
@@ -134,7 +134,7 @@ function renderBoardSelection(boardSelection, proximity) {
     labelElem.className += ' automa';
   }
   labelElem.appendChild(boardElem);
-  labelElem.insertAdjacentHTML('beforeend', '&nbsp;');
+  labelElem.insertAdjacentHTML('beforeend', ' ');
   labelElem.appendChild(factionElem);
 
   item.appendChild(labelElem);

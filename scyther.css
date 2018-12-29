@@ -42,7 +42,7 @@ body {
 }
 
 #players {
-  font-size: 1.1rem;
+  font-size: 1rem;
   line-height: 1rem;
   margin-top: 0.25rem;
 }
@@ -56,10 +56,8 @@ ol#players li:first-child {
 }
 
 ol#players .player-board {
-  font-family: monospace, monospace;
-  font-size: 1.25rem;
-  font-style: italic;
   font-variant-caps: small-caps;
+  font-weight: 500;
 }
 
 .polania {
