@@ -67,17 +67,30 @@ function withProximityScores() {
   return document.getElementById(SECTION_IDS.PROXIMITY_SWITCH).checked;
 }
 
-function pickBoards() {
-  var factions = DATA.factions.slice();
-  var playerBoards = DATA.playerBoards.slice();
-  if (!shouldIncludeInvadersBoards()) {
-    factions = factions.filter(function(faction) {
-      return !faction.invadersOnly;
-    });
-    playerBoards = playerBoards.filter(function(playerBoard) {
-      return !playerBoard.invadersOnly;
-    });
+function getFactions() {
+  if (shouldIncludeInvadersBoards()) {
+    return DATA.factions.slice();
   }
+
+  return DATA.factions.filter(function(faction) {
+    return !faction.invadersOnly;
+  });
+}
+
+function getPlayerBoards() {
+  if (shouldIncludeInvadersBoards()) {
+    return DATA.playerBoards.slice();
+  }
+
+  return DATA.playerBoards.filter(function(board) {
+    return !board.invadersOnly;
+  });
+}
+
+function pickBoards() {
+  var factions = getFactions();
+  var playerBoards = getPlayerBoards();
+
   out = [];
   for (var i = 0; i < getPlayerCount(); i++) {
     var factionIdx = getIntInRange(0, factions.length - 1);
@@ -199,6 +212,7 @@ function renderGlobalSection() {
 
 function renderButtons() {
   var group = document.getElementById(SECTION_IDS.INPUT_FORM);
+  group.innerHTML = '';
   group.onclick = function(event) {
     $('.input-phase').hide();
     $('.output-phase').show();
@@ -210,9 +224,9 @@ function renderButtons() {
     return;
   }
 
-  // No need for an entry for 1 (the automa requires 2 factions) and no need for
-  // the maximum as you can always deduce that from the remaining boards.
-  for (var i = 2; i < DATA.factions.length; i++) {
+  // No need for an entry for 1 (the automa requires 2 factions)
+  var factions = getFactions();
+  for (var i = 2; i <= factions.length; i++) {
     var button = document.createElement('input');
     button.type = 'radio';
     button.name = PLAYER_COUNT_GROUP_NAME;
@@ -293,11 +307,13 @@ function loadSettings() {
 
 function main() {
   registerServiceWorker();
-  document.getElementById(SECTION_IDS.SETTINGS_FORM).onchange = saveSettings;
+  var settings = document.getElementById(SECTION_IDS.SETTINGS_FORM);
+  settings.addEventListener('change', saveSettings);
+  settings.addEventListener('change', renderButtons);
   document.getElementById('reshuffle').onclick = renderOutput;
   document.getElementById('close').onclick = renderInputForm;
-  renderInputForm();
   loadSettings();
+  renderInputForm();
   show();
 }
 
