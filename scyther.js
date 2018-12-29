@@ -92,7 +92,8 @@ function pickBoards() {
   var playerBoards = getPlayerBoards();
 
   out = [];
-  for (var i = 0; i < getPlayerCount(); i++) {
+  var playerCount = getPlayerCount();
+  for (var i = 0; i < playerCount; i++) {
     var factionIdx = getIntInRange(0, factions.length - 1);
     var faction = factions[factionIdx];
     factions.splice(factionIdx, 1);
@@ -103,6 +104,13 @@ function pickBoards() {
 
     out.push({faction: faction, playerBoard: board});
   }
+
+  if (playerCount === 1) {
+    // Add a faction for the automa
+    var automaFaction = pickFromArray(factions);
+    out.push({faction: automaFaction, isAutoma: true});
+  }
+
   return out;
 }
 
@@ -111,9 +119,18 @@ function renderBoardSelection(boardSelection, proximity) {
   item.className = ELEMENT_CLASSES.BOARD_SELECTION;
 
   const labelElem = document.createElement('span');
-  labelElem.textContent =
-    boardSelection.playerBoard.label + ' ' + boardSelection.faction.label;
+  if (boardSelection.isAutoma) {
+    labelElem.textContent = "Automa: " + boardSelection.faction.label;
+  } else {
+    labelElem.textContent =
+      boardSelection.playerBoard.label + ' ' + boardSelection.faction.label;
+  }
+
   labelElem.className = boardSelection.faction.className;
+  if (boardSelection.isAutoma) {
+    labelElem.className += ' automa';
+  }
+
   item.appendChild(labelElem);
 
   if (!!proximity) {
@@ -129,7 +146,8 @@ function renderBoardSelection(boardSelection, proximity) {
 
 function getPlayerCount() {
   var selector = "input[name='" + PLAYER_COUNT_GROUP_NAME + "']";
-  return $(selector + ':active').val() || $(selector + ':checked').val();
+  var playerCount = $(selector + ':active').val() || $(selector + ':checked').val();
+  return parseInt(playerCount);
 }
 
 function renderBoards() {
@@ -214,9 +232,8 @@ function renderPlayerCountButtons() {
   var group = document.getElementById(SECTION_IDS.INPUT_FORM);
   group.innerHTML = '';
 
-  // No need for an entry for 1 (the automa requires 2 factions)
   var factions = getFactions();
-  for (var i = 2; i <= factions.length; i++) {
+  for (var i = 1; i <= factions.length; i++) {
     var button = document.createElement('input');
     button.type = 'radio';
     button.name = PLAYER_COUNT_GROUP_NAME;
@@ -226,6 +243,11 @@ function renderPlayerCountButtons() {
     buttonLabel.className = ELEMENT_CLASSES.INPUT_BUTTON;
     buttonLabel.appendChild(button);
     buttonLabel.insertAdjacentHTML('beforeend', i);
+    if (i === 1) {
+      // Single player mode only works with an Automa player, label the button
+      // clearly for that
+      buttonLabel.insertAdjacentHTML('beforeend', '+A');
+    }
 
     group.appendChild(buttonLabel);
   }
@@ -301,7 +323,7 @@ function registerEventHandlers() {
   // Settings (input) form events
   var settings = document.getElementById(SECTION_IDS.SETTINGS_FORM);
   settings.addEventListener('change', saveSettings);
-  settings.addEventListener('change', renderButtons);
+  settings.addEventListener('change', renderPlayerCountButtons);
 
   document.getElementById('close').onclick = switchToInputForm;
 

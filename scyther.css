@@ -83,6 +83,10 @@ ol#players li:first-child {
   color: #539832;
 }
 
+.automa {
+  font-style: italic;
+}
+
 .proximity {
   color: darkgray;
   font-size: small;
