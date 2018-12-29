@@ -120,7 +120,7 @@ function renderBoardSelection(boardSelection, proximity) {
 
   const labelElem = document.createElement('span');
   if (boardSelection.isAutoma) {
-    labelElem.textContent = "Automa: " + boardSelection.faction.label;
+    labelElem.textContent = 'Automa: ' + boardSelection.faction.label;
   } else {
     labelElem.textContent =
       boardSelection.playerBoard.label + ' ' + boardSelection.faction.label;
@@ -146,7 +146,8 @@ function renderBoardSelection(boardSelection, proximity) {
 
 function getPlayerCount() {
   var selector = "input[name='" + PLAYER_COUNT_GROUP_NAME + "']";
-  var playerCount = $(selector + ':active').val() || $(selector + ':checked').val();
+  var playerCount =
+    $(selector + ':active').val() || $(selector + ':checked').val();
   return parseInt(playerCount);
 }
 
