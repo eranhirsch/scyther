@@ -67,16 +67,6 @@
           </fieldset>
         </form>
       </div>
-      <div class="row fixed-bottom input-phase">
-        <div class="col">
-          <div
-            id="input"
-            class="btn-group btn-group-toggle"
-            data-toggle="buttons"
-            >
-          </div>
-        </div>
-      </div>
       <div class="row align-items-center output-phase">
         <div class="col">
           <ol id="players" class="list-group rounded shadow-sm"></ol>
@@ -87,9 +77,19 @@
           <ul id="global" class="list-group shadow-sm rounded text-left"></ul>
         </div>
       </div>
-      <div class="row fixed-bottom output-phase">
+      <div class="row fixed-bottom">
         <div id="controls" class="col">
-          <button id="reshuffle" type="button" class="btn btn-lg btn-danger">
+          <div
+            id="input"
+            class="btn-group btn-group-toggle input-phase"
+            data-toggle="buttons"
+            >
+          </div>
+          <button
+            id="reshuffle"
+            type="button"
+            class="btn btn-lg btn-danger output-phase"
+            >
           Reshuffle
           </button>
         </div>
