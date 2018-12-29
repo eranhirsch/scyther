@@ -213,16 +213,6 @@ function renderGlobalSection() {
 function renderButtons() {
   var group = document.getElementById(SECTION_IDS.INPUT_FORM);
   group.innerHTML = '';
-  group.onclick = function(event) {
-    $('.input-phase').hide();
-    $('.output-phase').show();
-    renderOutput();
-  };
-
-  if (group.children.length > 0) {
-    // already has buttons;
-    return;
-  }
 
   // No need for an entry for 1 (the automa requires 2 factions)
   var factions = getFactions();
@@ -247,6 +237,8 @@ function resetOutputView() {
 }
 
 function renderOutput() {
+  $('.input-phase').hide();
+  $('.output-phase').show();
   resetOutputView();
   renderBoards();
   renderGlobalSection();
@@ -305,15 +297,29 @@ function loadSettings() {
   });
 }
 
-function main() {
-  registerServiceWorker();
+function registerEventHandlers() {
+  // Settings (input) form events
   var settings = document.getElementById(SECTION_IDS.SETTINGS_FORM);
   settings.addEventListener('change', saveSettings);
   settings.addEventListener('change', renderButtons);
-  document.getElementById('reshuffle').onclick = renderOutput;
+
   document.getElementById('close').onclick = renderInputForm;
+
+  // Output rendering events events
+  document.getElementById('reshuffle').onclick = renderOutput;
+  document.getElementById(SECTION_IDS.INPUT_FORM).onclick = renderOutput;
+}
+
+function main() {
   loadSettings();
+
+  registerServiceWorker();
+  registerEventHandlers();
+
+  // We always start with the input form!
   renderInputForm();
+
+  // When finished loading all the components, show the view
   show();
 }
 
