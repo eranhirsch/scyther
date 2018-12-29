@@ -71,14 +71,14 @@ const DATA = {
 
   airshipAbilities: {
     aggressive: [
-      'Bombard',
-      'Bounty',
-      'Siege Engine',
-      'Distract',
-      'Espionage',
-      'Blitzkrieg',
-      'Toll',
-      'War Correspondent',
+      {label: 'Bombard', supportedByAutoma: true},
+      {label: 'Bounty', supportedByAutoma: true},
+      {label: 'Siege Engine', supportedByAutoma: true},
+      {label: 'Distract', supportedByAutoma: true},
+      {label: 'Espionage', supportedByAutoma: true},
+      {label: 'Blitzkrieg', supportedByAutoma: true},
+      {label: 'Toll', supportedByAutoma: false},
+      {label: 'War Correspondent', supportedByAutoma: true},
     ],
 
     passive: [

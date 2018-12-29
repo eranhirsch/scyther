@@ -198,9 +198,18 @@ function renderAirshipLabel() {
 
   labelElem.insertAdjacentHTML('beforeend', '&nbsp;&&nbsp;');
 
+  var aggressive = DATA.airshipAbilities.aggressive;
+  if (getPlayerCount() === 1) {
+    // Some aggressive abilities aren't supported by the automa
+    aggressive = aggressive.filter(function(ability) {
+      return ability.supportedByAutoma;
+    });
+  }
+
   var aggressiveElem = document.createElement('span');
   aggressiveElem.className = 'airship-aggressive';
-  aggressiveElem.textContent = pickFromArray(DATA.airshipAbilities.aggressive);
+  aggressiveElem.textContent = pickFromArray(aggressive).label;
+
   labelElem.appendChild(aggressiveElem);
 
   return labelElem;
