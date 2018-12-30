@@ -118,6 +118,12 @@ function pickBoards() {
   return out;
 }
 
+function getPlayerCount() {
+  var selector = "input[name='" + PLAYER_COUNT_GROUP_NAME + "']";
+  var playerCount = $(selector + ':checked').val();
+  return parseInt(playerCount);
+}
+
 function renderPlayerBoard(selection) {
   const elem = document.createElement('span');
   elem.className = 'player-board';
@@ -145,30 +151,92 @@ function renderBoardSelectionLabel(selection) {
 }
 
 function renderProximity(proximity) {
-  const proximityElem = document.createElement('span');
-  proximityElem.className = 'proximity';
-  proximityElem.textContent =
+  const elem = document.createElement('span');
+  elem.className = 'proximity';
+  elem.textContent =
     '\xA0(' + parseFloat(proximity).toFixed(PROXIMITY_PRECISION) + ')';
-  return proximityElem;
+  return elem;
 }
 
 function renderBoardSelection(boardSelection, proximity) {
-  const item = document.createElement('li');
-  item.className = ELEMENT_CLASSES.BOARD_SELECTION;
-  item.appendChild(renderBoardSelectionLabel(boardSelection));
+  const elem = document.createElement('li');
+  elem.className = ELEMENT_CLASSES.BOARD_SELECTION;
+  elem.appendChild(renderBoardSelectionLabel(boardSelection));
   if (proximity !== null) {
-    item.appendChild(renderProximity(proximity));
+    elem.appendChild(renderProximity(proximity));
   }
-  return item;
+  return elem;
 }
 
-function getPlayerCount() {
-  var selector = "input[name='" + PLAYER_COUNT_GROUP_NAME + "']";
-  var playerCount = $(selector + ':checked').val();
-  return parseInt(playerCount);
+function renderGlobalItem(icon, labelElem) {
+  var elem = document.createElement('li');
+  elem.className = ELEMENT_CLASSES.GLOBAL_ITEM;
+
+  var icon = document.createElement('span');
+  icon.className = 'icon';
+  icon.textContent = icon;
+
+  elem.append(icon, labelElem);
+  return elem;
 }
 
-function renderBoards() {
+function renderSimpleLabel(label = '') {
+  var elem = document.createElement('span');
+  elem.className = 'label';
+  elem.textContent = label;
+  return elem;
+}
+
+function renderAirshipLabel() {
+  var elem = renderSimpleLabel();
+
+  var passiveElem = document.createElement('span');
+  passiveElem.className = 'airship-passive';
+  passiveElem.textContent = pickFromArray(DATA.airshipAbilities.passive);
+  elem.appendChild(passiveElem);
+
+  elem.insertAdjacentHTML('beforeend', '&nbsp;&&nbsp;');
+
+  var aggressive = DATA.airshipAbilities.aggressive;
+  if (getPlayerCount() === 1) {
+    // Some aggressive abilities aren't supported by the automa
+    aggressive = aggressive.filter(function(ability) {
+      return ability.supportedByAutoma;
+    });
+  }
+
+  var aggressiveElem = document.createElement('span');
+  aggressiveElem.className = 'airship-aggressive';
+  aggressiveElem.textContent = pickFromArray(aggressive).label;
+
+  elem.appendChild(aggressiveElem);
+
+  return elem;
+}
+
+function renderPlayerCountButton(i, isActive) {
+  var button = document.createElement('input');
+  button.type = 'radio';
+  button.name = PLAYER_COUNT_GROUP_NAME;
+  button.value = i;
+  button.checked = isActive;
+
+  var elem = document.createElement('label');
+  elem.className =
+    ELEMENT_CLASSES.INPUT_BUTTON + (isActive ? ' active' : '');
+  elem.appendChild(button);
+  elem.insertAdjacentHTML('beforeend', i);
+  if (i === 1) {
+    // Single player mode only works with an Automa player, label the button
+    // clearly for that
+    elem.insertAdjacentHTML('beforeend', '+A');
+  }
+  elem.onclick = savePlayerCount;
+
+  return elem;
+}
+
+function populateBoards() {
   var playersSection = document.getElementById(SECTION_IDS.PLAYERS);
   if (playersSection === null) {
     console.log('No player section!');
@@ -186,54 +254,7 @@ function renderBoards() {
   );
 }
 
-function renderGlobalItem(icon, labelElem) {
-  var itemElem = document.createElement('li');
-  itemElem.className = ELEMENT_CLASSES.GLOBAL_ITEM;
-
-  var iconElem = document.createElement('span');
-  iconElem.className = 'icon';
-  iconElem.textContent = icon;
-  itemElem.appendChild(iconElem);
-  itemElem.appendChild(labelElem);
-
-  return itemElem;
-}
-
-function renderSimpleLabel(label = '') {
-  var labelElem = document.createElement('span');
-  labelElem.className = 'label';
-  labelElem.textContent = label;
-  return labelElem;
-}
-
-function renderAirshipLabel() {
-  var labelElem = renderSimpleLabel();
-
-  var passiveElem = document.createElement('span');
-  passiveElem.className = 'airship-passive';
-  passiveElem.textContent = pickFromArray(DATA.airshipAbilities.passive);
-  labelElem.appendChild(passiveElem);
-
-  labelElem.insertAdjacentHTML('beforeend', '&nbsp;&&nbsp;');
-
-  var aggressive = DATA.airshipAbilities.aggressive;
-  if (getPlayerCount() === 1) {
-    // Some aggressive abilities aren't supported by the automa
-    aggressive = aggressive.filter(function(ability) {
-      return ability.supportedByAutoma;
-    });
-  }
-
-  var aggressiveElem = document.createElement('span');
-  aggressiveElem.className = 'airship-aggressive';
-  aggressiveElem.textContent = pickFromArray(aggressive).label;
-
-  labelElem.appendChild(aggressiveElem);
-
-  return labelElem;
-}
-
-function renderGlobalSection() {
+function populateGlobalSection() {
   var globalSection = document.getElementById(SECTION_IDS.GLOBAL);
   if (globalSection === null) {
     console.log('No global section!');
@@ -256,29 +277,7 @@ function renderGlobalSection() {
   }
 }
 
-function renderPlayerCountButton(i, isActive) {
-  var button = document.createElement('input');
-  button.type = 'radio';
-  button.name = PLAYER_COUNT_GROUP_NAME;
-  button.value = i;
-  button.checked = isActive;
-
-  var buttonLabel = document.createElement('label');
-  buttonLabel.className =
-    ELEMENT_CLASSES.INPUT_BUTTON + (isActive ? ' active' : '');
-  buttonLabel.appendChild(button);
-  buttonLabel.insertAdjacentHTML('beforeend', i);
-  if (i === 1) {
-    // Single player mode only works with an Automa player, label the button
-    // clearly for that
-    buttonLabel.insertAdjacentHTML('beforeend', '+A');
-  }
-  buttonLabel.onclick = savePlayerCount;
-
-  return buttonLabel;
-}
-
-function renderPlayerCountButtons() {
+function populatePlayerCountButtons() {
   var group = document.getElementById(SECTION_IDS.INPUT_FORM);
   group.innerHTML = '';
 
@@ -287,11 +286,11 @@ function renderPlayerCountButtons() {
   });
   var factions = getFactions();
   for (var i = 1; i <= factions.length; i++) {
-    group.appendChild(renderPlayerCountButton(i, storedPlayerCount === i));
+    group.appendChild(populatePlayerCountButtons(i, storedPlayerCount === i));
   }
 }
 
-function renderOutput() {
+function showOutputView() {
   // Switch views
   $('.input-phase').hide();
   $('.output-phase').show();
@@ -301,11 +300,11 @@ function renderOutput() {
   document.getElementById(SECTION_IDS.PLAYERS).innerHTML = '';
 
   // Render new values
-  renderBoards();
-  renderGlobalSection();
+  populateBoards();
+  populateGlobalSection();
 }
 
-function switchToInputForm() {
+function showInputView() {
   $('.input-phase').show();
   $('.output-phase').hide();
 }
@@ -343,7 +342,7 @@ function savePlayerCount(event) {
   });
 }
 
-function updateSettingsStateFromStorage() {
+function readPreviousFormState() {
   state(function(state) {
     Object.entries(state.settings || []).forEach(function(setting) {
       document.getElementById(setting[0]).checked = setting[1];
@@ -355,22 +354,22 @@ function registerEventHandlers() {
   // Settings (input) form events
   var settings = document.getElementById(SECTION_IDS.SETTINGS_FORM);
   settings.addEventListener('change', saveSettings);
-  settings.addEventListener('change', renderPlayerCountButtons);
+  settings.addEventListener('change', populatePlayerCountButtons);
 
-  document.getElementById('close').onclick = switchToInputForm;
+  document.getElementById('close').onclick = showInputView;
 
   // Output rendering events events
-  document.getElementById('actionButton').onclick = renderOutput;
+  document.getElementById('actionButton').onclick = showOutputView;
 }
 
 function main() {
-  updateSettingsStateFromStorage();
+  readPreviousFormState();
 
   registerServiceWorker();
   registerEventHandlers();
 
   // We always start with the input form!
-  renderPlayerCountButtons();
+  populatePlayerCountButtons();
   switchToInputForm();
 
   // When finished loading all the components, show the view
