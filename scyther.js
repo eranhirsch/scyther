@@ -324,9 +324,9 @@ function registerServiceWorker() {
 
 function saveSettings() {
   state(function(state) {
-    state.settings = $(
-      '#' + SECTION_IDS.SETTINGS_FORM + " input[type='checkbox']"
-    )
+    const selector =
+      '#' + SECTION_IDS.SETTINGS_FORM + " input[type='checkbox']";
+    state.settings = $(selector)
       .map(function(_, elem) {
         return {id: elem.id, checked: elem.checked};
       })
