@@ -150,7 +150,8 @@ function renderBoardSelectionLabel(selection) {
 function renderProximity(proximity) {
   const proximityElem = document.createElement('span');
   proximityElem.className = 'proximity';
-  proximityElem.textContent = '\xA0(' + parseFloat(proximity).toFixed(PROXIMITY_PRECISION) + ')';
+  proximityElem.textContent =
+    '\xA0(' + parseFloat(proximity).toFixed(PROXIMITY_PRECISION) + ')';
   return proximityElem;
 }
 
@@ -259,28 +260,32 @@ function renderGlobalSection() {
   }
 }
 
+function renderPlayerCountButton(i) {
+  var button = document.createElement('input');
+  button.type = 'radio';
+  button.name = PLAYER_COUNT_GROUP_NAME;
+  button.value = i;
+
+  var buttonLabel = document.createElement('label');
+  buttonLabel.className = ELEMENT_CLASSES.INPUT_BUTTON;
+  buttonLabel.appendChild(button);
+  buttonLabel.insertAdjacentHTML('beforeend', i);
+  if (i === 1) {
+    // Single player mode only works with an Automa player, label the button
+    // clearly for that
+    buttonLabel.insertAdjacentHTML('beforeend', '+A');
+  }
+
+  return buttonLabel;
+}
+
 function renderPlayerCountButtons() {
   var group = document.getElementById(SECTION_IDS.INPUT_FORM);
   group.innerHTML = '';
 
   var factions = getFactions();
   for (var i = 1; i <= factions.length; i++) {
-    var button = document.createElement('input');
-    button.type = 'radio';
-    button.name = PLAYER_COUNT_GROUP_NAME;
-    button.value = i;
-
-    var buttonLabel = document.createElement('label');
-    buttonLabel.className = ELEMENT_CLASSES.INPUT_BUTTON;
-    buttonLabel.appendChild(button);
-    buttonLabel.insertAdjacentHTML('beforeend', i);
-    if (i === 1) {
-      // Single player mode only works with an Automa player, label the button
-      // clearly for that
-      buttonLabel.insertAdjacentHTML('beforeend', '+A');
-    }
-
-    group.appendChild(buttonLabel);
+    group.appendChild(renderPlayerCountButton(i));
   }
 }
 
