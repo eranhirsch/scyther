@@ -17,7 +17,11 @@ const ELEMENT_CLASSES = {
 
 const PLAYER_COUNT_GROUP_NAME = 'player_count';
 
+/** The local storage key to use for saving the settings */
 const STORAGE_KEY = 'scyther_store';
+
+/** The precision to show proximity scores at */
+const PROXIMITY_PRECISION = 1;
 
 function getIntInRange(from, to) {
   return from + Math.floor(Math.random() * (to - from + 1));
@@ -39,15 +43,18 @@ function factionDistance(a, b) {
 }
 
 function proximityScore(faction, others) {
-  return (
+  return Math.sqrt(
     others
       .map(function(other) {
         return factionDistance(faction, other.faction);
       })
+      .map(function(distance) {
+        return Math.pow(distance, 2);
+      })
       .reduce(function(accumulator, currVal) {
         return accumulator + currVal;
       }) /
-    (others.length - 1)
+      (others.length - 1)
   );
 }
 
@@ -114,39 +121,46 @@ function pickBoards() {
   return out;
 }
 
+function renderPlayerBoard(selection) {
+  const elem = document.createElement('span');
+  elem.className = 'player-board';
+  elem.textContent = selection.isAutoma
+    ? 'Automa:'
+    : selection.playerBoard.label;
+  return elem;
+}
+
+function renderFaction(selection) {
+  const elem = document.createElement('span');
+  elem.className = 'faction';
+  elem.textContent = selection.faction.label.replace(' ', '\xa0');
+  return elem;
+}
+
+function renderBoardSelectionLabel(selection) {
+  const elem = document.createElement('span');
+  elem.className = selection.faction.className;
+  if (selection.isAutoma) {
+    elem.className += ' automa';
+  }
+  elem.append(renderPlayerBoard(selection), ' ', renderFaction(selection));
+  return elem;
+}
+
+function renderProximity(proximity) {
+  const proximityElem = document.createElement('span');
+  proximityElem.className = 'proximity';
+  proximityElem.textContent = '\xA0(' + parseFloat(proximity).toFixed(PROXIMITY_PRECISION) + ')';
+  return proximityElem;
+}
+
 function renderBoardSelection(boardSelection, proximity) {
   const item = document.createElement('li');
   item.className = ELEMENT_CLASSES.BOARD_SELECTION;
-
-  const boardElem = document.createElement('span');
-  boardElem.className = 'player-board';
-  boardElem.textContent = boardSelection.isAutoma
-    ? 'Automa:'
-    : boardSelection.playerBoard.label;
-
-  const factionElem = document.createElement('span');
-  factionElem.className = 'faction';
-  factionElem.textContent = boardSelection.faction.label.replace(' ', '\xa0');
-
-  const labelElem = document.createElement('span');
-  labelElem.className = boardSelection.faction.className;
-  if (boardSelection.isAutoma) {
-    labelElem.className += ' automa';
+  item.appendChild(renderBoardSelectionLabel(boardSelection));
+  if (proximity !== null) {
+    item.appendChild(renderProximity(proximity));
   }
-  labelElem.appendChild(boardElem);
-  labelElem.insertAdjacentHTML('beforeend', ' ');
-  labelElem.appendChild(factionElem);
-
-  item.appendChild(labelElem);
-
-  if (!!proximity) {
-    const proximityElem = document.createElement('span');
-    proximityElem.className = 'proximity';
-    proximityElem.textContent =
-      '\xA0(' + parseFloat(proximity).toFixed(1) + ')';
-    item.appendChild(proximityElem);
-  }
-
   return item;
 }
 
@@ -165,13 +179,14 @@ function renderBoards() {
   }
 
   var boards = pickBoards();
-
-  boards.forEach(function(selection) {
-    var proximity = withProximityScores()
-      ? proximityScore(selection.faction, boards)
-      : null;
-    playersSection.appendChild(renderBoardSelection(selection, proximity));
-  });
+  playersSection.append(
+    ...boards.map(function(selection) {
+      return renderBoardSelection(
+        selection,
+        withProximityScores() ? proximityScore(selection.faction, boards) : null
+      );
+    })
+  );
 }
 
 function renderGlobalItem(icon, labelElem) {
