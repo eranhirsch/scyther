@@ -17,9 +17,6 @@ const ELEMENT_CLASSES = {
 
 const PLAYER_COUNT_GROUP_NAME = 'player_count';
 
-/** The local storage key to use for saving the settings */
-const STORAGE_KEY = 'scyther_store';
-
 /** The precision to show proximity scores at */
 const PROXIMITY_PRECISION = 1;
 
@@ -167,8 +164,7 @@ function renderBoardSelection(boardSelection, proximity) {
 
 function getPlayerCount() {
   var selector = "input[name='" + PLAYER_COUNT_GROUP_NAME + "']";
-  var playerCount =
-    $(selector + ':active').val() || $(selector + ':checked').val();
+  var playerCount = $(selector + ':checked').val();
   return parseInt(playerCount);
 }
 
@@ -260,14 +256,16 @@ function renderGlobalSection() {
   }
 }
 
-function renderPlayerCountButton(i) {
+function renderPlayerCountButton(i, isActive) {
   var button = document.createElement('input');
   button.type = 'radio';
   button.name = PLAYER_COUNT_GROUP_NAME;
   button.value = i;
+  button.checked = isActive;
 
   var buttonLabel = document.createElement('label');
-  buttonLabel.className = ELEMENT_CLASSES.INPUT_BUTTON;
+  buttonLabel.className =
+    ELEMENT_CLASSES.INPUT_BUTTON + (isActive ? ' active' : '');
   buttonLabel.appendChild(button);
   buttonLabel.insertAdjacentHTML('beforeend', i);
   if (i === 1) {
@@ -275,6 +273,7 @@ function renderPlayerCountButton(i) {
     // clearly for that
     buttonLabel.insertAdjacentHTML('beforeend', '+A');
   }
+  buttonLabel.onclick = savePlayerCount;
 
   return buttonLabel;
 }
@@ -283,9 +282,12 @@ function renderPlayerCountButtons() {
   var group = document.getElementById(SECTION_IDS.INPUT_FORM);
   group.innerHTML = '';
 
+  const storedPlayerCount = state(function(state) {
+    return state.playerCount || null;
+  });
   var factions = getFactions();
   for (var i = 1; i <= factions.length; i++) {
-    group.appendChild(renderPlayerCountButton(i));
+    group.appendChild(renderPlayerCountButton(i, storedPlayerCount === i));
   }
 }
 
@@ -320,38 +322,32 @@ function registerServiceWorker() {
 }
 
 function saveSettings() {
-  if (!window.localStorage) {
-    console.log('No Local Storage');
-    return;
-  }
-
-  var formState = $('#' + SECTION_IDS.SETTINGS_FORM + " input[type='checkbox']")
-    .map(function(_, elem) {
-      return {id: elem.id, checked: elem.checked};
-    })
-    .get()
-    .reduce(function(out, elem) {
-      out[elem.id] = elem.checked;
-      return out;
-    }, {});
-
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(formState));
+  state(function(state) {
+    state.settings = $(
+      '#' + SECTION_IDS.SETTINGS_FORM + " input[type='checkbox']"
+    )
+      .map(function(_, elem) {
+        return {id: elem.id, checked: elem.checked};
+      })
+      .get()
+      .reduce(function(out, elem) {
+        out[elem.id] = elem.checked;
+        return out;
+      }, {});
+  });
 }
 
-function loadSettings() {
-  if (!window.localStorage) {
-    console.log('No Local Storage');
-    return;
-  }
+function savePlayerCount(event) {
+  state(function(state) {
+    state.playerCount = parseInt(event.currentTarget.firstChild.value);
+  });
+}
 
-  var formState = JSON.parse(window.localStorage.getItem(STORAGE_KEY));
-  if (formState === null) {
-    // Nothing stored yet...
-    return;
-  }
-
-  Object.entries(formState).forEach(function(setting) {
-    document.getElementById(setting[0]).checked = setting[1];
+function updateSettingsStateFromStorage() {
+  state(function(state) {
+    Object.entries(state.settings || []).forEach(function(setting) {
+      document.getElementById(setting[0]).checked = setting[1];
+    });
   });
 }
 
@@ -368,7 +364,7 @@ function registerEventHandlers() {
 }
 
 function main() {
-  loadSettings();
+  updateSettingsStateFromStorage();
 
   registerServiceWorker();
   registerEventHandlers();
