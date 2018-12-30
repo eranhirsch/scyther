@@ -241,6 +241,8 @@ function populateBoards() {
     console.log('No player section!');
     return;
   }
+  // Reset previous results
+  playersSection.innerHTML = '';
 
   var boards = pickBoards();
   playersSection.append(
@@ -259,6 +261,8 @@ function populateGlobalSection() {
     console.log('No global section!');
     return;
   }
+  // Reset previous values
+  globalSection.innerHTML = '';
 
   globalSection.appendChild(
     renderGlobalItem(
@@ -278,6 +282,9 @@ function populateGlobalSection() {
 
 function populatePlayerCountButtons() {
   var group = document.getElementById(SECTION_IDS.INPUT_FORM);
+  if (group === null) {
+    console.log('Missing player count button section');
+  }
   group.innerHTML = '';
 
   const storedPlayerCount = state(function(state) {
@@ -293,10 +300,6 @@ function showOutputView() {
   // Switch views
   $('.input-phase').hide();
   $('.output-phase').show();
-
-  // Reset previous values
-  document.getElementById(SECTION_IDS.GLOBAL).innerHTML = '';
-  document.getElementById(SECTION_IDS.PLAYERS).innerHTML = '';
 
   // Render new values
   populateBoards();
