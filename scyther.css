@@ -28,7 +28,7 @@ body {
   color: white;
   font-family: monospace, monospace;
   letter-spacing: 1rem;
-  padding-top: 12rem;
+  padding-top: 10rem;
 }
 
 .automa-button {
@@ -39,7 +39,7 @@ body {
 
 #settings {
   color: white;
-  padding-top: 3rem;
+  padding-top: 1rem;
 }
 
 #settings .custom-control-input:checked~.custom-control-label::before {
