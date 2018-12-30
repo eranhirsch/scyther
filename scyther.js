@@ -172,11 +172,11 @@ function renderGlobalItem(icon, labelElem) {
   var elem = document.createElement('li');
   elem.className = ELEMENT_CLASSES.GLOBAL_ITEM;
 
-  var icon = document.createElement('span');
-  icon.className = 'icon';
-  icon.textContent = icon;
+  var iconElem = document.createElement('span');
+  iconElem.className = 'icon';
+  iconElem.textContent = icon;
+  elem.append(iconElem, labelElem);
 
-  elem.append(icon, labelElem);
   return elem;
 }
 
@@ -286,7 +286,7 @@ function populatePlayerCountButtons() {
   });
   var factions = getFactions();
   for (var i = 1; i <= factions.length; i++) {
-    group.appendChild(populatePlayerCountButtons(i, storedPlayerCount === i));
+    group.appendChild(renderPlayerCountButton(i, storedPlayerCount === i));
   }
 }
 
@@ -370,7 +370,7 @@ function main() {
 
   // We always start with the input form!
   populatePlayerCountButtons();
-  switchToInputForm();
+  showInputView();
 
   // When finished loading all the components, show the view
   show();

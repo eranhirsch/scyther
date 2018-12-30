@@ -7,8 +7,8 @@ function state(fn) {
     return;
   }
 
-  var state = JSON.parse(window.localStorage.getItem(STORAGE_KEY)) || {};
-  const ret = fn(state);
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  var savedState = JSON.parse(window.localStorage.getItem(STORAGE_KEY)) || {};
+  const ret = fn(savedState);
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(savedState));
   return ret;
 }
