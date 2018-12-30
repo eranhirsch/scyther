@@ -37,8 +37,9 @@ body {
 }
 
 #settings .custom-control-input:checked~.custom-control-label::before {
-  background-color: #dc3545;
-  border-color: #dc3545;
+  /* Copied from the colors of --warning in bootstrap */
+  background-color: #ffc107;
+  border-color: #ffc107;
 }
 
 #players {
