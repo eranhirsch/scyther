@@ -10,7 +10,7 @@ const SECTION_IDS = {
 };
 
 const ELEMENT_CLASSES = {
-  INPUT_BUTTON: 'btn btn-danger btn-lg border',
+  INPUT_BUTTON: 'btn btn-danger border',
   BOARD_SELECTION: 'list-group-item',
   GLOBAL_ITEM: 'list-group-item',
 };
@@ -359,8 +359,7 @@ function registerEventHandlers() {
   document.getElementById('close').onclick = switchToInputForm;
 
   // Output rendering events events
-  document.getElementById('reshuffle').onclick = renderOutput;
-  document.getElementById(SECTION_IDS.INPUT_FORM).onclick = renderOutput;
+  document.getElementById('actionButton').onclick = renderOutput;
 }
 
 function main() {

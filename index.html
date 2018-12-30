@@ -29,6 +29,15 @@
       <div class="row input-phase">
         <form id="settings" class="col text-left">
           <fieldset>
+            <legend class="col-form-label">Players</legend>
+            <div
+              id="input"
+              class="btn-group btn-group-toggle"
+              data-toggle="buttons"
+              >
+            </div>
+          </fieldset>
+          <fieldset>
             <legend class="col-form-label">Expansions</legend>
             <div class="custom-control custom-switch">
               <input
@@ -52,7 +61,7 @@
             </div>
           </fieldset>
           <fieldset>
-            <legend class="col-form-label">Settings</legend>
+            <legend class="col-form-label">Advanced</legend>
             <div class="form-check">
               <input
                 type="checkbox"
@@ -79,18 +88,13 @@
       </div>
       <div class="row fixed-bottom">
         <div id="controls" class="col">
-          <div
-            id="input"
-            class="btn-group btn-group-toggle input-phase"
-            data-toggle="buttons"
-            >
-          </div>
           <button
-            id="reshuffle"
+            id="actionButton"
             type="button"
-            class="btn btn-lg btn-danger output-phase"
+            class="btn btn-lg btn-danger"
             >
-          Reshuffle
+            <span class="input-phase">Draw</span>
+            <span class="output-phase">Reshuffle</span>
           </button>
         </div>
       </div>
