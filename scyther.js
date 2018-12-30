@@ -90,7 +90,6 @@ function getPlayerBoards() {
 }
 
 function pickBoards() {
-    console.log("____-____________");
   var factions = getFactions();
   var playerBoards = getPlayerBoards();
 
