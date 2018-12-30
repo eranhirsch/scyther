@@ -292,7 +292,8 @@ function populatePlayerCountButtons() {
   });
   var factions = getFactions();
   for (var i = 1; i <= factions.length; i++) {
-    group.appendChild(renderPlayerCountButton(i, storedPlayerCount === i));
+    const isActive = Math.min(factions.length, storedPlayerCount) === i;
+    group.appendChild(renderPlayerCountButton(i, isActive));
   }
 }
 
