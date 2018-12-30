@@ -222,8 +222,7 @@ function renderPlayerCountButton(i, isActive) {
   button.checked = isActive;
 
   var elem = document.createElement('label');
-  elem.className =
-    ELEMENT_CLASSES.INPUT_BUTTON + (isActive ? ' active' : '');
+  elem.className = ELEMENT_CLASSES.INPUT_BUTTON + (isActive ? ' active' : '');
   elem.appendChild(button);
   elem.insertAdjacentHTML('beforeend', i);
   if (i === 1) {
