@@ -40,19 +40,17 @@ function factionDistance(a, b) {
 }
 
 function proximityScore(faction, others) {
-  return Math.sqrt(
-    others
-      .map(function(other) {
-        return factionDistance(faction, other.faction);
-      })
-      .map(function(distance) {
-        return Math.pow(distance, 2);
-      })
-      .reduce(function(accumulator, currVal) {
-        return accumulator + currVal;
-      }) /
-      (others.length - 1)
-  );
+  return others
+    .map(function(other) {
+      return factionDistance(faction, other.faction);
+    })
+    .filter(function(distance) {
+      return distance > 0;
+    })
+    .sort()
+    .reduce(function(proximity, distance, index) {
+      return proximity + distance * Math.pow(0.5, index);
+    }, 0);
 }
 
 function shouldIncludeInvadersBoards() {
@@ -92,6 +90,7 @@ function getPlayerBoards() {
 }
 
 function pickBoards() {
+    console.log("____-____________");
   var factions = getFactions();
   var playerBoards = getPlayerBoards();
 
