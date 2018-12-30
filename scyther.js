@@ -228,7 +228,10 @@ function renderPlayerCountButton(i, isActive) {
   if (i === 1) {
     // Single player mode only works with an Automa player, label the button
     // clearly for that
-    elem.insertAdjacentHTML('beforeend', '+A');
+    var automaElem = document.createElement('span');
+    automaElem.className = 'automa-button';
+    automaElem.textContent = '+A';
+    elem.appendChild(automaElem);
   }
   elem.onclick = savePlayerCount;
 

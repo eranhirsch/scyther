@@ -31,6 +31,12 @@ body {
   padding-top: 12rem;
 }
 
+.automa-button {
+  font-size: 0.8rem;
+  font-style: italic;
+  vertical-align: top;
+}
+
 #settings {
   color: white;
   padding-top: 3rem;
