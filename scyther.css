@@ -26,7 +26,7 @@ body {
 
 #title {
   color: white;
-  font-family: monospace;
+  font-family: monospace, monospace;
   letter-spacing: 1rem;
   padding-top: 12rem;
 }
