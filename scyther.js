@@ -190,7 +190,7 @@ function renderBoardSelection(boardSelection, proximity) {
   const elem = document.createElement('li');
   elem.className = ELEMENT_CLASSES.BOARD_SELECTION;
 
-  if (boardSelection.warn) {
+  if (withBadComboWarnings() && boardSelection.warn) {
     elem.appendChild(renderWarning());
   }
 
