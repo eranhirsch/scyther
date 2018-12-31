@@ -33,7 +33,8 @@ function factionDistance(a, b) {
   var smallerLocation = Math.min(a.location, b.location);
 
   var clockwiseDistance = biggerLocation - smallerLocation;
-  var counterClockwiseDistance = DATA.factions.length - clockwiseDistance;
+  var counterClockwiseDistance =
+    Object.values(DATA.factions).length - clockwiseDistance;
   var bestDistance = Math.min(clockwiseDistance, counterClockwiseDistance);
 
   return bestDistance;
@@ -70,21 +71,23 @@ function withProximityScores() {
 }
 
 function getFactions() {
+  const rawFactions = Object.values(DATA.factions);
   if (shouldIncludeInvadersBoards()) {
-    return DATA.factions.slice();
+    return rawFactions.slice();
   }
 
-  return DATA.factions.filter(function(faction) {
+  return rawFactions.filter(function(faction) {
     return !faction.invadersOnly;
   });
 }
 
 function getPlayerBoards() {
+  const rawBoards = Object.values(DATA.playerBoards);
   if (shouldIncludeInvadersBoards()) {
-    return DATA.playerBoards.slice();
+    return rawBoards.slice();
   }
 
-  return DATA.playerBoards.filter(function(board) {
+  return rawBoards.filter(function(board) {
     return !board.invadersOnly;
   });
 }
@@ -104,7 +107,23 @@ function pickBoards() {
     var board = playerBoards[boardIdx];
     playerBoards.splice(boardIdx, 1);
 
-    out.push({faction: faction, playerBoard: board});
+    var selection = {faction: faction, playerBoard: board};
+
+    const op = BAD_COMBOS.overPowered.some(function(op) {
+      return op.faction === faction && op.playerBoard === board;
+    });
+    if (op) {
+      selection.warn = 'OP';
+    }
+
+    const up = BAD_COMBOS.underPowered.some(function(up) {
+      return up.faction === faction && up.playerBoard === board;
+    });
+    if (up) {
+      selection.warn = 'UP';
+    }
+
+    out.push(selection);
   }
 
   if (playerCount === 1) {
@@ -156,13 +175,26 @@ function renderProximity(proximity) {
   return elem;
 }
 
+function renderWarning() {
+  const elem = document.createElement('span');
+  elem.textContent = '⚠️';
+  return elem;
+}
+
 function renderBoardSelection(boardSelection, proximity) {
   const elem = document.createElement('li');
   elem.className = ELEMENT_CLASSES.BOARD_SELECTION;
+
+  if (boardSelection.warn) {
+    elem.appendChild(renderWarning());
+  }
+
   elem.appendChild(renderBoardSelectionLabel(boardSelection));
+
   if (proximity !== null) {
     elem.appendChild(renderProximity(proximity));
   }
+
   return elem;
 }
 

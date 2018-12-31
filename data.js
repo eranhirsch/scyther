@@ -1,53 +1,53 @@
 const DATA = {
-  factions: [
-    {
+  factions: {
+    POLANIA: {
       label: 'Polania Republic',
       location: 1,
       className: 'polania',
     },
-    {
+    SAXONY: {
       label: 'Saxony Empire',
       location: 2,
       className: 'saxony',
     },
-    {
+    CRIMEA: {
       label: 'Crimean Khanate',
       location: 3,
       className: 'crimea',
     },
-    {
+    TOGAWA: {
       label: 'Togawa Shogunate',
       location: 4,
       className: 'togawa',
       invadersOnly: true,
     },
-    {
+    RUSVIET: {
       label: 'Rusviet Union',
       location: 5,
       className: 'rusviet',
     },
-    {
+    NORDIC: {
       label: 'Nordic Kingdom',
       location: 6,
       className: 'nordic',
     },
-    {
+    ALBION: {
       label: 'Clan Albion',
       location: 7,
       className: 'albion',
       invadersOnly: true,
     },
-  ],
+  },
 
-  playerBoards: [
-    {label: 'Industrial'},
-    {label: 'Engineering'},
-    {label: 'Militant', invadersOnly: true},
-    {label: 'Patriotic'},
-    {label: 'Mechanical'},
-    {label: 'Innovative', invadersOnly: true},
-    {label: 'Agricultural'},
-  ],
+  playerBoards: {
+    INDUSTRIAL: {label: 'Industrial'},
+    ENGINEERING: {label: 'Engineering'},
+    MILITANT: {label: 'Militant', invadersOnly: true},
+    PATRIOTIC: {label: 'Patriotic'},
+    MECHANICAL: {label: 'Mechanical'},
+    INNOVATIVE: {label: 'Innovative', invadersOnly: true},
+    AGRICULTURAL: {label: 'Agricultural'},
+  },
 
   buildingBonuses: [
     'Adjacent Tunnels',
@@ -92,4 +92,12 @@ const DATA = {
       'Negotiate',
     ],
   },
+};
+
+BAD_COMBOS = {
+  overPowered: [
+    {faction: DATA.factions.RUSVIET, playerBoard: DATA.playerBoards.INDUSTRIAL},
+    {faction: DATA.factions.CRIMEA, playerBoard: DATA.playerBoards.PATRIOTIC},
+  ],
+  underPowered: [],
 };
