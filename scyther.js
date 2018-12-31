@@ -1,18 +1,19 @@
 const SECTION_IDS = {
-  ROOT: 'root',
+  BAD_COMBOS_SWITCH: 'badCombos',
   GLOBAL: 'global',
-  PLAYERS: 'players',
   INPUT_FORM: 'input',
   INVADERS_SWITCH: 'invadersSwitch',
-  WIND_GAMBIT_SWITCH: 'windGambitSwitch',
+  PLAYERS: 'players',
   PROXIMITY_SWITCH: 'proximityCheckbox',
+  ROOT: 'root',
   SETTINGS_FORM: 'settings',
+  WIND_GAMBIT_SWITCH: 'windGambitSwitch',
 };
 
 const ELEMENT_CLASSES = {
-  INPUT_BUTTON: 'btn btn-warning btn-lg',
   BOARD_SELECTION: 'list-group-item',
   GLOBAL_ITEM: 'list-group-item',
+  INPUT_BUTTON: 'btn btn-warning btn-lg',
 };
 
 const PLAYER_COUNT_GROUP_NAME = 'player_count';
@@ -68,6 +69,10 @@ function shouldIncludeResolutions() {
 
 function withProximityScores() {
   return document.getElementById(SECTION_IDS.PROXIMITY_SWITCH).checked;
+}
+
+function withBadComboWarnings() {
+  return document.getElementById(SECTION_IDS.BAD_COMBOS_SWITCH).checked;
 }
 
 function getFactions() {
