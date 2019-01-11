@@ -31,6 +31,12 @@ body {
   padding-top: 10rem;
 }
 
+@media only screen and (max-width: 320px) {
+  #title {
+    padding-top: 5rem;
+  }
+}
+
 .automa-button {
   font-size: 0.8rem;
   font-style: italic;
