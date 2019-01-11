@@ -13,7 +13,7 @@ const SECTION_IDS = {
 const ELEMENT_CLASSES = {
   BOARD_SELECTION: 'list-group-item',
   GLOBAL_ITEM: 'list-group-item',
-  INPUT_BUTTON: 'btn btn-warning btn-lg',
+  INPUT_BUTTON: 'btn btn-warning',
 };
 
 const PLAYER_COUNT_GROUP_NAME = 'player_count';

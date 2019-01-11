@@ -31,9 +31,16 @@ body {
   padding-top: 10rem;
 }
 
-@media only screen and (max-width: 320px) {
+@media only screen and (max-height: 568px) {
+  /* Fixes for iPhone SE and similar sized devices */
   #title {
     padding-top: 5rem;
+  }
+
+  .btn-group-lg>.btn {
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: .375rem .75rem;
   }
 }
 
