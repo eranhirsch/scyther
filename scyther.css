@@ -34,7 +34,7 @@ body {
 @media only screen and (max-height: 568px) {
   /* Fixes for iPhone SE and similar sized devices */
   #title {
-    padding-top: 5rem;
+    padding-top: 2rem;
   }
 
   .btn-group-lg>.btn {
