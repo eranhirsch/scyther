@@ -201,9 +201,10 @@ function renderBoardSelectionLabel(selection) {
 
 function renderInfraMods(infraMods) {
   const containerElem = document.createElement('ul');
-  containerElem.className = 'infraMods';
+  containerElem.className = 'list-inline';
   containerElem.append(...infraMods.map(function(mod) {
     const modElem = document.createElement('li');
+    modElem.className = 'list-inline-item';
     modElem.textContent = mod;
     return modElem;
   }));
