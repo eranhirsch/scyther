@@ -5,6 +5,7 @@ const SECTION_IDS = {
   INVADERS_SWITCH: 'invadersSwitch',
   PLAYERS: 'players',
   PROXIMITY_SWITCH: 'proximityCheckbox',
+  RISE_OF_FENRIS_SWITCH: 'riseOfFenrisSwitch',
   ROOT: 'root',
   SETTINGS_FORM: 'settings',
   WIND_GAMBIT_SWITCH: 'windGambitSwitch',
@@ -67,6 +68,10 @@ function shouldIncludeResolutions() {
   return document.getElementById(SECTION_IDS.WIND_GAMBIT_SWITCH).checked;
 }
 
+function withInfraMods() {
+  return document.getElementById(SECTION_IDS.RISE_OF_FENRIS_SWITCH).checked;
+}
+
 function withProximityScores() {
   return document.getElementById(SECTION_IDS.PROXIMITY_SWITCH).checked;
 }
@@ -97,9 +102,16 @@ function getPlayerBoards() {
   });
 }
 
+function getInfraMods() {
+  return DATA.infrastructureMods.flatMap(function(modType) {
+    return Array(4).fill(modType);
+  });
+}
+
 function pickBoards() {
   var factions = getFactions();
   var playerBoards = getPlayerBoards();
+  var allInfraMods = getInfraMods();
 
   out = [];
   var playerCount = getPlayerCount();
@@ -113,6 +125,21 @@ function pickBoards() {
     playerBoards.splice(boardIdx, 1);
 
     var selection = {faction: faction, playerBoard: board};
+
+    if (withInfraMods()) {
+      var playerInfraMods = [];
+      while (playerInfraMods.length < 4) {
+        var modIdx = getIntInRange(0, allInfraMods.length - 1);
+        var mod = allInfraMods[modIdx];
+        if (!playerInfraMods.includes(mod)) {
+          // Add mod to player
+          playerInfraMods.push(mod);
+          // and remove it from the general pool
+          allInfraMods.splice(modIdx, 1);
+        }
+      }
+      selection.infraMods = playerInfraMods;
+    }
 
     const op = BAD_COMBOS.overPowered.some(function(op) {
       return op.faction === faction && op.playerBoard === board;
@@ -172,6 +199,17 @@ function renderBoardSelectionLabel(selection) {
   return elem;
 }
 
+function renderInfraMods(infraMods) {
+  const containerElem = document.createElement('ul');
+  containerElem.className = 'infraMods';
+  containerElem.append(...infraMods.map(function(mod) {
+    const modElem = document.createElement('li');
+    modElem.textContent = mod;
+    return modElem;
+  }));
+  return containerElem;
+}
+
 function renderProximity(proximity) {
   const elem = document.createElement('span');
   elem.className = 'proximity';
@@ -186,15 +224,19 @@ function renderWarning() {
   return elem;
 }
 
-function renderBoardSelection(boardSelection, proximity) {
+function renderBoardSelection(selection, proximity) {
   const elem = document.createElement('li');
   elem.className = ELEMENT_CLASSES.BOARD_SELECTION;
 
-  if (withBadComboWarnings() && boardSelection.warn) {
+  if (withBadComboWarnings() && selection.warn) {
     elem.appendChild(renderWarning());
   }
 
-  elem.appendChild(renderBoardSelectionLabel(boardSelection));
+  elem.appendChild(renderBoardSelectionLabel(selection));
+
+  if (!!selection.infraMods) {
+    elem.appendChild(renderInfraMods(selection.infraMods));
+  }
 
   if (proximity !== null) {
     elem.appendChild(renderProximity(proximity));
@@ -273,7 +315,7 @@ function renderPlayerCountButton(i, isActive) {
   return elem;
 }
 
-function populateBoards() {
+function populatePlayers() {
   var playersSection = document.getElementById(SECTION_IDS.PLAYERS);
   if (playersSection === null) {
     console.log('No player section!');
@@ -341,7 +383,7 @@ function showOutputView() {
   $('.output-phase').show();
 
   // Render new values
-  populateBoards();
+  populatePlayers();
   populateGlobalSection();
 }
 

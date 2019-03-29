@@ -92,6 +92,17 @@ const DATA = {
       'Negotiate',
     ],
   },
+
+  infrastructureMods: [
+    'Assembly Line',
+    'Automachines',
+    'Cavalry',
+    'Construction',
+    'Machinery',
+    'Propaganda',
+    'Recruitment Office',
+    'Spy',
+  ],
 };
 
 BAD_COMBOS = {
