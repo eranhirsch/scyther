@@ -54,11 +54,11 @@ body {
   margin-top: 0.25rem;
 }
 
-ol#players li {
+ol#players > li {
   background-color: rgba(255, 255, 255, 0.75);
 }
 
-ol#players li:first-child {
+ol#players > li:first-child {
   margin-top: 0;
 }
 
@@ -102,6 +102,24 @@ ol#players .player-board {
 .proximity {
   color: darkgray;
   font-size: small;
+}
+
+.infraMods {
+  font-size: 6pt;
+  font-family: monospace;
+}
+
+.infraMods > li:not(:last-child) {
+  margin-right: .1rem;
+}
+
+.infraMods li:after {
+	content: '/';
+  margin-left: .1rem;
+}
+
+.infraMods li:last-child:after {
+	content: '';
 }
 
 #global {

@@ -190,7 +190,7 @@ function renderFaction(selection) {
 }
 
 function renderBoardSelectionLabel(selection) {
-  const elem = document.createElement('span');
+  const elem = document.createElement('div');
   elem.className = selection.faction.className;
   if (selection.isAutoma) {
     elem.className += ' automa';
@@ -200,14 +200,22 @@ function renderBoardSelectionLabel(selection) {
 }
 
 function renderInfraMods(infraMods) {
-  const containerElem = document.createElement('ul');
-  containerElem.className = 'list-inline';
-  containerElem.append(...infraMods.map(function(mod) {
+  const containerElem = document.createElement('div');
+  containerElem.className = 'd-inline';
+
+  containerElem.appendChild(renderIcon('🏗️'));
+
+  const listElem = document.createElement('ul');
+  listElem.className = 'infraMods list-inline d-inline';
+  listElem.append(...infraMods.map(function(mod) {
     const modElem = document.createElement('li');
     modElem.className = 'list-inline-item';
     modElem.textContent = mod;
     return modElem;
   }));
+
+  containerElem.appendChild(listElem);
+
   return containerElem;
 }
 
@@ -222,6 +230,13 @@ function renderProximity(proximity) {
 function renderWarning() {
   const elem = document.createElement('span');
   elem.textContent = '⚠️';
+  return elem;
+}
+
+function renderIcon(icon) {
+  var elem = document.createElement('span');
+  elem.className = 'icon';
+  elem.textContent = icon;
   return elem;
 }
 
@@ -250,10 +265,7 @@ function renderGlobalItem(icon, labelElem) {
   var elem = document.createElement('li');
   elem.className = ELEMENT_CLASSES.GLOBAL_ITEM;
 
-  var iconElem = document.createElement('span');
-  iconElem.className = 'icon';
-  iconElem.textContent = icon;
-  elem.append(iconElem, labelElem);
+  elem.append(renderIcon(icon), labelElem);
 
   return elem;
 }
