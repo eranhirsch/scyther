@@ -201,7 +201,7 @@ function renderInfraMods(infraMods) {
 
   const listElem = document.createElement('ul');
   listElem.className = 'list-inline d-inline';
-  listElem.append(...infraMods.map(function(mod) {
+  listElem.append(...infraMods.sort().map(function(mod) {
     const modElem = document.createElement('li');
     modElem.className = 'list-inline-item';
     modElem.textContent = mod;
