@@ -1,5 +1,4 @@
 const SECTION_IDS = {
-  BAD_COMBOS_SWITCH: 'badCombos',
   GLOBAL: 'global',
   INPUT_FORM: 'input',
   INVADERS_SWITCH: 'invadersSwitch',
@@ -68,10 +67,6 @@ function withInfraMods() {
 
 function withProximityScores() {
   return document.getElementById(SECTION_IDS.PROXIMITY_SWITCH).checked;
-}
-
-function withBadComboWarnings() {
-  return document.getElementById(SECTION_IDS.BAD_COMBOS_SWITCH).checked;
 }
 
 function getFactions() {
@@ -186,7 +181,7 @@ function renderFaction(selection) {
 function renderBoardSelectionLabel(selection) {
   const elem = document.createElement('div');
 
-  if (withBadComboWarnings() && selection.warn) {
+  if (selection.warn) {
     elem.appendChild(renderWarning());
   }
 
@@ -436,7 +431,10 @@ function savePlayerCount(event) {
 function readPreviousFormState() {
   state(function(state) {
     Object.entries(state.settings || []).forEach(function(setting) {
-      document.getElementById(setting[0]).checked = setting[1];
+      const elem = document.getElementById(setting[0]);
+      if (elem) {
+        elem.checked = setting[1];
+      }
     });
   });
 }
