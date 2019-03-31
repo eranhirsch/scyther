@@ -109,7 +109,7 @@ ol#players .player-board {
   font-family: monospace;
 }
 
-.infraMods > li:not(:last-child) {
+.infraMods li:not(:last-child) {
   margin-right: .1rem;
 }
 
@@ -120,6 +120,10 @@ ol#players .player-board {
 
 .infraMods li:last-child:after {
 	content: '';
+}
+
+.infraMods .icon {
+  margin-right: .25rem;
 }
 
 #global {
