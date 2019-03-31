@@ -11,12 +11,6 @@ const SECTION_IDS = {
   WIND_GAMBIT_SWITCH: 'windGambitSwitch',
 };
 
-const ELEMENT_CLASSES = {
-  BOARD_SELECTION: 'list-group-item',
-  GLOBAL_ITEM: 'list-group-item',
-  INPUT_BUTTON: 'btn btn-warning',
-};
-
 const PLAYER_COUNT_GROUP_NAME = 'player_count';
 
 /** The precision to show proximity scores at */
@@ -242,7 +236,7 @@ function renderIcon(icon) {
 
 function renderBoardSelection(selection, proximity) {
   const elem = document.createElement('li');
-  elem.className = ELEMENT_CLASSES.BOARD_SELECTION;
+  elem.className = 'list-group-item';
 
   if (withBadComboWarnings() && selection.warn) {
     elem.appendChild(renderWarning());
@@ -263,7 +257,7 @@ function renderBoardSelection(selection, proximity) {
 
 function renderGlobalItem(icon, labelElem) {
   var elem = document.createElement('li');
-  elem.className = ELEMENT_CLASSES.GLOBAL_ITEM;
+  elem.className = 'list-group-item';
 
   elem.append(renderIcon(icon), labelElem);
 
@@ -312,7 +306,7 @@ function renderPlayerCountButton(i, isActive) {
   button.checked = isActive;
 
   var elem = document.createElement('label');
-  elem.className = ELEMENT_CLASSES.INPUT_BUTTON + (isActive ? ' active' : '');
+  elem.className = 'btn btn-warning' + (isActive ? ' active' : '');
   elem.appendChild(button);
   elem.insertAdjacentHTML('beforeend', i);
   if (i === 1) {
