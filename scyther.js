@@ -185,6 +185,11 @@ function renderFaction(selection) {
 
 function renderBoardSelectionLabel(selection) {
   const elem = document.createElement('div');
+
+  if (withBadComboWarnings() && selection.warn) {
+    elem.appendChild(renderWarning());
+  }
+
   elem.className = selection.faction.className;
   if (selection.isAutoma) {
     elem.className += ' automa';
@@ -237,10 +242,6 @@ function renderIcon(icon) {
 function renderBoardSelection(selection, proximity) {
   const elem = document.createElement('li');
   elem.className = 'list-group-item';
-
-  if (withBadComboWarnings() && selection.warn) {
-    elem.appendChild(renderWarning());
-  }
 
   elem.appendChild(renderBoardSelectionLabel(selection));
 
