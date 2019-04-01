@@ -104,25 +104,25 @@ ol#players .player-board {
   font-size: small;
 }
 
-.infraMods {
+.rofMods {
   font-size: 6pt;
   font-family: monospace;
 }
 
-.infraMods li:not(:last-child) {
+.rofMods li:not(:last-child) {
   margin-right: .1rem;
 }
 
-.infraMods li:after {
+.rofMods li:after {
 	content: '/';
   margin-left: .1rem;
 }
 
-.infraMods li:last-child:after {
+.rofMods li:last-child:after {
 	content: '';
 }
 
-.infraMods .icon {
+.rofMods .icon {
   margin-right: .25rem;
 }
 

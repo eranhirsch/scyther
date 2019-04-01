@@ -21,8 +21,25 @@ function getIntInRange(from, to) {
   return from + Math.floor(Math.random() * (to - from + 1));
 }
 
+function extractFromPool(pool, amount = 1, filter = null) {
+  var result = [];
+  while (result.length < amount) {
+    var idx = getIntInRange(0, pool.length - 1);
+    var item = pool[idx];
+    if (!result.includes(item) && (filter === null || filter(item))) {
+      // Add item to result
+      result.push(item);
+      // and remove it from the general pool
+      pool.splice(idx, 1);
+    }
+  }
+  return result;
+}
+
 function pickFromArray(array) {
-  return array[getIntInRange(0, array.length - 1)];
+  // We need to copy the array before we extract from it otherwise we wouldn't
+  // be able to reshuffle the results later on...
+  return extractFromPool(array.slice())[0];
 }
 
 function factionDistance(a, b) {
@@ -62,6 +79,10 @@ function shouldIncludeResolutions() {
   return document.getElementById(SECTION_IDS.WIND_GAMBIT_SWITCH).checked;
 }
 
+function withMechMods() {
+  return document.getElementById(SECTION_IDS.RISE_OF_FENRIS_SWITCH).checked;
+}
+
 function withInfraMods() {
   return document.getElementById(SECTION_IDS.RISE_OF_FENRIS_SWITCH).checked;
 }
@@ -88,43 +109,44 @@ function getPlayerBoards() {
   return baseBoards.concat(Object.values(INVADERS_FROM_AFAR.playerBoards));
 }
 
-function getInfraMods() {
-  return RISE_OF_FENRIS.infrastructureMods.flatMap(function(modType) {
-    return Array(4).fill(modType);
+function multiply(list, multiplier) {
+  return list.flatMap(function(item) {
+    return Array(multiplier).fill(item);
   });
+}
+
+function getMechMods() {
+  return multiply(RISE_OF_FENRIS.mechMods.generic, 3).concat(
+    multiply(Object.keys(RISE_OF_FENRIS.mechMods.factionSpecific), 2),
+  );
+}
+
+function getInfraMods() {
+  return multiply(RISE_OF_FENRIS.infrastructureMods, 4);
 }
 
 function pickBoards() {
   var factions = getFactions();
   var playerBoards = getPlayerBoards();
+  var allMechMods = getMechMods();
   var allInfraMods = getInfraMods();
 
   out = [];
   var playerCount = getPlayerCount();
   for (var i = 0; i < playerCount; i++) {
-    var factionIdx = getIntInRange(0, factions.length - 1);
-    var faction = factions[factionIdx];
-    factions.splice(factionIdx, 1);
-
-    var boardIdx = getIntInRange(0, playerBoards.length - 1);
-    var board = playerBoards[boardIdx];
-    playerBoards.splice(boardIdx, 1);
+    var faction = extractFromPool(factions)[0];
+    var board = extractFromPool(playerBoards)[0];
 
     var selection = {faction: faction, playerBoard: board};
 
+    if (withMechMods()) {
+      selection.mechMods = extractFromPool(allMechMods, 4, function(mod) {
+        return RISE_OF_FENRIS.mechMods.factionSpecific[mod] !== faction;
+      });
+    }
+
     if (withInfraMods()) {
-      var playerInfraMods = [];
-      while (playerInfraMods.length < 4) {
-        var modIdx = getIntInRange(0, allInfraMods.length - 1);
-        var mod = allInfraMods[modIdx];
-        if (!playerInfraMods.includes(mod)) {
-          // Add mod to player
-          playerInfraMods.push(mod);
-          // and remove it from the general pool
-          allInfraMods.splice(modIdx, 1);
-        }
-      }
-      selection.infraMods = playerInfraMods;
+      selection.infraMods = extractFromPool(allInfraMods, 4);
     }
 
     const op = BAD_COMBOS.overPowered.some(function(op) {
@@ -190,16 +212,16 @@ function renderBoardSelectionLabel(selection) {
   return elem;
 }
 
-function renderInfraMods(infraMods) {
+function renderMods(mods, icon) {
   const containerElem = document.createElement('div');
-  containerElem.className = 'infraMods d-inline';
+  containerElem.className = 'rofMods';
 
-  containerElem.appendChild(renderIcon('🏗️'));
+  containerElem.appendChild(renderIcon(icon));
 
   const listElem = document.createElement('ul');
   listElem.className = 'list-inline d-inline';
   listElem.append(
-    ...infraMods.sort().map(function(mod) {
+    ...mods.sort().map(function(mod) {
       const modElem = document.createElement('li');
       modElem.className = 'list-inline-item';
       modElem.textContent = mod;
@@ -239,8 +261,12 @@ function renderBoardSelection(selection, proximity) {
 
   elem.appendChild(renderBoardSelectionLabel(selection));
 
+  if (!!selection.mechMods) {
+    elem.appendChild(renderMods(selection.mechMods, '🛠️️'));
+  }
+
   if (!!selection.infraMods) {
-    elem.appendChild(renderInfraMods(selection.infraMods));
+    elem.appendChild(renderMods(selection.infraMods, '🏗️'));
   }
 
   if (proximity !== null) {
