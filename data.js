@@ -1,4 +1,4 @@
-const DATA = {
+const BASE = {
   factions: {
     POLANIA: {
       label: 'Polania Republic',
@@ -15,12 +15,6 @@ const DATA = {
       location: 3,
       className: 'crimea',
     },
-    TOGAWA: {
-      label: 'Togawa Shogunate',
-      location: 4,
-      className: 'togawa',
-      invadersOnly: true,
-    },
     RUSVIET: {
       label: 'Rusviet Union',
       location: 5,
@@ -31,21 +25,13 @@ const DATA = {
       location: 6,
       className: 'nordic',
     },
-    ALBION: {
-      label: 'Clan Albion',
-      location: 7,
-      className: 'albion',
-      invadersOnly: true,
-    },
   },
 
   playerBoards: {
     INDUSTRIAL: {label: 'Industrial'},
     ENGINEERING: {label: 'Engineering'},
-    MILITANT: {label: 'Militant', invadersOnly: true},
     PATRIOTIC: {label: 'Patriotic'},
     MECHANICAL: {label: 'Mechanical'},
-    INNOVATIVE: {label: 'Innovative', invadersOnly: true},
     AGRICULTURAL: {label: 'Agricultural'},
   },
 
@@ -57,7 +43,29 @@ const DATA = {
     'In a Row',
     'On Farms and Tundras',
   ],
+};
 
+const INVADERS_FROM_AFAR = {
+  factions: {
+    TOGAWA: {
+      label: 'Togawa Shogunate',
+      location: 4,
+      className: 'togawa',
+    },
+    ALBION: {
+      label: 'Clan Albion',
+      location: 7,
+      className: 'albion',
+    },
+  },
+
+  playerBoards: {
+    MILITANT: {label: 'Militant'},
+    INNOVATIVE: {label: 'Innovative'},
+  },
+};
+
+const WIND_GAMBIT = {
   resolutions: [
     'Spoils of War',
     'Land Rush',
@@ -92,6 +100,31 @@ const DATA = {
       'Negotiate',
     ],
   },
+};
+
+const RISE_OF_FENRIS = {
+  mechMods: {
+    generic: [
+      'Armor',
+      'Entrenched',
+      'Feint',
+      'Foothold',
+      'Pontoons',
+      'Regroup',
+      'Reinforce',
+      'Stealth',
+      'Tactics',
+    ],
+    factionSpecific: {
+      Artillery: DATA.factions.NORDIC,
+      Camaraderie: DATA.factions.POLANIA,
+      Scout: DATA.factions.CRIMEA,
+      Suiton: DATA.factions.TOGAWA,
+      Sword: DATA.factions.ALBION,
+      Township: DATA.factions.RUSVIET,
+      Underpass: DATA.factions.SAXONY,
+    },
+  },
 
   infrastructureMods: [
     'Assembly Line',
@@ -107,8 +140,8 @@ const DATA = {
 
 BAD_COMBOS = {
   overPowered: [
-    {faction: DATA.factions.RUSVIET, playerBoard: DATA.playerBoards.INDUSTRIAL},
-    {faction: DATA.factions.CRIMEA, playerBoard: DATA.playerBoards.PATRIOTIC},
+    {faction: BASE.factions.RUSVIET, playerBoard: BASE.playerBoards.INDUSTRIAL},
+    {faction: BASE.factions.CRIMEA, playerBoard: BASE.playerBoards.PATRIOTIC},
   ],
   underPowered: [],
 };

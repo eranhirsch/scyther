@@ -15,6 +15,8 @@ const PLAYER_COUNT_GROUP_NAME = 'player_count';
 /** The precision to show proximity scores at */
 const PROXIMITY_PRECISION = 1;
 
+const HOME_BASES_ON_BOARD = 7; // This doesn't change with expansions!
+
 function getIntInRange(from, to) {
   return from + Math.floor(Math.random() * (to - from + 1));
 }
@@ -28,8 +30,7 @@ function factionDistance(a, b) {
   var smallerLocation = Math.min(a.location, b.location);
 
   var clockwiseDistance = biggerLocation - smallerLocation;
-  var counterClockwiseDistance =
-    Object.values(DATA.factions).length - clockwiseDistance;
+  var counterClockwiseDistance = HOME_BASES_ON_BOARD - clockwiseDistance;
   var bestDistance = Math.min(clockwiseDistance, counterClockwiseDistance);
 
   return bestDistance;
@@ -70,29 +71,25 @@ function withProximityScores() {
 }
 
 function getFactions() {
-  const rawFactions = Object.values(DATA.factions);
-  if (shouldIncludeInvadersBoards()) {
-    return rawFactions.slice();
+  const baseFactions = Object.values(BASE.factions);
+  if (!shouldIncludeInvadersBoards()) {
+    return baseFactions.slice();
   }
 
-  return rawFactions.filter(function(faction) {
-    return !faction.invadersOnly;
-  });
+  return baseFactions.concat(Object.values(INVADERS_FROM_AFAR.factions));
 }
 
 function getPlayerBoards() {
-  const rawBoards = Object.values(DATA.playerBoards);
-  if (shouldIncludeInvadersBoards()) {
-    return rawBoards.slice();
+  const baseBoards = Object.values(BASE.playerBoards);
+  if (!shouldIncludeInvadersBoards()) {
+    return baseBoards.slice();
   }
 
-  return rawBoards.filter(function(board) {
-    return !board.invadersOnly;
-  });
+  return baseBoards.concat(Object.values(INVADERS_FROM_AFAR.playerBoards));
 }
 
 function getInfraMods() {
-  return DATA.infrastructureMods.flatMap(function(modType) {
+  return RISE_OF_FENRIS.infrastructureMods.flatMap(function(modType) {
     return Array(4).fill(modType);
   });
 }
@@ -201,12 +198,14 @@ function renderInfraMods(infraMods) {
 
   const listElem = document.createElement('ul');
   listElem.className = 'list-inline d-inline';
-  listElem.append(...infraMods.sort().map(function(mod) {
-    const modElem = document.createElement('li');
-    modElem.className = 'list-inline-item';
-    modElem.textContent = mod;
-    return modElem;
-  }));
+  listElem.append(
+    ...infraMods.sort().map(function(mod) {
+      const modElem = document.createElement('li');
+      modElem.className = 'list-inline-item';
+      modElem.textContent = mod;
+      return modElem;
+    }),
+  );
 
   containerElem.appendChild(listElem);
 
@@ -272,12 +271,12 @@ function renderAirshipLabel() {
 
   var passiveElem = document.createElement('span');
   passiveElem.className = 'airship-passive';
-  passiveElem.textContent = pickFromArray(DATA.airshipAbilities.passive);
+  passiveElem.textContent = pickFromArray(WIND_GAMBIT.airshipAbilities.passive);
   elem.appendChild(passiveElem);
 
   elem.insertAdjacentHTML('beforeend', '&nbsp;&&nbsp;');
 
-  var aggressive = DATA.airshipAbilities.aggressive;
+  var aggressive = WIND_GAMBIT.airshipAbilities.aggressive;
   if (getPlayerCount() === 1) {
     // Some aggressive abilities aren't supported by the automa
     aggressive = aggressive.filter(function(ability) {
@@ -332,9 +331,11 @@ function populatePlayers() {
     ...boards.map(function(selection) {
       return renderBoardSelection(
         selection,
-        withProximityScores() ? proximityScore(selection.faction, boards) : null
+        withProximityScores()
+          ? proximityScore(selection.faction, boards)
+          : null,
       );
-    })
+    }),
   );
 }
 
@@ -350,12 +351,15 @@ function populateGlobalSection() {
   globalSection.appendChild(
     renderGlobalItem(
       '🏠',
-      renderSimpleLabel(pickFromArray(DATA.buildingBonuses))
-    )
+      renderSimpleLabel(pickFromArray(BASE.buildingBonuses)),
+    ),
   );
   if (shouldIncludeResolutions()) {
     globalSection.appendChild(
-      renderGlobalItem('🏆', renderSimpleLabel(pickFromArray(DATA.resolutions)))
+      renderGlobalItem(
+        '🏆',
+        renderSimpleLabel(pickFromArray(WIND_GAMBIT.resolutions)),
+      ),
     );
   }
   if (shouldIncludeAirships()) {
