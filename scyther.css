@@ -83,11 +83,11 @@ ol#players .player-board {
   color: #904bab;
 }
 
-.rusviet, .airship-aggressive {
+.rusviet, .airship-aggressive, .warTrack {
   color: #c14747;
 }
 
-.nordic, .airship-passive {
+.nordic, .airship-passive, .peaceTrack {
   color: #2c78bd;
 }
 
@@ -143,6 +143,11 @@ ol#players .player-board {
 
 #global .label {
   vertical-align: text-bottom;
+}
+
+.trackEnhancement {
+  font-style: italic;
+  font-size: smaller;
 }
 
 #controls {

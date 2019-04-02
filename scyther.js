@@ -87,6 +87,10 @@ function withInfraMods() {
   return document.getElementById(SECTION_IDS.RISE_OF_FENRIS_SWITCH).checked;
 }
 
+function withAltTriumphTracks() {
+  return document.getElementById(SECTION_IDS.RISE_OF_FENRIS_SWITCH).checked;
+}
+
 function withProximityScores() {
   return document.getElementById(SECTION_IDS.PROXIMITY_SWITCH).checked;
 }
@@ -285,9 +289,9 @@ function renderGlobalItem(icon, labelElem) {
   return elem;
 }
 
-function renderSimpleLabel(label = '') {
+function renderSimpleLabel(label = '', classNames = []) {
   var elem = document.createElement('span');
-  elem.className = 'label';
+  elem.className = ['label'].concat(classNames).join(' ');
   elem.textContent = label;
   return elem;
 }
@@ -315,6 +319,25 @@ function renderAirshipLabel() {
   aggressiveElem.textContent = pickFromArray(aggressive).label;
 
   elem.appendChild(aggressiveElem);
+
+  return elem;
+}
+
+function renderTriumphTrackLabel() {
+  const track = pickFromArray(RISE_OF_FENRIS.triumphTracks);
+
+  let elem = renderSimpleLabel(
+    track.name,
+    track.className ? [track.className] : [],
+  );
+
+  const enhancement = pickFromArray(track.enhancements.concat(['']));
+  if (enhancement) {
+    let enhancementElem = document.createElement('span');
+    enhancementElem.className = 'trackEnhancement';
+    enhancementElem.textContent = ' with ' + enhancement;
+    elem.appendChild(enhancementElem);
+  }
 
   return elem;
 }
@@ -390,6 +413,12 @@ function populateGlobalSection() {
   }
   if (shouldIncludeAirships()) {
     globalSection.appendChild(renderGlobalItem('🚢', renderAirshipLabel()));
+  }
+
+  if (withAltTriumphTracks()) {
+    globalSection.appendChild(
+      renderGlobalItem('⭐', renderTriumphTrackLabel()),
+    );
   }
 }
 

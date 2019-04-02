@@ -136,6 +136,12 @@ const RISE_OF_FENRIS = {
     'Recruitment Office',
     'Spy',
   ],
+
+  triumphTracks: [
+    {name: 'War Track', enhancements: ['Rivals'], className: 'warTrack'},
+    {name: 'Regular Track', enhancements: ['Rivals', 'Alliances']},
+    {name: 'Peace Track', enhancements: ['Alliances'], className: 'peaceTrack'},
+  ],
 };
 
 BAD_COMBOS = {
