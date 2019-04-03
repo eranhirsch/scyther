@@ -194,7 +194,7 @@ function pickBoards() {
 
         // Add a visual clue to the alt abilities
         altAbilities = altAbilities.map(function(ability) {
-          return '(' + ability + ')';
+          return '[' + ability + ']';
         });
 
         selection.mechAbilities = selection.mechAbilities.concat(altAbilities);
