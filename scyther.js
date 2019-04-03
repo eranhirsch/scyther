@@ -327,12 +327,26 @@ function renderBoardSelection(selection, proximity) {
   }
 
   if (!!selection.mechAbilities) {
-    let vesnaElem = renderMods(
+    let abilitiesElem = renderMods(
       selection.mechAbilities,
       selection.faction.shortName,
     );
-    vesnaElem.className += ' ' + selection.faction.className;
-    elem.appendChild(vesnaElem);
+    abilitiesElem.className += ' ' + selection.faction.className;
+
+    if (withMechMods()) {
+      const hiddenHTML = abilitiesElem.innerHTML;
+      const hiddenClassName = abilitiesElem.className;
+
+      abilitiesElem.textContent = 'Click here to reveal mech abilities';
+      abilitiesElem.className += ' revealCTA';
+
+      abilitiesElem.addEventListener('click', function() {
+        this.className = hiddenClassName;
+        this.innerHTML = hiddenHTML;
+      });
+    }
+
+    elem.appendChild(abilitiesElem);
   }
 
   if (!!selection.infraMods) {

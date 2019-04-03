@@ -145,6 +145,10 @@ ol#players .player-board {
   margin-right: .25rem;
 }
 
+.rofMods.revealCTA {
+  text-decoration: underline;
+}
+
 #global {
   margin-top: 0.8rem;
 }
