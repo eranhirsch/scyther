@@ -164,7 +164,7 @@ function pickBoards() {
     // Vesna has a unique set up that requires picking random components too!
     const vesnaMechAbilities = RISE_OF_FENRIS.factions.VESNA.mechAbilities.slice();
     if (selection.faction === RISE_OF_FENRIS.factions.VESNA) {
-      selection.vesnaMechAbilities = extractFromPool(vesnaMechAbilities, 6);
+      selection.mechAbilities = extractFromPool(vesnaMechAbilities, 6);
     }
 
     selection.playerBoard = extractFromPool(playerBoards)[0];
@@ -302,8 +302,11 @@ function renderBoardSelection(selection, proximity) {
     elem.appendChild(renderMods(selection.mechMods, 'Mech'));
   }
 
-  if (!!selection.vesnaMechAbilities) {
-    let vesnaElem = renderMods(selection.vesnaMechAbilities, selection.faction.shortName)
+  if (!!selection.mechAbilities) {
+    let vesnaElem = renderMods(
+      selection.mechAbilities,
+      selection.faction.shortName,
+    );
     vesnaElem.className += ' ' + selection.faction.className;
     elem.appendChild(vesnaElem);
   }
