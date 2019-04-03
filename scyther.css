@@ -120,8 +120,12 @@ ol#players .player-board {
 }
 
 .rofMods {
-  font-size: 6pt;
+  font-size: 7pt;
   font-family: monospace;
+}
+
+.rofMods .label {
+  font-weight: bold;
 }
 
 .rofMods li:not(:last-child) {

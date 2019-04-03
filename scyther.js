@@ -161,6 +161,12 @@ function pickBoards() {
       })[0];
     }
 
+    // Vesna has a unique set up that requires picking random components too!
+    const vesnaMechAbilities = RISE_OF_FENRIS.factions.VESNA.mechAbilities.slice();
+    if (selection.faction === RISE_OF_FENRIS.factions.VESNA) {
+      selection.vesnaMechAbilities = extractFromPool(vesnaMechAbilities, 6);
+    }
+
     selection.playerBoard = extractFromPool(playerBoards)[0];
 
     if (withMechMods()) {
@@ -243,11 +249,11 @@ function renderBoardSelectionLabel(selection) {
   return elem;
 }
 
-function renderMods(mods, icon) {
+function renderMods(mods, label) {
   const containerElem = document.createElement('div');
   containerElem.className = 'rofMods';
 
-  containerElem.appendChild(renderIcon(icon));
+  containerElem.appendChild(renderSimpleLabel(label + ':'));
 
   const listElem = document.createElement('ul');
   listElem.className = 'list-inline d-inline';
@@ -293,11 +299,17 @@ function renderBoardSelection(selection, proximity) {
   elem.appendChild(renderBoardSelectionLabel(selection));
 
   if (!!selection.mechMods) {
-    elem.appendChild(renderMods(selection.mechMods, '🛠️️'));
+    elem.appendChild(renderMods(selection.mechMods, 'Mech'));
+  }
+
+  if (!!selection.vesnaMechAbilities) {
+    let vesnaElem = renderMods(selection.vesnaMechAbilities, selection.faction.shortName)
+    vesnaElem.className += ' ' + selection.faction.className;
+    elem.appendChild(vesnaElem);
   }
 
   if (!!selection.infraMods) {
-    elem.appendChild(renderMods(selection.infraMods, '🏗️'));
+    elem.appendChild(renderMods(selection.infraMods, 'Infra'));
   }
 
   if (proximity !== null) {
