@@ -175,7 +175,7 @@ function pickBoards() {
       selection.infraMods = extractFromPool(allInfraMods, 4);
     }
 
-    const op = BAD_COMBOS.overPowered.some(function(op) {
+    const op = BAD_COMBOS.some(function(op) {
       return (
         op.faction === selection.faction &&
         op.playerBoard === selection.playerBoard
@@ -183,16 +183,6 @@ function pickBoards() {
     });
     if (op) {
       selection.warn = 'OP';
-    }
-
-    const up = BAD_COMBOS.underPowered.some(function(up) {
-      return (
-        up.faction === selection.faction &&
-        up.playerBoard === selection.playerBoard
-      );
-    });
-    if (up) {
-      selection.warn = 'UP';
     }
 
     out.push(selection);

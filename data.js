@@ -164,10 +164,7 @@ const RISE_OF_FENRIS = {
   },
 };
 
-BAD_COMBOS = {
-  overPowered: [
-    {faction: BASE.factions.RUSVIET, playerBoard: BASE.playerBoards.INDUSTRIAL},
-    {faction: BASE.factions.CRIMEA, playerBoard: BASE.playerBoards.PATRIOTIC},
-  ],
-  underPowered: [],
-};
+BAD_COMBOS = [
+  {faction: BASE.factions.RUSVIET, playerBoard: BASE.playerBoards.INDUSTRIAL},
+  {faction: BASE.factions.CRIMEA, playerBoard: BASE.playerBoards.PATRIOTIC},
+];
