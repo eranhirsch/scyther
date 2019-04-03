@@ -17,6 +17,12 @@ const PROXIMITY_PRECISION = 1;
 
 const HOME_BASES_ON_BOARD = 7; // This doesn't change with expansions!
 
+function multiply(list, multiplier) {
+  return list.flatMap(function(item) {
+    return Array(multiplier).fill(item);
+  });
+}
+
 function getIntInRange(from, to) {
   return from + Math.floor(Math.random() * (to - from + 1));
 }
@@ -122,12 +128,6 @@ function getPlayerBoards() {
   return baseBoards.concat(Object.values(INVADERS_FROM_AFAR.playerBoards));
 }
 
-function multiply(list, multiplier) {
-  return list.flatMap(function(item) {
-    return Array(multiplier).fill(item);
-  });
-}
-
 function getMechMods() {
   return multiply(RISE_OF_FENRIS.mechMods.generic, 3).concat(
     multiply(Object.keys(RISE_OF_FENRIS.mechMods.factionSpecific), 2),
@@ -175,6 +175,30 @@ function pickBoards() {
           RISE_OF_FENRIS.mechMods.factionSpecific[mod] !== selection.faction
         );
       });
+
+      if (selection.faction === RISE_OF_FENRIS.factions.VESNA) {
+        // When playing with mech mods, Vesna's mech abilities might clash with
+        // the mods selected by the player. In those cases we will need to draw
+        // additional mods so that the player still has 6 to choose from.
+
+        const clashes = selection.mechMods.filter(function(mod) {
+          return selection.mechAbilities.includes(mod);
+        }).length;
+
+        let altAbilities = extractFromPool(
+          vesnaMechAbilities,
+          // The player can only select 2 mech mods, so we only need to replace
+          // up to 2 mods.
+          Math.min(clashes, 2),
+        );
+
+        // Add a visual clue to the alt abilities
+        altAbilities = altAbilities.map(function(ability) {
+          return '(' + ability + ')';
+        });
+
+        selection.mechAbilities = selection.mechAbilities.concat(altAbilities);
+      }
     }
 
     if (withInfraMods()) {
