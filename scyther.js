@@ -91,17 +91,26 @@ function withAltTriumphTracks() {
   return document.getElementById(SECTION_IDS.RISE_OF_FENRIS_SWITCH).checked;
 }
 
+function shouldIncludeFenrisFactions() {
+  return document.getElementById(SECTION_IDS.RISE_OF_FENRIS_SWITCH).checked;
+}
+
 function withProximityScores() {
   return document.getElementById(SECTION_IDS.PROXIMITY_SWITCH).checked;
 }
 
 function getFactions() {
-  const baseFactions = Object.values(BASE.factions);
-  if (!shouldIncludeInvadersBoards()) {
-    return baseFactions.slice();
+  let factions = Object.values(BASE.factions).slice();
+
+  if (shouldIncludeInvadersBoards()) {
+    factions = factions.concat(Object.values(INVADERS_FROM_AFAR.factions));
   }
 
-  return baseFactions.concat(Object.values(INVADERS_FROM_AFAR.factions));
+  if (shouldIncludeFenrisFactions()) {
+    factions = factions.concat(Object.values(RISE_OF_FENRIS.factions));
+  }
+
+  return factions;
 }
 
 function getPlayerBoards() {
@@ -138,14 +147,27 @@ function pickBoards() {
   out = [];
   var playerCount = getPlayerCount();
   for (var i = 0; i < playerCount; i++) {
-    var faction = extractFromPool(factions)[0];
-    var board = extractFromPool(playerBoards)[0];
+    const selection = {};
 
-    var selection = {faction: faction, playerBoard: board};
+    selection.faction = extractFromPool(factions)[0];
+    if (!selection.faction.location) {
+      // Some factions don't have a persistant home-base (Fenris, Vesna). They
+      // use a home-base drawn randomly from the remaining bases.
+      selection.homeBaseFaction = extractFromPool(factions, 1, function(
+        faction,
+      ) {
+        // We want to make sure the faction we choose has a homebase
+        return !!faction.location;
+      })[0];
+    }
+
+    selection.playerBoard = extractFromPool(playerBoards)[0];
 
     if (withMechMods()) {
       selection.mechMods = extractFromPool(allMechMods, 4, function(mod) {
-        return RISE_OF_FENRIS.mechMods.factionSpecific[mod] !== faction;
+        return (
+          RISE_OF_FENRIS.mechMods.factionSpecific[mod] !== selection.faction
+        );
       });
     }
 
@@ -154,14 +176,20 @@ function pickBoards() {
     }
 
     const op = BAD_COMBOS.overPowered.some(function(op) {
-      return op.faction === faction && op.playerBoard === board;
+      return (
+        op.faction === selection.faction &&
+        op.playerBoard === selection.playerBoard
+      );
     });
     if (op) {
       selection.warn = 'OP';
     }
 
     const up = BAD_COMBOS.underPowered.some(function(up) {
-      return up.faction === faction && up.playerBoard === board;
+      return (
+        up.faction === selection.faction &&
+        up.playerBoard === selection.playerBoard
+      );
     });
     if (up) {
       selection.warn = 'UP';
@@ -198,6 +226,15 @@ function renderFaction(selection) {
   const elem = document.createElement('span');
   elem.className = 'faction';
   elem.textContent = selection.faction.label.replace(' ', '\xa0');
+
+  const homeBaseFaction = selection.homeBaseFaction;
+  if (homeBaseFaction) {
+    const homeBaseElem = document.createElement('span');
+    homeBaseElem.className = 'altHomeBase ' + homeBaseFaction.className;
+    homeBaseElem.textContent = '(' + homeBaseFaction.shortName + ')';
+    elem.appendChild(homeBaseElem);
+  }
+
   return elem;
 }
 
@@ -433,7 +470,7 @@ function populatePlayerCountButtons() {
     return state.playerCount || null;
   });
   var factions = getFactions();
-  for (var i = 1; i <= factions.length; i++) {
+  for (var i = 1; i <= Math.min(factions.length, HOME_BASES_ON_BOARD); i++) {
     const isActive = Math.min(factions.length, storedPlayerCount) === i;
     group.appendChild(renderPlayerCountButton(i, isActive));
   }

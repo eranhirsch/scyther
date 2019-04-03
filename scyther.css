@@ -95,6 +95,21 @@ ol#players .player-board {
   color: #539832;
 }
 
+.vesna {
+  color: #38c7bd;
+}
+
+.fenris {
+  color: #f78937;
+}
+
+.altHomeBase {
+  font-size: xx-small;
+  font-style: italic;
+  margin-left: 0.2rem;
+  vertical-align: bottom;
+}
+
 .automa {
   font-style: italic;
 }

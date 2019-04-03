@@ -2,26 +2,31 @@ const BASE = {
   factions: {
     POLANIA: {
       label: 'Polania Republic',
+      shortName: 'Polania',
       location: 1,
       className: 'polania',
     },
     SAXONY: {
       label: 'Saxony Empire',
+      shortName: 'Saxony',
       location: 2,
       className: 'saxony',
     },
     CRIMEA: {
       label: 'Crimean Khanate',
+      shortName: 'Crimea',
       location: 3,
       className: 'crimea',
     },
     RUSVIET: {
       label: 'Rusviet Union',
+      shortName: 'Rusviet',
       location: 5,
       className: 'rusviet',
     },
     NORDIC: {
       label: 'Nordic Kingdom',
+      shortName: 'Nordic',
       location: 6,
       className: 'nordic',
     },
@@ -49,11 +54,13 @@ const INVADERS_FROM_AFAR = {
   factions: {
     TOGAWA: {
       label: 'Togawa Shogunate',
+      shortName: 'Togawa',
       location: 4,
       className: 'togawa',
     },
     ALBION: {
       label: 'Clan Albion',
+      shortName: 'Albion',
       location: 7,
       className: 'albion',
     },
@@ -142,6 +149,19 @@ const RISE_OF_FENRIS = {
     {name: 'Regular Track', enhancements: ['Rivals', 'Alliances']},
     {name: 'Peace Track', enhancements: ['Alliances'], className: 'peaceTrack'},
   ],
+
+  factions: {
+    VESNA: {
+      label: 'Vesna',
+      shortName: 'Vesna',
+      className: 'vesna',
+    },
+    FENRIS: {
+      label: 'Fenris',
+      shortName: 'Fenris',
+      className: 'fenris',
+    },
+  },
 };
 
 BAD_COMBOS = {
