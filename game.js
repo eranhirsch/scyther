@@ -190,30 +190,6 @@ function pickBoards(playerCount) {
     const automa = selectFaction(factions);
     automa.isAutoma = true;
 
-    // Rules for fenris mods when playing with the automa (Page 50)
-    // TODO: If I ever add a rule clarification row to the general section this
-    // should ideally move there, and combined with the triumph track changes
-    if (withInfraMods()) {
-      if (withMechMods()) {
-        // "If you’re using both types of Mods, The Automa “buys” 4
-        // Infrastructure Mods."
-        extractFromPool(allInfraMods, 4);
-        // See table on Page 6
-        automa.modifiers = 'Star Tracker +2, Gain Stuff, Remove Card 4';
-      } else {
-        // "If you’re using Infrastructure Mods only, the Automa “buys” 2
-        // Infrastructure Mods."
-        extractFromPool(allInfraMods, 2);
-        // See table on Page 6
-        automa.modifiers = 'Star Tracker +1, Gain Stuff';
-      }
-    } else if (withMechMods()) {
-      // "If you’re using Mech Mods only, the Automa “buys” 3 Mech Mods."
-      extractFromPool(allMechMods, 3);
-      // See table on Page 6
-      automa.modifiers = 'Gain Stuff x2';
-    }
-
     if (automa.faction === RISE_OF_FENRIS.factions.VESNA) {
       // Vesna draws 2 random factions (Page 23)
       const allFactions = getFactions(true /* skipRiseOfFenris */);
@@ -255,6 +231,38 @@ function pickGlobals(withAutoma) {
     const track = pickFromArray(RISE_OF_FENRIS.triumphTracks);
     const enhancement = pickFromArray(track.enhancements.concat(['']));
     globals.triumphTrack = {track: track, enhancement: enhancement};
+  }
+
+  if (withAutoma) {
+    modifiers = {};
+
+    // Rules for fenris infra/mech mods when playing with the automa (Page 50)
+    // Modifiers were calculated based on the table in page 6.
+    if (withInfraMods()) {
+      if (withMechMods()) {
+        // "If you’re using both types of Mods, The Automa “buys” 4
+        // Infrastructure Mods."
+        modifiers = {
+          starTracker: 2,
+          gainStuff: 1,
+          removedCards: [4],
+        };
+      } else {
+        // "If you’re using Infrastructure Mods only, the Automa “buys” 2
+        // Infrastructure Mods."
+        modifiers = {
+          starTracker: 1,
+          gainStuff: 1,
+        };
+      }
+    } else if (withMechMods()) {
+      // "If you’re using Mech Mods only, the Automa “buys” 3 Mech Mods."
+      modifiers = {
+        gainStuff: 2,
+      };
+    }
+
+    globals.automaModifiers = modifiers;
   }
 
   return globals;

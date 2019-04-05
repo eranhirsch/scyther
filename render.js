@@ -203,6 +203,28 @@ function renderTriumphTrackLabel(track) {
   return elem;
 }
 
+function renderAutomaModifiers(modifiers) {
+  const output = [];
+
+  if (!!modifiers.starTracker) {
+    output.push('Star Tracker: +' + modifiers.starTracker);
+  }
+
+  if (!!modifiers.gainStuff) {
+    let gainStuff = 'Gain Stuff';
+    if (modifiers.gainStuff > 1) {
+      gainStuff += ' x' + modifiers.gainStuff;
+    }
+    output.push(gainStuff);
+  }
+
+  if (!!modifiers.removedCards) {
+    output.push('Remove Card: ' + modifiers.removedCards.join(', '));
+  }
+
+  return output.join(', ');
+}
+
 function renderPlayerCountButton(i, isActive) {
   var button = document.createElement('input');
   button.type = 'radio';
@@ -271,6 +293,12 @@ function populateGlobalSection(globals) {
   if (!!globals.triumphTrack) {
     globalSection.appendChild(
       renderGlobalItem('⭐', renderTriumphTrackLabel(globals.triumphTrack)),
+    );
+  }
+
+  if (!!globals.automaModifiers) {
+    globalSection.appendChild(
+      renderGlobalItem('🤖', renderAutomaModifiers(globals.automaModifiers)),
     );
   }
 }
