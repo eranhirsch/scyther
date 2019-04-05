@@ -232,6 +232,45 @@ function pickBoards() {
   return out;
 }
 
+function pickGlobals() {
+  globals = {};
+
+  // We always have a building bonus tile
+  globals.buildingBonus = pickFromArray(BASE.buildingBonuses);
+
+  if (shouldIncludeResolutions()) {
+    globals.resolution = pickFromArray(WIND_GAMBIT.resolutions);
+  }
+
+  if (shouldIncludeAirships()) {
+    var aggressive = WIND_GAMBIT.airshipAbilities.aggressive;
+    if (getPlayerCount() === 1) {
+      // Some aggressive abilities aren't supported by the automa
+      aggressive = aggressive.filter(function(ability) {
+        return ability.supportedByAutoma;
+      });
+    }
+
+    globals.airships = {
+      passive: pickFromArray(WIND_GAMBIT.airshipAbilities.passive),
+      aggressive: pickFromArray(aggressive).label,
+    };
+  }
+
+  if (withAltTriumphTracks()) {
+    globals.triumphTrack = pickFromArray(RISE_OF_FENRIS.triumphTracks);
+  }
+
+  return globals;
+}
+
+function generateNewGame() {
+  return {
+    players: pickBoards(),
+    globals: pickGlobals(),
+  }
+}
+
 function getPlayerCount() {
   var selector = "input[name='" + PLAYER_COUNT_GROUP_NAME + "']";
   var playerCount = $(selector + ':checked').val();
@@ -381,36 +420,26 @@ function renderSimpleLabel(label = '', classNames = []) {
   return elem;
 }
 
-function renderAirshipLabel() {
+function renderAirshipLabel(airships) {
   var elem = renderSimpleLabel();
 
   var passiveElem = document.createElement('span');
   passiveElem.className = 'airship-passive';
-  passiveElem.textContent = pickFromArray(WIND_GAMBIT.airshipAbilities.passive);
+  passiveElem.textContent = airships.passive;
   elem.appendChild(passiveElem);
 
   elem.insertAdjacentHTML('beforeend', '&nbsp;&&nbsp;');
 
-  var aggressive = WIND_GAMBIT.airshipAbilities.aggressive;
-  if (getPlayerCount() === 1) {
-    // Some aggressive abilities aren't supported by the automa
-    aggressive = aggressive.filter(function(ability) {
-      return ability.supportedByAutoma;
-    });
-  }
-
   var aggressiveElem = document.createElement('span');
   aggressiveElem.className = 'airship-aggressive';
-  aggressiveElem.textContent = pickFromArray(aggressive).label;
+  aggressiveElem.textContent = airships.aggressive;
 
   elem.appendChild(aggressiveElem);
 
   return elem;
 }
 
-function renderTriumphTrackLabel() {
-  const track = pickFromArray(RISE_OF_FENRIS.triumphTracks);
-
+function renderTriumphTrackLabel(track) {
   let elem = renderSimpleLabel(
     track.name,
     track.className ? [track.className] : [],
@@ -451,7 +480,7 @@ function renderPlayerCountButton(i, isActive) {
   return elem;
 }
 
-function populatePlayers() {
+function populatePlayers(boards) {
   var playersSection = document.getElementById(SECTION_IDS.PLAYERS);
   if (playersSection === null) {
     console.log('No player section!');
@@ -459,8 +488,6 @@ function populatePlayers() {
   }
   // Reset previous results
   playersSection.innerHTML = '';
-
-  var boards = pickBoards();
   playersSection.append(
     ...boards.map(function(selection) {
       return renderBoardSelection(
@@ -473,36 +500,37 @@ function populatePlayers() {
   );
 }
 
-function populateGlobalSection() {
+function populateGlobalSection(globals) {
   var globalSection = document.getElementById(SECTION_IDS.GLOBAL);
   if (globalSection === null) {
     console.log('No global section!');
     return;
   }
+
   // Reset previous values
   globalSection.innerHTML = '';
 
   globalSection.appendChild(
     renderGlobalItem(
       '🏠',
-      renderSimpleLabel(pickFromArray(BASE.buildingBonuses)),
+      renderSimpleLabel(globals.buildingBonus),
     ),
   );
-  if (shouldIncludeResolutions()) {
+  if (!!globals.resolution) {
     globalSection.appendChild(
       renderGlobalItem(
         '🏆',
-        renderSimpleLabel(pickFromArray(WIND_GAMBIT.resolutions)),
+        renderSimpleLabel(globals.resolution),
       ),
     );
   }
-  if (shouldIncludeAirships()) {
-    globalSection.appendChild(renderGlobalItem('🚢', renderAirshipLabel()));
+  if (!!globals.airships) {
+    globalSection.appendChild(renderGlobalItem('🚢', renderAirshipLabel(globals.airships)));
   }
 
-  if (withAltTriumphTracks()) {
+  if (!!globals.triumphTrack) {
     globalSection.appendChild(
-      renderGlobalItem('⭐', renderTriumphTrackLabel()),
+      renderGlobalItem('⭐', renderTriumphTrackLabel(globals.triumphTrack)),
     );
   }
 }
@@ -524,14 +552,19 @@ function populatePlayerCountButtons() {
   }
 }
 
+function populateGameResults(game) {
+  populatePlayers(game.players);
+  populateGlobalSection(game.globals);
+}
+
 function showOutputView() {
   // Switch views
   $('.input-phase').hide();
   $('.output-phase').show();
 
-  // Render new values
-  populatePlayers();
-  populateGlobalSection();
+  const game = generateNewGame();
+  console.log(game);
+  populateGameResults(game);
 }
 
 function showInputView() {
