@@ -84,7 +84,7 @@ function renderIcon(icon) {
   return elem;
 }
 
-function renderBoardSelection(selection, proximity) {
+function renderBoardSelection(selection) {
   const elem = document.createElement('li');
   elem.className = 'list-group-item';
 
@@ -121,8 +121,8 @@ function renderBoardSelection(selection, proximity) {
     elem.appendChild(renderMods(selection.infraMods, 'Infra'));
   }
 
-  if (proximity !== null) {
-    elem.appendChild(renderProximity(proximity));
+  if (!!selection.proximity) {
+    elem.appendChild(renderProximity(selection.proximity));
   }
 
   return elem;
@@ -215,9 +215,6 @@ function populatePlayers(boards) {
     ...boards.map(function(selection) {
       return renderBoardSelection(
         selection,
-        withProximityScores()
-          ? proximityScore(selection.faction, boards)
-          : null,
       );
     }),
   );

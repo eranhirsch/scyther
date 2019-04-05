@@ -264,8 +264,18 @@ function pickGlobals() {
 }
 
 function generateNewGame() {
+  const boards = pickBoards();
+
+  if (withProximityScores()) {
+    // Proximity scores are individual to each board selection, but can only be
+    // computed after all boards are selected
+    boards.forEach(function(board) {
+      board.proximity = proximityScore(board.faction, boards);
+    });
+  }
+
   return {
-    players: pickBoards(),
+    players: boards,
     globals: pickGlobals(),
   }
 }
