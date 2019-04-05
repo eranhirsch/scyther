@@ -213,9 +213,7 @@ function populatePlayers(boards) {
   playersSection.innerHTML = '';
   playersSection.append(
     ...boards.map(function(selection) {
-      return renderBoardSelection(
-        selection,
-      );
+      return renderBoardSelection(selection);
     }),
   );
 }
@@ -231,21 +229,19 @@ function populateGlobalSection(globals) {
   globalSection.innerHTML = '';
 
   globalSection.appendChild(
-    renderGlobalItem(
-      '🏠',
-      renderSimpleLabel(globals.buildingBonus),
-    ),
+    renderGlobalItem('🏠', renderSimpleLabel(globals.buildingBonus)),
   );
+
   if (!!globals.resolution) {
     globalSection.appendChild(
-      renderGlobalItem(
-        '🏆',
-        renderSimpleLabel(globals.resolution),
-      ),
+      renderGlobalItem('🏆', renderSimpleLabel(globals.resolution)),
     );
   }
+
   if (!!globals.airships) {
-    globalSection.appendChild(renderGlobalItem('🚢', renderAirshipLabel(globals.airships)));
+    globalSection.appendChild(
+      renderGlobalItem('🚢', renderAirshipLabel(globals.airships)),
+    );
   }
 
   if (!!globals.triumphTrack) {

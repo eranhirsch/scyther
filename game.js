@@ -134,10 +134,17 @@ function getMechMods() {
 function getInfraMods() {
   let mods = RISE_OF_FENRIS.infrastructureMods;
   if (getPlayerCount() === 1) {
-    mods = mods.filter(function(mod) { return mod.supportedByAutoma; });
+    mods = mods.filter(function(mod) {
+      return mod.supportedByAutoma;
+    });
   }
 
-  return multiply(mods.map(function(mod) { return mod.label; }), 4);
+  return multiply(
+    mods.map(function(mod) {
+      return mod.label;
+    }),
+    4,
+  );
 }
 
 function pickBoards() {
@@ -277,7 +284,7 @@ function generateNewGame() {
   return {
     players: boards,
     globals: pickGlobals(),
-  }
+  };
 }
 
 function getPlayerCount() {
