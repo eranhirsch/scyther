@@ -144,11 +144,11 @@ const RISE_OF_FENRIS = {
     {label: 'Spy', supportedByAutoma: false},
   ],
 
-  triumphTracks: [
-    {name: 'War Track', enhancements: ['Rivals'], className: 'warTrack'},
-    {name: 'Regular Track', enhancements: ['Rivals', 'Alliances']},
-    {name: 'Peace Track', enhancements: ['Alliances'], className: 'peaceTrack'},
-  ],
+  triumphTracks: {
+    WAR: {name: 'War Track', enhancements: ['Rivals'], className: 'warTrack'},
+    REGULAR: {name: 'Regular Track', enhancements: ['Rivals', 'Alliances']},
+    PEACE: {name: 'Peace Track', enhancements: ['Alliances'], className: 'peaceTrack'},
+  },
 
   factions: {
     VESNA: {

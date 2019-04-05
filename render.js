@@ -301,6 +301,12 @@ function populateGlobalSection(globals) {
       renderGlobalItem('🤖', renderAutomaModifiers(globals.automaModifiers)),
     );
   }
+
+  if (!!globals.ruleBook && globals.ruleBook.length > 0) {
+    globalSection.appendChild(
+      renderGlobalItem('📖', renderSimpleLabel(globals.ruleBook.join(', '))),
+    );
+  }
 }
 
 function populatePlayerCountButtons() {

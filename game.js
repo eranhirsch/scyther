@@ -203,7 +203,7 @@ function pickBoards(playerCount) {
 }
 
 function pickGlobals(withAutoma) {
-  globals = {};
+  globals = {ruleBook: []};
 
   // We always have a building bonus tile
   globals.buildingBonus = pickFromArray(BASE.buildingBonuses);
@@ -228,9 +228,21 @@ function pickGlobals(withAutoma) {
   }
 
   if (withAltTriumphTracks()) {
-    const track = pickFromArray(RISE_OF_FENRIS.triumphTracks);
+    const track = pickFromArray(Object.values(RISE_OF_FENRIS.triumphTracks));
+    if (track === RISE_OF_FENRIS.triumphTracks.PEACE) {
+      // Page 51
+      globals.ruleBook.push('Remove objective card #23');
+    }
     const enhancement = pickFromArray(track.enhancements.concat(['']));
     globals.triumphTrack = {track: track, enhancement: enhancement};
+  }
+
+  if (withInfraMods()) {
+    if (withMechMods()) {
+      globals.ruleBook.push('Pick 2 mods of each kind');
+    } else {
+      globals.ruleBook.push('Pick 2 mods');
+    }
   }
 
   if (withAutoma) {
