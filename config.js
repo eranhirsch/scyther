@@ -1,3 +1,9 @@
+const EXPANSIONS = {
+  INAVADERS: 'Invaders from Afar',
+  WG: 'The Wind Gambit',
+  ROF: 'The Rise of Fenris',
+};
+
 const SECTION_IDS = {
   GLOBAL: 'global',
   INPUT_FORM: 'input',
@@ -12,32 +18,44 @@ const SECTION_IDS = {
 
 const PLAYER_COUNT_GROUP_NAME = 'player_count';
 
+function hasExpansion(expansion) {
+  switch (expansion) {
+    case EXPANSIONS.INVADERS:
+      return document.getElementById(SECTION_IDS.INVADERS_SWITCH).checked;
+    case EXPANSIONS.WG:
+      return document.getElementById(SECTION_IDS.WIND_GAMBIT_SWITCH).checked;
+    case EXPANSIONS.ROF:
+      return document.getElementById(SECTION_IDS.RISE_OF_FENRIS_SWITCH).checked;
+  }
+  throw new Exception('Unknown expansion: ' + expansion);
+}
+
 function shouldIncludeInvadersBoards() {
-  return document.getElementById(SECTION_IDS.INVADERS_SWITCH).checked;
+  return hasExpansion(EXPANSIONS.INVADERS);
 }
 
 function shouldIncludeAirships() {
-  return document.getElementById(SECTION_IDS.WIND_GAMBIT_SWITCH).checked;
+  return hasExpansion(EXPANSIONS.WG);
 }
 
 function shouldIncludeResolutions() {
-  return document.getElementById(SECTION_IDS.WIND_GAMBIT_SWITCH).checked;
+  return hasExpansion(EXPANSIONS.WG);
 }
 
 function withMechMods() {
-  return document.getElementById(SECTION_IDS.RISE_OF_FENRIS_SWITCH).checked;
+  return hasExpansion(EXPANSIONS.ROF);
 }
 
 function withInfraMods() {
-  return document.getElementById(SECTION_IDS.RISE_OF_FENRIS_SWITCH).checked;
+  return hasExpansion(EXPANSIONS.ROF);
 }
 
 function withAltTriumphTracks() {
-  return document.getElementById(SECTION_IDS.RISE_OF_FENRIS_SWITCH).checked;
+  return hasExpansion(EXPANSIONS.ROF);
 }
 
 function shouldIncludeFenrisFactions() {
-  return document.getElementById(SECTION_IDS.RISE_OF_FENRIS_SWITCH).checked;
+  return hasExpansion(EXPANSIONS.ROF);
 }
 
 function withProximityScores() {

@@ -266,9 +266,14 @@ function populatePlayerCountButtons() {
   const storedPlayerCount = state(function(state) {
     return state.playerCount || null;
   });
-  var factions = getFactions();
-  for (var i = 1; i <= Math.min(factions.length, HOME_BASES_ON_BOARD); i++) {
-    const isActive = Math.min(factions.length, storedPlayerCount) === i;
+
+  let factionsCount = HOME_BASES_ON_BOARD;
+  if (!shouldIncludeInvadersBoards() && !shouldIncludeFenrisFactions()) {
+    factionsCount -= 2;
+  }
+
+  for (var i = 1; i <= factionsCount; i++) {
+    const isActive = Math.min(factionsCount, storedPlayerCount) === i;
     group.appendChild(renderPlayerCountButton(i, isActive));
   }
 }
