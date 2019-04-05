@@ -42,6 +42,15 @@ function renderBoardSelectionLabel(selection) {
 }
 
 function renderMods(mods, label) {
+  return renderInlineItemsList(
+    mods.map(function(mod) {
+      return {label: mod};
+    }),
+    label,
+  );
+}
+
+function renderInlineItemsList(items, label) {
   const containerElem = document.createElement('div');
   containerElem.className = 'rofMods';
 
@@ -50,11 +59,12 @@ function renderMods(mods, label) {
   const listElem = document.createElement('ul');
   listElem.className = 'list-inline d-inline';
   listElem.append(
-    ...mods.sort().map(function(mod) {
-      const modElem = document.createElement('li');
-      modElem.className = 'list-inline-item';
-      modElem.textContent = mod;
-      return modElem;
+    ...items.sort().map(function(item) {
+      const itemElem = document.createElement('li');
+      itemElem.className =
+        'list-inline-item' + (!!item.className ? ' ' + item.className : '');
+      itemElem.textContent = item.label;
+      return itemElem;
     }),
   );
 
@@ -96,28 +106,15 @@ function renderBoardSelection(selection) {
 
   if (selection.isAutoma) {
     if (!!selection.vesnaFactions) {
-      // TODO: This is ugly, i need to merge this with the rendering logic for
-      // the renderMods
-      const factionsElem = document.createElement('div');
-      factionsElem.className = 'rofMods';
-      factionsElem.appendChild(renderSimpleLabel('Factions:'));
-      const listElem = document.createElement('ul');
-      listElem.className = 'list-inline d-inline';
-      listElem.append(
-        ...selection.vesnaFactions.map(function(faction) {
-          const elem = document.createElement('li');
-          elem.className = faction.className + ' list-inline-item';
-          elem.textContent = faction.shortName;
-          return elem;
-        }),
+      elem.appendChild(
+        renderInlineItemsList(selection.vesnaFactions, 'Factions'),
       );
-      factionsElem.appendChild(listElem);
-      elem.appendChild(factionsElem);
     }
 
     if (!!selection.modifiers) {
-      // We're faking it as a mod so that it renders in the same way...
-      elem.appendChild(renderMods([selection.modifiers], 'Modifiers'));
+      elem.appendChild(
+        renderInlineItemsList([{label: selection.modifiers}], 'Modifiers'),
+      );
     }
   }
 
