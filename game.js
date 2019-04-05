@@ -236,13 +236,6 @@ function pickGlobals(withAutoma) {
     globals.triumphTrack = {track: track, enhancement: enhancement};
   }
 
-  if (withInfraMods() || withMechMods()) {
-    globals.ruleBook.push(
-      'Pick 2 mods' +
-        (!withInfraMods() || !withMechMods() ? '' : ' (of each kind)'),
-    );
-  }
-
   if (withAutoma) {
     // Rules for fenris infra/mech mods when playing with the automa (Page 50)
     // Modifiers were calculated based on the table in page 6.
