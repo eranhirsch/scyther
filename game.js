@@ -242,8 +242,13 @@ function pickGlobals(boards) {
         globals.ruleBook.push('Saxony starts with 3 objective cards');
       }
     }
+
     const enhancement = pickFromArray(track.enhancements.concat(['']));
     globals.triumphTrack = {track: track, enhancement: enhancement};
+
+    if (track === RISE_OF_FENRIS.triumphTracks.RANDOM) {
+      globals.triumphTrack.tiles = extractFromPool(track.tiles.slice(), 10);
+    }
   }
 
   if (withAutoma) {

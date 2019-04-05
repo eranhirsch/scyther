@@ -147,6 +147,28 @@ const RISE_OF_FENRIS = {
   triumphTracks: {
     WAR: {name: 'War Track', enhancements: ['Rivals'], className: 'warTrack'},
     REGULAR: {name: 'Regular Track', enhancements: ['Rivals', 'Alliances']},
+    RANDOM: {
+      name: 'Random Tiles',
+      tiles: [
+        'Combat Cards',
+        'Combat 1',
+        'Combat 2',
+        'Combat 3',
+        'Combat 4',
+        'Encounters',
+        'Enlists',
+        'Factory',
+        'Mechs',
+        'Objective',
+        'Popularity',
+        'Power',
+        'Resources',
+        'Structures',
+        'Upgrades',
+        'Workers',
+      ],
+      enhancements: [],
+    },
     PEACE: {
       name: 'Peace Track',
       enhancements: ['Alliances'],

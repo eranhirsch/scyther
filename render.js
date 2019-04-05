@@ -200,6 +200,10 @@ function renderTriumphTrackLabel(track) {
     elem.appendChild(enhancementElem);
   }
 
+  if (!!track.tiles) {
+    elem.appendChild(renderSimpleLabel(track.tiles.sort().join(', ')));
+  }
+
   return elem;
 }
 
