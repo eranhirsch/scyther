@@ -94,6 +94,11 @@ function renderBoardSelection(selection) {
     elem.appendChild(renderMods(selection.mechMods, 'Mech'));
   }
 
+  if (selection.isAutoma && !!selection.modifiers) {
+    // We're faking it as a mod so that it renders in the same way...
+    elem.appendChild(renderMods([selection.modifiers], 'Modifiers'));
+  }
+
   if (!!selection.mechAbilities) {
     let abilitiesElem = renderMods(
       selection.mechAbilities,

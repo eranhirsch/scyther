@@ -181,9 +181,29 @@ function pickBoards(playerCount) {
   }
 
   if (playerCount === 1) {
-    // Add a faction for the automa
-    var automaFaction = pickFromArray(factions);
-    out.push({faction: automaFaction, isAutoma: true});
+    const automa = {isAutoma: true};
+
+    automa.faction = extractFromPool(factions)[0];
+
+    if (withInfraMods()) {
+      if (withMechMods()) {
+        // "If you’re using both types of Mods, The Automa “buys” 4
+        // Infrastructure Mods."
+        extractFromPool(allInfraMods, 4);
+        automa.modifiers = "Star Tracker +2, Gain Stuff, Remove Card 4";
+      } else {
+        // "If you’re using Infrastructure Mods only, the Automa “buys” 2
+        // Infrastructure Mods."
+        extractFromPool(allInfraMods, 2);
+        automa.modifiers = "Star Tracker +1, Gain Stuff";
+      }
+    } else if (withMechMods()) {
+      // "If you’re using Mech Mods only, the Automa “buys” 3 Mech Mods."
+      extractFromPool(allMechMods, 3);
+      automa.modifiers = "Gain Stuff x2";
+    }
+
+    out.push(automa);
   }
 
   return out;
