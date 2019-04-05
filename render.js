@@ -278,7 +278,8 @@ function showOutputView() {
   $('.input-phase').hide();
   $('.output-phase').show();
 
-  const game = generateNewGame();
+  const playerCount = getPlayerCount();
+  const game = generateNewGame(playerCount);
   populateGameResults(game);
 }
 

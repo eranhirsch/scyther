@@ -85,9 +85,9 @@ function getMechMods() {
   );
 }
 
-function getInfraMods() {
+function getInfraMods(withAutoma) {
   let mods = RISE_OF_FENRIS.infrastructureMods;
-  if (getPlayerCount() === 1) {
+  if (withAutoma) {
     mods = mods.filter(function(mod) {
       return mod.supportedByAutoma;
     });
@@ -101,14 +101,13 @@ function getInfraMods() {
   );
 }
 
-function pickBoards() {
+function pickBoards(playerCount) {
   var factions = getFactions();
   var playerBoards = getPlayerBoards();
   var allMechMods = getMechMods();
-  var allInfraMods = getInfraMods();
+  var allInfraMods = getInfraMods(playerCount === 1 /* withAutoma */);
 
   out = [];
-  var playerCount = getPlayerCount();
   for (var i = 0; i < playerCount; i++) {
     const selection = {};
 
@@ -190,7 +189,7 @@ function pickBoards() {
   return out;
 }
 
-function pickGlobals() {
+function pickGlobals(withAutoma) {
   globals = {};
 
   // We always have a building bonus tile
@@ -202,7 +201,7 @@ function pickGlobals() {
 
   if (shouldIncludeAirships()) {
     var aggressive = WIND_GAMBIT.airshipAbilities.aggressive;
-    if (getPlayerCount() === 1) {
+    if (withAutoma) {
       // Some aggressive abilities aren't supported by the automa
       aggressive = aggressive.filter(function(ability) {
         return ability.supportedByAutoma;
@@ -224,8 +223,8 @@ function pickGlobals() {
   return globals;
 }
 
-function generateNewGame() {
-  const boards = pickBoards();
+function generateNewGame(playerCount) {
+  const boards = pickBoards(playerCount);
 
   if (withProximityScores()) {
     // Proximity scores are individual to each board selection, but can only be
@@ -237,6 +236,6 @@ function generateNewGame() {
 
   return {
     players: boards,
-    globals: pickGlobals(),
+    globals: pickGlobals(playerCount === 1 /* withAutoma */),
   };
 }
