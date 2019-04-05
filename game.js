@@ -232,49 +232,33 @@ function pickGlobals(withAutoma) {
     if (track === RISE_OF_FENRIS.triumphTracks.PEACE) {
       // Page 51
       globals.ruleBook.push('Remove objective card #23');
+      globals.ruleBook.push('Saxony starts with 3 objective cards');
     }
     const enhancement = pickFromArray(track.enhancements.concat(['']));
     globals.triumphTrack = {track: track, enhancement: enhancement};
   }
 
-  if (withInfraMods()) {
-    if (withMechMods()) {
-      globals.ruleBook.push('Pick 2 mods of each kind');
-    } else {
-      globals.ruleBook.push('Pick 2 mods');
-    }
+  if (withInfraMods() || withMechMods()) {
+    globals.ruleBook.push('Pick 2 mods' (!withInfraMods() || !withMechMods() ? '' : ' (of each kind)');
   }
 
   if (withAutoma) {
-    modifiers = {};
-
     // Rules for fenris infra/mech mods when playing with the automa (Page 50)
     // Modifiers were calculated based on the table in page 6.
     if (withInfraMods()) {
       if (withMechMods()) {
         // "If you’re using both types of Mods, The Automa “buys” 4
         // Infrastructure Mods."
-        modifiers = {
-          starTracker: 2,
-          gainStuff: 1,
-          removedCards: [4],
-        };
+        globals.automaModifiers = 'Star Tracker: +2, Gain Stuff, Remove Card 4';
       } else {
         // "If you’re using Infrastructure Mods only, the Automa “buys” 2
         // Infrastructure Mods."
-        modifiers = {
-          starTracker: 1,
-          gainStuff: 1,
-        };
+        globals.automaModifiers = 'Star Tracker: +1, Gain Stuff';
       }
     } else if (withMechMods()) {
       // "If you’re using Mech Mods only, the Automa “buys” 3 Mech Mods."
-      modifiers = {
-        gainStuff: 2,
-      };
+      globals.automaModifiers = 'Gain Stuff x2';
     }
-
-    globals.automaModifiers = modifiers;
   }
 
   return globals;
