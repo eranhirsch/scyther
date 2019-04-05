@@ -135,7 +135,12 @@ function getMechMods() {
 }
 
 function getInfraMods() {
-  return multiply(RISE_OF_FENRIS.infrastructureMods, 4);
+  let mods = RISE_OF_FENRIS.infrastructureMods;
+  if (getPlayerCount() === 1) {
+    mods = mods.filter(function(mod) { return mod.supportedByAutoma; });
+  }
+
+  return multiply(mods.map(function(mod) { return mod.label; }), 4);
 }
 
 function pickBoards() {

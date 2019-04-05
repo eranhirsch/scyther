@@ -134,14 +134,14 @@ const RISE_OF_FENRIS = {
   },
 
   infrastructureMods: [
-    'Assembly Line',
-    'Automachines',
-    'Cavalry',
-    'Construction',
-    'Machinery',
-    'Propaganda',
-    'Recruitment Office',
-    'Spy',
+    {label: 'Assembly Line', supportedByAutoma: true},
+    {label: 'Automachines', supportedByAutoma: true},
+    {label: 'Cavalry', supportedByAutoma: true},
+    {label: 'Construction', supportedByAutoma: true},
+    {label: 'Machinery', supportedByAutoma: true},
+    {label: 'Propaganda', supportedByAutoma: true},
+    {label: 'Recruitment Office', supportedByAutoma: true},
+    {label: 'Spy', supportedByAutoma: false},
   ],
 
   triumphTracks: [
