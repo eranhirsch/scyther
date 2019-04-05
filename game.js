@@ -200,7 +200,7 @@ function pickBoards(playerCount) {
   return out;
 }
 
-function pickGlobals(withAutoma) {
+function pickGlobals(boards) {
   globals = {ruleBook: []};
 
   // We always have a building bonus tile
@@ -209,6 +209,10 @@ function pickGlobals(withAutoma) {
   if (shouldIncludeResolutions()) {
     globals.resolution = pickFromArray(WIND_GAMBIT.resolutions);
   }
+
+  const withAutoma = boards.some(function(board) {
+    return board.isAutoma;
+  });
 
   if (shouldIncludeAirships()) {
     var aggressive = WIND_GAMBIT.airshipAbilities.aggressive;
@@ -230,7 +234,13 @@ function pickGlobals(withAutoma) {
     if (track === RISE_OF_FENRIS.triumphTracks.PEACE) {
       // Page 51
       globals.ruleBook.push('Remove objective card #23');
-      globals.ruleBook.push('Saxony starts with 3 objective cards');
+      if (
+        boards.some(function(board) {
+          return board.faction === BASE.factions.SAXONY;
+        })
+      ) {
+        globals.ruleBook.push('Saxony starts with 3 objective cards');
+      }
     }
     const enhancement = pickFromArray(track.enhancements.concat(['']));
     globals.triumphTrack = {track: track, enhancement: enhancement};
@@ -271,6 +281,6 @@ function generateNewGame(playerCount) {
 
   return {
     players: boards,
-    globals: pickGlobals(playerCount === 1 /* withAutoma */),
+    globals: pickGlobals(boards),
   };
 }
