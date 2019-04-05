@@ -274,15 +274,21 @@ function populateGlobalSection(globals) {
     );
   }
 
-  if (!!globals.automaModifiers) {
+  if (!!globals.ruleBook && globals.ruleBook.length > 0) {
     globalSection.appendChild(
-      renderGlobalItem('🤖', renderSimpleLabel(globals.automaModifiers)),
+      renderGlobalItem(
+        '📖',
+        renderSimpleLabel(globals.ruleBook.join(', '), ['ruleBook']),
+      ),
     );
   }
 
-  if (!!globals.ruleBook && globals.ruleBook.length > 0) {
+  if (!!globals.automaModifiers) {
     globalSection.appendChild(
-      renderGlobalItem('📖', renderSimpleLabel(globals.ruleBook.join(', '))),
+      renderGlobalItem(
+        '🤖',
+        renderSimpleLabel(globals.automaModifiers, ['ruleBook']),
+      ),
     );
   }
 }

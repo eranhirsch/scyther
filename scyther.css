@@ -173,6 +173,10 @@ ol#players .player-board {
   font-size: smaller;
 }
 
+#global .ruleBook {
+  font-style: italic;
+}
+
 #controls {
   margin-bottom: 15px;
 }
