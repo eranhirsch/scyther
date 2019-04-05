@@ -107,7 +107,7 @@ function renderBoardSelection(selection) {
         ...selection.vesnaFactions.map(function(faction) {
           const elem = document.createElement('li');
           elem.className = faction.className + ' list-inline-item';
-          elem.textContent = faction.name;
+          elem.textContent = faction.shortName;
           return elem;
         }),
       );
