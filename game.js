@@ -101,6 +101,24 @@ function getInfraMods(withAutoma) {
   );
 }
 
+function selectFaction(factions) {
+  const selection = {};
+
+  selection.faction = extractFromPool(factions)[0];
+  if (!selection.faction.location) {
+    // Some factions don't have a persistant home-base (Fenris, Vesna). They
+    // use a home-base drawn randomly from the remaining bases.
+    selection.homeBaseFaction = extractFromPool(factions, 1, function(
+      faction,
+    ) {
+      // We want to make sure the faction we choose has a homebase
+      return !!faction.location;
+    })[0];
+  }
+
+  return selection;
+}
+
 function pickBoards(playerCount) {
   var factions = getFactions();
   var playerBoards = getPlayerBoards();
@@ -109,19 +127,7 @@ function pickBoards(playerCount) {
 
   out = [];
   for (var i = 0; i < playerCount; i++) {
-    const selection = {};
-
-    selection.faction = extractFromPool(factions)[0];
-    if (!selection.faction.location) {
-      // Some factions don't have a persistant home-base (Fenris, Vesna). They
-      // use a home-base drawn randomly from the remaining bases.
-      selection.homeBaseFaction = extractFromPool(factions, 1, function(
-        faction,
-      ) {
-        // We want to make sure the faction we choose has a homebase
-        return !!faction.location;
-      })[0];
-    }
+    selection = selectFaction(factions);
 
     // Vesna has a unique set up that requires picking random components too!
     const vesnaMechAbilities = RISE_OF_FENRIS.factions.VESNA.mechAbilities.slice();
@@ -181,9 +187,8 @@ function pickBoards(playerCount) {
   }
 
   if (playerCount === 1) {
-    const automa = {isAutoma: true};
-
-    automa.faction = extractFromPool(factions)[0];
+    const automa = selectFaction(factions);
+    automa.isAutoma = true;
 
     // Rules for fenris mods when playing with the automa (Page 50)
     // TODO: If I ever add a rule clarification row to the general section this
