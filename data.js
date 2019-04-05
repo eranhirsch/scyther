@@ -147,7 +147,11 @@ const RISE_OF_FENRIS = {
   triumphTracks: {
     WAR: {name: 'War Track', enhancements: ['Rivals'], className: 'warTrack'},
     REGULAR: {name: 'Regular Track', enhancements: ['Rivals', 'Alliances']},
-    PEACE: {name: 'Peace Track', enhancements: ['Alliances'], className: 'peaceTrack'},
+    PEACE: {
+      name: 'Peace Track',
+      enhancements: ['Alliances'],
+      className: 'peaceTrack',
+    },
   },
 
   factions: {

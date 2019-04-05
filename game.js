@@ -108,9 +108,7 @@ function selectFaction(factions) {
   if (!selection.faction.location) {
     // Some factions don't have a persistant home-base (Fenris, Vesna). They
     // use a home-base drawn randomly from the remaining bases.
-    selection.homeBaseFaction = extractFromPool(factions, 1, function(
-      faction,
-    ) {
+    selection.homeBaseFaction = extractFromPool(factions, 1, function(faction) {
       // We want to make sure the faction we choose has a homebase
       return !!faction.location;
     })[0];
@@ -239,7 +237,10 @@ function pickGlobals(withAutoma) {
   }
 
   if (withInfraMods() || withMechMods()) {
-    globals.ruleBook.push('Pick 2 mods' + (!withInfraMods() || !withMechMods() ? '' : ' (of each kind)'));
+    globals.ruleBook.push(
+      'Pick 2 mods' +
+        (!withInfraMods() || !withMechMods() ? '' : ' (of each kind)'),
+    );
   }
 
   if (withAutoma) {
