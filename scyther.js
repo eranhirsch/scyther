@@ -563,7 +563,6 @@ function showOutputView() {
   $('.output-phase').show();
 
   const game = generateNewGame();
-  console.log(game);
   populateGameResults(game);
 }
 
