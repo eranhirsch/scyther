@@ -19,7 +19,7 @@ function renderFaction(selection) {
   if (homeBaseFaction) {
     const homeBaseElem = document.createElement('span');
     homeBaseElem.className = 'altHomeBase ' + homeBaseFaction.className;
-    homeBaseElem.textContent = '(' + homeBaseFaction.shortName + ')';
+    homeBaseElem.textContent = '➔ ' + homeBaseFaction.shortName;
     elem.appendChild(homeBaseElem);
   }
 
