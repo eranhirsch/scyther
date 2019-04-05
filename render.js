@@ -165,15 +165,14 @@ function renderAirshipLabel(airships) {
 
 function renderTriumphTrackLabel(track) {
   let elem = renderSimpleLabel(
-    track.name,
-    track.className ? [track.className] : [],
+    track.track.name,
+    track.track.className ? [track.track.className] : [],
   );
 
-  const enhancement = pickFromArray(track.enhancements.concat(['']));
-  if (enhancement) {
+  if (!!track.enhancement) {
     let enhancementElem = document.createElement('span');
     enhancementElem.className = 'trackEnhancement';
-    enhancementElem.textContent = ' with ' + enhancement;
+    enhancementElem.textContent = ' with ' + track.enhancement;
     elem.appendChild(enhancementElem);
   }
 

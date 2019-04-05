@@ -255,7 +255,9 @@ function pickGlobals() {
   }
 
   if (withAltTriumphTracks()) {
-    globals.triumphTrack = pickFromArray(RISE_OF_FENRIS.triumphTracks);
+    const track = pickFromArray(RISE_OF_FENRIS.triumphTracks);
+    const enhancement = pickFromArray(track.enhancements.concat(['']));
+    globals.triumphTrack = {track: track, enhancement: enhancement};
   }
 
   return globals;
