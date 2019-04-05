@@ -239,7 +239,7 @@ function pickGlobals(withAutoma) {
   }
 
   if (withInfraMods() || withMechMods()) {
-    globals.ruleBook.push('Pick 2 mods' (!withInfraMods() || !withMechMods() ? '' : ' (of each kind)');
+    globals.ruleBook.push('Pick 2 mods' + (!withInfraMods() || !withMechMods() ? '' : ' (of each kind)'));
   }
 
   if (withAutoma) {
