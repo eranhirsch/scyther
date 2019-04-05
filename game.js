@@ -186,22 +186,27 @@ function pickBoards(playerCount) {
     automa.faction = extractFromPool(factions)[0];
 
     // Rules for fenris mods when playing with the automa (Page 50)
+    // TODO: If I ever add a rule clarification row to the general section this
+    // should ideally move there, and combined with the triumph track changes
     if (withInfraMods()) {
       if (withMechMods()) {
         // "If you’re using both types of Mods, The Automa “buys” 4
         // Infrastructure Mods."
         extractFromPool(allInfraMods, 4);
-        automa.modifiers = "Star Tracker +2, Gain Stuff, Remove Card 4";
+        // See table on Page 6
+        automa.modifiers = 'Star Tracker +2, Gain Stuff, Remove Card 4';
       } else {
         // "If you’re using Infrastructure Mods only, the Automa “buys” 2
         // Infrastructure Mods."
         extractFromPool(allInfraMods, 2);
-        automa.modifiers = "Star Tracker +1, Gain Stuff";
+        // See table on Page 6
+        automa.modifiers = 'Star Tracker +1, Gain Stuff';
       }
     } else if (withMechMods()) {
       // "If you’re using Mech Mods only, the Automa “buys” 3 Mech Mods."
       extractFromPool(allMechMods, 3);
-      automa.modifiers = "Gain Stuff x2";
+      // See table on Page 6
+      automa.modifiers = 'Gain Stuff x2';
     }
 
     if (automa.faction === RISE_OF_FENRIS.factions.VESNA) {
