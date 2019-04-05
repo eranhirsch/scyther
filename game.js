@@ -56,14 +56,14 @@ function proximityScore(faction, others) {
     }, 0);
 }
 
-function getFactions() {
+function getFactions(skipRiseOfFenris = false) {
   let factions = Object.values(BASE.factions).slice();
 
   if (shouldIncludeInvadersBoards()) {
     factions = factions.concat(Object.values(INVADERS_FROM_AFAR.factions));
   }
 
-  if (shouldIncludeFenrisFactions()) {
+  if (!skipRiseOfFenris && shouldIncludeFenrisFactions()) {
     factions = factions.concat(Object.values(RISE_OF_FENRIS.factions));
   }
 
@@ -185,6 +185,7 @@ function pickBoards(playerCount) {
 
     automa.faction = extractFromPool(factions)[0];
 
+    // Rules for fenris mods when playing with the automa (Page 50)
     if (withInfraMods()) {
       if (withMechMods()) {
         // "If you’re using both types of Mods, The Automa “buys” 4
@@ -201,6 +202,12 @@ function pickBoards(playerCount) {
       // "If you’re using Mech Mods only, the Automa “buys” 3 Mech Mods."
       extractFromPool(allMechMods, 3);
       automa.modifiers = "Gain Stuff x2";
+    }
+
+    if (automa.faction === RISE_OF_FENRIS.factions.VESNA) {
+      // Vesna draws 2 random factions (Page 23)
+      const allFactions = getFactions(true /* skipRiseOfFenris */);
+      automa.vesnaFactions = extractFromPool(allFactions, 2);
     }
 
     out.push(automa);

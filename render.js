@@ -94,9 +94,31 @@ function renderBoardSelection(selection) {
     elem.appendChild(renderMods(selection.mechMods, 'Mech'));
   }
 
-  if (selection.isAutoma && !!selection.modifiers) {
-    // We're faking it as a mod so that it renders in the same way...
-    elem.appendChild(renderMods([selection.modifiers], 'Modifiers'));
+  if (selection.isAutoma) {
+    if (!!selection.vesnaFactions) {
+      // TODO: This is ugly, i need to merge this with the rendering logic for
+      // the renderMods
+      const factionsElem = document.createElement('div');
+      factionsElem.className = 'rofMods';
+      factionsElem.appendChild(renderSimpleLabel('Factions:'));
+      const listElem = document.createElement('ul');
+      listElem.className = 'list-inline d-inline';
+      listElem.append(
+        ...selection.vesnaFactions.map(function(faction) {
+          const elem = document.createElement('li');
+          elem.className = faction.className + ' list-inline-item';
+          elem.textContent = faction.name;
+          return elem;
+        }),
+      );
+      factionsElem.appendChild(listElem);
+      elem.appendChild(factionsElem);
+    }
+
+    if (!!selection.modifiers) {
+      // We're faking it as a mod so that it renders in the same way...
+      elem.appendChild(renderMods([selection.modifiers], 'Modifiers'));
+    }
   }
 
   if (!!selection.mechAbilities) {
