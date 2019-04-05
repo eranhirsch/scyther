@@ -101,7 +101,7 @@ function renderBoardSelection(selection) {
     );
     abilitiesElem.className += ' ' + selection.faction.className;
 
-    if (withMechMods()) {
+    if (!!selection.mechMods) {
       const hiddenHTML = abilitiesElem.innerHTML;
       const hiddenClassName = abilitiesElem.className;
 
