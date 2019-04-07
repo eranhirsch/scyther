@@ -252,11 +252,14 @@ function pickGlobals(boards) {
 
     if (track === RISE_OF_FENRIS.triumphTracks.RANDOM) {
       globals.triumphTrack.tiles = extractFromPool(
+        // We want to maintain order so we shuffle indices instead of values
         range(track.tiles.length),
         10,
-      ).map(function(idx) {
-        return track.tiles[idx];
-      });
+      )
+        .sort()
+        .map(function(idx) {
+          return track.tiles[idx];
+        });
     }
   }
 
