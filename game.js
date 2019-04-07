@@ -6,6 +6,10 @@ function multiply(list, multiplier) {
   });
 }
 
+function range(n) {
+  return Array.from(Array(n).keys());
+}
+
 function getIntInRange(from, to) {
   return from + Math.floor(Math.random() * (to - from + 1));
 }
@@ -247,7 +251,12 @@ function pickGlobals(boards) {
     globals.triumphTrack = {track: track, enhancement: enhancement};
 
     if (track === RISE_OF_FENRIS.triumphTracks.RANDOM) {
-      globals.triumphTrack.tiles = extractFromPool(track.tiles.slice(), 10);
+      globals.triumphTrack.tiles = extractFromPool(
+        range(track.tiles.length),
+        10,
+      ).map(function(idx) {
+        return track.tiles[idx];
+      });
     }
   }
 
