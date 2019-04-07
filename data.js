@@ -147,7 +147,7 @@ const RISE_OF_FENRIS = {
   triumphTracks: {
     REGULAR: {
       name: 'Regular Track',
-      enhancements: ['Rivals', 'Alliances'],
+      className: 'regularTrack',
       layout: [
         'Upgrades',
         'Mechs',
@@ -163,7 +163,6 @@ const RISE_OF_FENRIS = {
     },
     WAR: {
       name: 'War Track',
-      enhancements: ['Rivals'],
       className: 'warTrack',
       layout: [
         // Page 16
@@ -181,7 +180,6 @@ const RISE_OF_FENRIS = {
     },
     PEACE: {
       name: 'Peace Track',
-      enhancements: ['Alliances'],
       className: 'peaceTrack',
       layout: [
         // Page 18
@@ -199,7 +197,7 @@ const RISE_OF_FENRIS = {
     },
     RANDOM: {
       name: 'Tiles',
-      enhancements: [],
+      className: 'randomTrack',
       tiles: [
         // Dont sort these, the order is important for display
         'Upgrades',

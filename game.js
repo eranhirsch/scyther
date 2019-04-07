@@ -6,10 +6,6 @@ function multiply(list, multiplier) {
   });
 }
 
-function range(n) {
-  return Array.from(Array(n).keys());
-}
-
 function getIntInRange(from, to) {
   return from + Math.floor(Math.random() * (to - from + 1));
 }
@@ -33,6 +29,30 @@ function pickFromArray(array) {
   // We need to copy the array before we extract from it otherwise we wouldn't
   // be able to reshuffle the results later on...
   return extractFromPool(array.slice())[0];
+}
+
+/**
+ * calculate the 'edit distance' between 2 lists. Edit distance is the number
+ * of mismatching tiles between the 2. It should be reflexive.
+ */
+function listDistance(a, b) {
+  if (a.length !== b.length) {
+    console.log(a, b);
+    throw new Exception('Both lists need to be of the same length');
+  }
+
+  // We need a copy of b so we can do destructive changes to it
+  return a.reduce(function(remaining, value) {
+    const idx = remaining.indexOf(value);
+    if (idx > -1) {
+      remaining.splice(idx, 1);
+    }
+    return remaining;
+  }, b.slice()).length;
+}
+
+function range(n) {
+  return Array.from(Array(n).keys());
 }
 
 function factionDistance(a, b) {
@@ -204,6 +224,65 @@ function pickBoards(playerCount) {
   return out;
 }
 
+function pickTriumphTrack() {
+  const track = pickFromArray(Object.values(RISE_OF_FENRIS.triumphTracks));
+
+  let out = {track: track};
+
+  if (track === RISE_OF_FENRIS.triumphTracks.WAR) {
+    out.distances = {
+      war: 0,
+      regular: 4,
+    };
+  } else if (track === RISE_OF_FENRIS.triumphTracks.PEACE) {
+    out.distances = {
+      war: 8,
+      regular: 4,
+    };
+  } else if (track === RISE_OF_FENRIS.triumphTracks.REGULAR) {
+    out.distances = {
+      war: 4,
+      regular: 0,
+    };
+  } else {
+    // We want to maintain order so we shuffle indices instead of values
+    out.tiles = extractFromPool(range(track.tiles.length), 10)
+      // We then sort the indices because order is important
+      .sort()
+      // and finally map the actual values to the indices for display
+      .map(function(idx) {
+        return track.tiles[idx];
+      });
+
+    out.distances = {
+      // The distance from the regular track is a number in the range 0..6 (we
+      // can build the regular track out of the random tile pieces).
+      regular: listDistance(
+        out.tiles,
+        RISE_OF_FENRIS.triumphTracks.REGULAR.layout,
+      ),
+
+      // The distance to the war track is a number in the range 1..7, 0 and 8
+      // are the actual war and peace tracks (respectively)
+      war: listDistance(out.tiles, RISE_OF_FENRIS.triumphTracks.WAR.layout),
+    };
+
+    if (out.distances.regular === 0) {
+      // When the distance is 0 we can simply use the track that is already
+      // printed on the board
+      out.track = RISE_OF_FENRIS.triumpTracks.REGULAR;
+    }
+  }
+
+  // The likelihood of using Rivals (or Alliances) is based on how close the
+  // current triumph track is to the War track. The closer it is, the more
+  // likely we are to using that module vs Alliances.
+  out.enhancement =
+    Math.random() < out.distances.war / 8.0 ? 'Alliances' : 'Rivals';
+
+  return out;
+}
+
 function pickGlobals(boards) {
   globals = {ruleBook: []};
 
@@ -234,8 +313,9 @@ function pickGlobals(boards) {
   }
 
   if (withAltTriumphTracks()) {
-    const track = pickFromArray(Object.values(RISE_OF_FENRIS.triumphTracks));
-    if (track === RISE_OF_FENRIS.triumphTracks.PEACE) {
+    const track = pickTriumphTrack();
+
+    if (track.track === RISE_OF_FENRIS.triumphTracks.PEACE) {
       // Page 51
       globals.ruleBook.push('Remove objective card #23');
       if (
@@ -247,20 +327,7 @@ function pickGlobals(boards) {
       }
     }
 
-    const enhancement = pickFromArray(track.enhancements.concat(['']));
-    globals.triumphTrack = {track: track, enhancement: enhancement};
-
-    if (track === RISE_OF_FENRIS.triumphTracks.RANDOM) {
-      globals.triumphTrack.tiles = extractFromPool(
-        // We want to maintain order so we shuffle indices instead of values
-        range(track.tiles.length),
-        10,
-      )
-        .sort()
-        .map(function(idx) {
-          return track.tiles[idx];
-        });
-    }
+    globals.triumphTrack = track;
   }
 
   if (withAutoma) {
