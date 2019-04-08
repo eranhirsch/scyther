@@ -91,6 +91,42 @@ ol#players .player-board {
   color: #2c78bd;
 }
 
+.randomTrack.warCol_0 {
+  color: hsla(0, 100%, 50%, 1);
+}
+
+.randomTrack.warCol_1 {
+  color: hsla(350, 100%, 50%, 1);
+}
+
+.randomTrack.warCol_2 {
+  color: hsla(340, 100%, 50%, 1);
+}
+
+.randomTrack.warCol_3 {
+  color: hsla(330, 100%, 50%, 1);
+}
+
+.randomTrack.warCol_4 {
+  color: hsla(265, 100%, 50%, 1);
+}
+
+.randomTrack.warCol_5 {
+  color: hsla(260, 100%, 50%, 1);
+}
+
+.randomTrack.warCol_6 {
+  color: hsla(255, 100%, 50%, 1);
+}
+
+.randomTrack.warCol_7 {
+  color: hsla(250, 100%, 50%, 1);
+}
+
+.randomTrack.warCol_8 {
+  color: hsla(240, 100%, 50%, 1);
+}
+
 .albion {
   color: #539832;
 }

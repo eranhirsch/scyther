@@ -188,10 +188,11 @@ function renderAirshipLabel(airships) {
 }
 
 function renderTriumphTrackLabel(track) {
-  let elem = renderSimpleLabel(
-    track.track.name,
-    track.track.className ? [track.track.className] : [],
-  );
+  let elem = renderSimpleLabel(track.track.name, [
+    track.track.className,
+    'regCol_' + track.distances.regular,
+    'warCol_' + track.distances.war,
+  ]);
 
   if (!!track.enhancement) {
     let enhancementElem = document.createElement('span');
