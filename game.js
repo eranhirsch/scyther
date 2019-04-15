@@ -248,11 +248,9 @@ function pickTriumphTrack() {
     // We want to maintain order so we shuffle indices instead of values
     out.tiles = extractFromPool(range(track.tiles.length), 10)
       // We then sort the indices because order is important
-      .sort()
+      .sort(function(a, b) { return a - b; })
       // and finally map the actual values to the indices for display
-      .map(function(idx) {
-        return track.tiles[idx];
-      });
+      .map(function(idx) { return track.tiles[idx]; });
 
     out.distances = {
       // The distance from the regular track is a number in the range 0..6 (we

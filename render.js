@@ -1,6 +1,22 @@
 /** The precision to show proximity scores at */
 const PROXIMITY_PRECISION = 1;
 
+const TRIUMPH_TILES_DISPLAY_LABELS = {
+  'Upgrades': 'UPGD',
+  'Mechs': 'MECH',
+  'Structures': 'BLDG',
+  'Recruits': 'RECR',
+  'Workers': 'WORK',
+  'Objective': 'OBJC',
+  'Combat Victory': 'CBAT',
+  'Popularity': 'POP',
+  'Power': 'POWR',
+  'Combat Cards': 'CCRD',
+  'Encounters': 'ENCR',
+  'Factory': 'FACT',
+  'Resources': 'RSRC',
+}
+
 function renderPlayerBoard(selection) {
   const elem = document.createElement('span');
   elem.className = 'player-board';
@@ -154,7 +170,7 @@ function renderBoardSelection(selection) {
 
 function renderGlobalItem(icon, labelElem) {
   var elem = document.createElement('li');
-  elem.className = 'list-group-item';
+  elem.className = 'globalItem list-group-item';
 
   elem.append(renderIcon(icon), labelElem);
 
@@ -188,24 +204,32 @@ function renderAirshipLabel(airships) {
 }
 
 function renderTriumphTrackLabel(track) {
-  let elem = renderSimpleLabel(track.track.name, [
-    track.track.className,
-    'regCol_' + track.distances.regular,
-    'warCol_' + track.distances.war,
-  ]);
+  const wrapperElem = document.createElement('div');
+
+  if (!!track.tiles) {
+    wrapperElem.className = ['randomTrack', 'regCol_' + track.distances.regular, 'warCol_' + track.distances.war].join(' ');
+    const tilesElem = document.createElement('ol');
+    tilesElem.className = 'list-inline';
+    tilesElem.append(...track.tiles.map(function(tile) {
+      const listElem = document.createElement('li');
+      listElem.className = 'list-inline-item';
+      listElem.textContent = TRIUMPH_TILES_DISPLAY_LABELS[tile];
+      return listElem;
+    }));
+    wrapperElem.appendChild(tilesElem);
+  } else {
+    wrapperElem.className = track.track.className + ' d-inline';
+    wrapperElem.appendChild(renderSimpleLabel(track.track.name));
+  }
 
   if (!!track.enhancement) {
     let enhancementElem = document.createElement('span');
     enhancementElem.className = 'trackEnhancement';
-    enhancementElem.textContent = ' with ' + track.enhancement;
-    elem.appendChild(enhancementElem);
+    enhancementElem.textContent = 'with ' + track.enhancement;
+    wrapperElem.append('\x0a', enhancementElem);
   }
 
-  if (!!track.tiles) {
-    elem.appendChild(renderSimpleLabel(track.tiles.sort().join(', ')));
-  }
-
-  return elem;
+  return wrapperElem;
 }
 
 function renderPlayerCountButton(i, isActive) {

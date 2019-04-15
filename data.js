@@ -196,8 +196,6 @@ const RISE_OF_FENRIS = {
       ],
     },
     RANDOM: {
-      name: 'Tiles',
-      className: 'randomTrack',
       tiles: [
         // Dont sort these, the order is important for display
         'Upgrades',

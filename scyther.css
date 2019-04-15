@@ -181,18 +181,18 @@ ol#players .player-board {
   margin-top: 0.8rem;
 }
 
-#global li {
+.globalItem {
   background-color: rgba(255, 255, 255, 0.75);
   font-size: smaller;
   padding: 0.25rem 0.9rem;
 }
 
-#global .icon {
+.globalItem > .icon {
   font-size: large;
   margin-right: 0.3rem;
 }
 
-#global .label {
+.globalItem > .label {
   vertical-align: text-bottom;
 }
 
@@ -201,8 +201,15 @@ ol#players .player-board {
   font-size: smaller;
 }
 
-#global .ruleBook {
+.ruleBook {
   font-style: italic;
+}
+
+.randomTrack li {
+  font-family: monospace;
+  font-size: 1rem;
+  line-height: 0.35rem;
+  writing-mode: vertical-rl;
 }
 
 #controls {
