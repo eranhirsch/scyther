@@ -2,19 +2,19 @@
 const PROXIMITY_PRECISION = 1;
 
 const TRIUMPH_TILES_DISPLAY_LABELS = {
-  Upgrades: 'UPGD',
-  Mechs: 'MECH',
-  Structures: 'BLDG',
-  Recruits: 'RECR',
-  Workers: 'WORK',
-  Objective: 'OBJC',
+  'Upgrades': 'UPGD',
+  'Mechs': 'MECH',
+  'Structures': 'BLDG',
+  'Recruits': 'RECR',
+  'Workers': 'WORK',
+  'Objective': 'OBJC',
   'Combat Victory': 'CBAT',
-  Popularity: 'POPT',
-  Power: 'POWR',
+  'Popularity': 'POPT',
+  'Power': 'POWR',
   'Combat Cards': 'CCRD',
-  Encounters: 'ENCR',
-  Factory: 'FACT',
-  Resources: 'RSRC',
+  'Encounters': 'ENCR',
+  'Factory': 'FACT',
+  'Resources': 'RSRC',
 };
 
 function renderPlayerBoard(selection) {
@@ -58,12 +58,7 @@ function renderBoardSelectionLabel(selection) {
 }
 
 function renderMods(mods, label) {
-  return renderInlineItemsList(
-    mods.map(function(mod) {
-      return {label: mod};
-    }),
-    label,
-  );
+  return renderInlineItemsList(mods.map(mod => ({label: mod})), label);
 }
 
 function renderInlineItemsList(items, label) {
@@ -75,7 +70,7 @@ function renderInlineItemsList(items, label) {
   const listElem = document.createElement('ul');
   listElem.className = 'list-inline d-inline';
   listElem.append(
-    ...items.sort().map(function(item) {
+    ...items.sort().map(item => {
       const itemElem = document.createElement('li');
       itemElem.className =
         'list-inline-item' + (!!item.className ? ' ' + item.className : '');
@@ -148,7 +143,7 @@ function renderBoardSelection(selection) {
       abilitiesElem.textContent = 'Click here to reveal mech abilities';
       abilitiesElem.className += ' revealCTA';
 
-      abilitiesElem.addEventListener('click', function() {
+      abilitiesElem.addEventListener('click', () => {
         this.className = hiddenClassName;
         this.innerHTML = hiddenHTML;
       });
@@ -215,7 +210,7 @@ function renderTriumphTrackLabel(track) {
     const tilesElem = document.createElement('ol');
     tilesElem.className = 'list-inline d-inline';
     tilesElem.append(
-      ...track.tiles.map(function(tile) {
+      ...track.tiles.map(tile => {
         const listElem = document.createElement('li');
         listElem.className = 'list-inline-item';
         listElem.textContent = TRIUMPH_TILES_DISPLAY_LABELS[tile];
@@ -271,9 +266,7 @@ function populatePlayers(boards) {
   // Reset previous results
   playersSection.innerHTML = '';
   playersSection.append(
-    ...boards.map(function(selection) {
-      return renderBoardSelection(selection);
-    }),
+    ...boards.map(selection => renderBoardSelection(selection)),
   );
 }
 
@@ -335,9 +328,7 @@ function populatePlayerCountButtons() {
   }
   group.innerHTML = '';
 
-  const storedPlayerCount = state(function(state) {
-    return state.playerCount || null;
-  });
+  const storedPlayerCount = state(state => state.playerCount || null);
 
   let factionsCount = HOME_BASES_ON_BOARD;
   if (!shouldIncludeInvadersBoards() && !shouldIncludeFenrisFactions()) {
@@ -385,15 +376,13 @@ function registerServiceWorker() {
 }
 
 function saveSettings() {
-  state(function(state) {
+  state(state => {
     const selector =
       '#' + SECTION_IDS.SETTINGS_FORM + " input[type='checkbox']";
     state.settings = $(selector)
-      .map(function(_, elem) {
-        return {id: elem.id, checked: elem.checked};
-      })
+      .map((_, elem) => ({id: elem.id, checked: elem.checked}))
       .get()
-      .reduce(function(out, elem) {
+      .reduce((out, elem) => {
         out[elem.id] = elem.checked;
         return out;
       }, {});
@@ -401,14 +390,14 @@ function saveSettings() {
 }
 
 function savePlayerCount(event) {
-  state(function(state) {
+  state(state => {
     state.playerCount = parseInt(event.currentTarget.firstChild.value);
   });
 }
 
 function readPreviousFormState() {
-  state(function(state) {
-    Object.entries(state.settings || []).forEach(function(setting) {
+  state(state => {
+    Object.entries(state.settings || []).forEach(setting => {
       const elem = document.getElementById(setting[0]);
       if (elem) {
         elem.checked = setting[1];
