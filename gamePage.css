@@ -1,47 +1,7 @@
-html {
-  background-attachment: fixed;
-  background-image: url(./bg.jpg);
-  background-position: 55% center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  overflow: hidden;
-}
-
-body {
-  background-color: rgba(0, 0, 0, 0.05);
-  height: 100%;
-}
-
-#root {
-  text-align: center;
-}
-
-#root.hide-all {
-  display: none !important;
-}
-
-#title {
-  color: white;
-  font-family: monospace, monospace;
-  letter-spacing: 1rem;
-  padding-top: 10rem;
-}
-
 .automa-button {
   font-size: 0.8rem;
   font-style: italic;
   vertical-align: top;
-}
-
-#settings {
-  color: white;
-  padding-top: 1rem;
-}
-
-#settings .custom-control-input:checked~.custom-control-label::before {
-  /* Copied from the colors of --warning in bootstrap */
-  background-color: #ffc107;
-  border-color: #ffc107;
 }
 
 #players {
@@ -208,22 +168,8 @@ ol#players .player-board {
   writing-mode: vertical-rl;
 }
 
-#navigation {
-  margin-bottom: 15px;
-}
-
 /* Fixes for iPhone SE and similar sized devices */
 @media only screen and (max-height: 568px) {
-  #title {
-    padding-top: 2rem;
-  }
-
-  .btn-group-lg>.btn {
-    font-size: 1rem;
-    line-height: 1.5;
-    padding: .375rem .75rem;
-  }
-
   #players {
     font-size: .75rem;
     line-height: .8rem;
