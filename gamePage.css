@@ -1,0 +1,232 @@
+html {
+  background-attachment: fixed;
+  background-image: url(./bg.jpg);
+  background-position: 55% center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden;
+}
+
+body {
+  background-color: rgba(0, 0, 0, 0.05);
+  height: 100%;
+}
+
+#root {
+  text-align: center;
+}
+
+#root.hide-all {
+  display: none !important;
+}
+
+#title {
+  color: white;
+  font-family: monospace, monospace;
+  letter-spacing: 1rem;
+  padding-top: 10rem;
+}
+
+.automa-button {
+  font-size: 0.8rem;
+  font-style: italic;
+  vertical-align: top;
+}
+
+#settings {
+  color: white;
+  padding-top: 1rem;
+}
+
+#settings .custom-control-input:checked~.custom-control-label::before {
+  /* Copied from the colors of --warning in bootstrap */
+  background-color: #ffc107;
+  border-color: #ffc107;
+}
+
+#players {
+  font-size: 1rem;
+  line-height: 1rem;
+  margin-top: 0.25rem;
+}
+
+ol#players > li {
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+ol#players > li:first-child {
+  margin-top: 0;
+}
+
+ol#players .player-board {
+  font-variant-caps: small-caps;
+  font-weight: 500;
+}
+
+.polania {
+  color: #ababab;
+}
+
+.saxony {
+  color: #525252;
+}
+
+.crimea {
+  color: #b9a51e;
+}
+
+.togawa {
+  color: #904bab;
+}
+
+.rusviet, .airship-aggressive, .warTrack {
+  color: hsla(0, 50%, 52%, 1);
+}
+
+.nordic, .airship-passive, .peaceTrack {
+  color: hsla(209, 62%, 52%, 1);
+}
+
+.albion {
+  color: #539832;
+}
+
+.vesna {
+  color: #38c7bd;
+}
+
+.fenris {
+  color: #f78937;
+}
+
+.randomTrack.warCol_1 {
+  color: hsla(0, 50%, 47%, 1);
+}
+
+.randomTrack.warCol_2 {
+  color: hsla(0, 50%, 40%, 1);
+}
+
+.randomTrack.warCol_3 {
+  color: hsla(0, 50%, 30%, 1);
+}
+
+.randomTrack.warCol_4 {
+  color: #000;
+}
+
+.randomTrack.warCol_5 {
+  color: hsla(209, 62%, 30%, 1);
+}
+
+.randomTrack.warCol_6 {
+  color: hsla(209, 62%, 40%, 1);
+}
+
+.randomTrack.warCol_7 {
+  color: hsla(209, 62%, 47%, 1);
+}
+
+.altHomeBase {
+  font-size: 7pt;
+  font-style: italic;
+  margin-left: 0.2rem;
+  vertical-align: text-top;
+}
+
+.automa {
+  font-style: italic;
+}
+
+.proximity {
+  color: darkgray;
+  font-size: small;
+}
+
+.rofMods {
+  font-family: monospace;
+  font-size: 7pt;
+}
+
+.rofMods .label {
+  font-weight: bold;
+}
+
+.rofMods li:not(:last-child) {
+  margin-right: .1rem;
+}
+
+.rofMods li:after {
+	content: '/';
+  margin-left: .1rem;
+}
+
+.rofMods li:last-child:after {
+	content: '';
+}
+
+.rofMods .icon {
+  margin-right: .25rem;
+}
+
+.rofMods.revealCTA {
+  text-decoration: underline;
+}
+
+#global {
+  margin-top: 0.8rem;
+}
+
+.globalItem {
+  background-color: rgba(255, 255, 255, 0.75);
+  font-size: smaller;
+  padding: 0.25rem 0.9rem;
+}
+
+.globalItem > .icon {
+  font-size: large;
+  margin-right: 0.3rem;
+}
+
+.globalItem > .label {
+  vertical-align: text-bottom;
+}
+
+.trackEnhancement {
+  font-style: italic;
+  font-size: smaller;
+}
+
+.ruleBook {
+  font-style: italic;
+}
+
+.randomTrack li {
+  font-family: monospace;
+  font-size: 1rem;
+  line-height: 0.35rem;
+  writing-mode: vertical-rl;
+}
+
+#navigation {
+  margin-bottom: 15px;
+}
+
+/* Fixes for iPhone SE and similar sized devices */
+@media only screen and (max-height: 568px) {
+  #title {
+    padding-top: 2rem;
+  }
+
+  .btn-group-lg>.btn {
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: .375rem .75rem;
+  }
+
+  #players {
+    font-size: .75rem;
+    line-height: .8rem;
+    margin-top: 0.15rem;
+  }
+}
