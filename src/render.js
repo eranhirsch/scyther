@@ -204,12 +204,12 @@ function renderAirshipLabel(airships) {
 }
 
 function renderTriumphTrackLabel(track) {
-  const wrapperElem = document.createElement('div');
+  const wrapperElem = document.createElement('span');
 
   if (!!track.tiles) {
     wrapperElem.className = ['randomTrack', 'regCol_' + track.distances.regular, 'warCol_' + track.distances.war].join(' ');
     const tilesElem = document.createElement('ol');
-    tilesElem.className = 'list-inline';
+    tilesElem.className = 'list-inline d-inline';
     tilesElem.append(...track.tiles.map(function(tile) {
       const listElem = document.createElement('li');
       listElem.className = 'list-inline-item';
