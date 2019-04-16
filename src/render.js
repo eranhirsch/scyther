@@ -9,7 +9,7 @@ const TRIUMPH_TILES_DISPLAY_LABELS = {
   'Workers': 'WORK',
   'Objective': 'OBJC',
   'Combat Victory': 'CBAT',
-  'Popularity': 'POP',
+  'Popularity': 'POPT',
   'Power': 'POWR',
   'Combat Cards': 'CCRD',
   'Encounters': 'ENCR',
