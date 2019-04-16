@@ -1,9 +1,7 @@
 const HOME_BASES_ON_BOARD = 7; // This doesn't change with expansions!
 
 function multiply(list, multiplier) {
-  return list.flatMap(function(item) {
-    return Array(multiplier).fill(item);
-  });
+  return list.flatMap(item => Array(multiplier).fill(item));
 }
 
 function getIntInRange(from, to) {
@@ -42,7 +40,7 @@ function listDistance(a, b) {
   }
 
   // We need a copy of b so we can do destructive changes to it
-  return a.reduce(function(remaining, value) {
+  return a.reduce((remaining, value) => {
     const idx = remaining.indexOf(value);
     if (idx > -1) {
       remaining.splice(idx, 1);
@@ -68,16 +66,14 @@ function factionDistance(a, b) {
 
 function proximityScore(faction, others) {
   return others
-    .map(function(other) {
-      return factionDistance(faction, other.faction);
-    })
-    .filter(function(distance) {
-      return distance > 0;
-    })
+    .map(other => factionDistance(faction, other.faction))
+    .filter(distance => distance > 0)
     .sort()
-    .reduce(function(proximity, distance, index) {
-      return proximity + distance * Math.pow(0.5, index);
-    }, 0);
+    .reduce(
+      (proximity, distance, index) =>
+        proximity + distance * Math.pow(0.5, index),
+      0,
+    );
 }
 
 function getFactions(skipRiseOfFenris = false) {
@@ -112,17 +108,10 @@ function getMechMods() {
 function getInfraMods(withAutoma) {
   let mods = RISE_OF_FENRIS.infrastructureMods;
   if (withAutoma) {
-    mods = mods.filter(function(mod) {
-      return mod.supportedByAutoma;
-    });
+    mods = mods.filter(mod => mod.supportedByAutoma);
   }
 
-  return multiply(
-    mods.map(function(mod) {
-      return mod.label;
-    }),
-    4,
-  );
+  return multiply(mods.map(mod => mod.label), 4);
 }
 
 function selectFaction(factions) {
@@ -132,10 +121,12 @@ function selectFaction(factions) {
   if (!selection.faction.location) {
     // Some factions don't have a persistant home-base (Fenris, Vesna). They
     // use a home-base drawn randomly from the remaining bases.
-    selection.homeBaseFaction = extractFromPool(factions, 1, function(faction) {
-      // We want to make sure the faction we choose has a homebase
-      return !!faction.location;
-    })[0];
+    // We want to make sure the faction we choose has a homebase
+    selection.homeBaseFaction = extractFromPool(
+      factions,
+      1,
+      faction => !!faction.location,
+    )[0];
   }
 
   return selection;
@@ -160,20 +151,21 @@ function pickBoards(playerCount) {
     selection.playerBoard = extractFromPool(playerBoards)[0];
 
     if (withMechMods()) {
-      selection.mechMods = extractFromPool(allMechMods, 4, function(mod) {
-        return (
-          RISE_OF_FENRIS.mechMods.factionSpecific[mod] !== selection.faction
-        );
-      });
+      selection.mechMods = extractFromPool(
+        allMechMods,
+        4,
+        mod =>
+          RISE_OF_FENRIS.mechMods.factionSpecific[mod] !== selection.faction,
+      );
 
       if (selection.faction === RISE_OF_FENRIS.factions.VESNA) {
         // When playing with mech mods, Vesna's mech abilities might clash with
         // the mods selected by the player. In those cases we will need to draw
         // additional mods so that the player still has 6 to choose from.
 
-        const clashes = selection.mechMods.filter(function(mod) {
-          return selection.mechAbilities.includes(mod);
-        }).length;
+        const clashes = selection.mechMods.filter(mod =>
+          selection.mechAbilities.includes(mod),
+        ).length;
 
         let altAbilities = extractFromPool(
           vesnaMechAbilities,
@@ -183,9 +175,7 @@ function pickBoards(playerCount) {
         );
 
         // Add a visual clue to the alt abilities
-        altAbilities = altAbilities.map(function(ability) {
-          return '[' + ability + ']';
-        });
+        altAbilities = altAbilities.map(ability => '[' + ability + ']');
 
         selection.mechAbilities = selection.mechAbilities.concat(altAbilities);
       }
@@ -195,12 +185,11 @@ function pickBoards(playerCount) {
       selection.infraMods = extractFromPool(allInfraMods, 4);
     }
 
-    const op = BAD_COMBOS.some(function(op) {
-      return (
+    const op = BAD_COMBOS.some(
+      op =>
         op.faction === selection.faction &&
-        op.playerBoard === selection.playerBoard
-      );
-    });
+        op.playerBoard === selection.playerBoard,
+    );
     if (op) {
       selection.warn = 'OP';
     }
@@ -248,13 +237,9 @@ function pickTriumphTrack() {
     // We want to maintain order so we shuffle indices instead of values
     out.tiles = extractFromPool(range(track.tiles.length), 10)
       // We then sort the indices because order is important
-      .sort(function(a, b) {
-        return a - b;
-      })
+      .sort((a, b) => a - b)
       // and finally map the actual values to the indices for display
-      .map(function(idx) {
-        return track.tiles[idx];
-      });
+      .map(idx => track.tiles[idx]);
 
     out.distances = {
       // The distance from the regular track is a number in the range 0..6 (we
@@ -295,17 +280,13 @@ function pickGlobals(boards) {
     globals.resolution = pickFromArray(WIND_GAMBIT.resolutions);
   }
 
-  const withAutoma = boards.some(function(board) {
-    return board.isAutoma;
-  });
+  const withAutoma = boards.some(board => board.isAutoma);
 
   if (shouldIncludeAirships()) {
     var aggressive = WIND_GAMBIT.airshipAbilities.aggressive;
     if (withAutoma) {
       // Some aggressive abilities aren't supported by the automa
-      aggressive = aggressive.filter(function(ability) {
-        return ability.supportedByAutoma;
-      });
+      aggressive = aggressive.filter(ability => ability.supportedByAutoma);
     }
 
     globals.airships = {
@@ -324,11 +305,7 @@ function pickGlobals(boards) {
     } else if (!tiles.includes('Combat Victory')) {
       // Page 51
       globals.ruleBook.push('Remove objective card #23');
-      if (
-        boards.some(function(board) {
-          return board.faction === BASE.factions.SAXONY;
-        })
-      ) {
+      if (boards.some(board => board.faction === BASE.factions.SAXONY)) {
         globals.ruleBook.push('Saxony starts with 3 objective cards');
       }
     }
@@ -364,9 +341,9 @@ function generateNewGame(playerCount) {
   if (withProximityScores()) {
     // Proximity scores are individual to each board selection, but can only be
     // computed after all boards are selected
-    boards.forEach(function(board) {
-      board.proximity = proximityScore(board.faction, boards);
-    });
+    boards.forEach(
+      board => (board.proximity = proximityScore(board.faction, boards)),
+    );
   }
 
   return {
