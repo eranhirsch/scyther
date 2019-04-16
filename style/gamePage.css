@@ -71,8 +71,24 @@ ol#players .player-board {
   color: hsla(0, 50%, 30%, 1);
 }
 
-.randomTrack.warCol_4 {
+.randomTrack.warCol_4.regCol_0 {
   color: #000;
+}
+
+.randomTrack.warCol_4.regCol_1 {
+  color: hsla(100, 50%, 20%, 1);
+}
+
+.randomTrack.warCol_4.regCol_2 {
+  color: hsla(100, 50%, 30%, 1);
+}
+
+.randomTrack.warCol_4.regCol_3 {
+  color: hsla(100, 50%, 40%, 1);
+}
+
+.randomTrack.warCol_4.regCol_4 {
+  color: hsla(100, 50%, 47%, 1);
 }
 
 .randomTrack.warCol_5 {
