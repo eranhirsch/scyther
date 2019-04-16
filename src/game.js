@@ -317,10 +317,11 @@ function pickGlobals(boards) {
   if (withAltTriumphTracks()) {
     const track = pickTriumphTrack();
 
-    if (
-      track.track === RISE_OF_FENRIS.triumphTracks.PEACE ||
-      (track.tiles && !track.tiles.includes('Combat Victory'))
-    ) {
+    const tiles = track.tiles || track.track.layout;
+
+    if (!tiles.includes('Objective')) {
+      globals.ruleBook.push('Remove ALL objective cards');
+    } else if (!tiles.includes('Combat Victory')) {
       // Page 51
       globals.ruleBook.push('Remove objective card #23');
       if (
