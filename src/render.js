@@ -2,20 +2,20 @@
 const PROXIMITY_PRECISION = 1;
 
 const TRIUMPH_TILES_DISPLAY_LABELS = {
-  'Upgrades': 'UPGD',
-  'Mechs': 'MECH',
-  'Structures': 'BLDG',
-  'Recruits': 'RECR',
-  'Workers': 'WORK',
-  'Objective': 'OBJC',
+  Upgrades: 'UPGD',
+  Mechs: 'MECH',
+  Structures: 'BLDG',
+  Recruits: 'RECR',
+  Workers: 'WORK',
+  Objective: 'OBJC',
   'Combat Victory': 'CBAT',
-  'Popularity': 'POPT',
-  'Power': 'POWR',
+  Popularity: 'POPT',
+  Power: 'POWR',
   'Combat Cards': 'CCRD',
-  'Encounters': 'ENCR',
-  'Factory': 'FACT',
-  'Resources': 'RSRC',
-}
+  Encounters: 'ENCR',
+  Factory: 'FACT',
+  Resources: 'RSRC',
+};
 
 function renderPlayerBoard(selection) {
   const elem = document.createElement('span');
@@ -207,15 +207,21 @@ function renderTriumphTrackLabel(track) {
   const wrapperElem = document.createElement('span');
 
   if (!!track.tiles) {
-    wrapperElem.className = ['randomTrack', 'regCol_' + track.distances.regular, 'warCol_' + track.distances.war].join(' ');
+    wrapperElem.className = [
+      'randomTrack',
+      'regCol_' + track.distances.regular,
+      'warCol_' + track.distances.war,
+    ].join(' ');
     const tilesElem = document.createElement('ol');
     tilesElem.className = 'list-inline d-inline';
-    tilesElem.append(...track.tiles.map(function(tile) {
-      const listElem = document.createElement('li');
-      listElem.className = 'list-inline-item';
-      listElem.textContent = TRIUMPH_TILES_DISPLAY_LABELS[tile];
-      return listElem;
-    }));
+    tilesElem.append(
+      ...track.tiles.map(function(tile) {
+        const listElem = document.createElement('li');
+        listElem.className = 'list-inline-item';
+        listElem.textContent = TRIUMPH_TILES_DISPLAY_LABELS[tile];
+        return listElem;
+      }),
+    );
     wrapperElem.appendChild(tilesElem);
   } else {
     wrapperElem.className = track.track.className + ' d-inline';
