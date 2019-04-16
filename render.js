@@ -414,8 +414,6 @@ function registerEventHandlers() {
   settings.addEventListener('change', saveSettings);
   settings.addEventListener('change', populatePlayerCountButtons);
 
-  document.getElementById('close').onclick = showInputView;
-
   // Output rendering events events
   document.getElementById('actionButton').onclick = showOutputView;
 }
