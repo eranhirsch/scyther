@@ -353,9 +353,9 @@ function showOutputView() {
   // Switch views
   // TODO: replace hiding the landing page with removing it from the DOM via:
   //    document.getElementById('landingScreen').remove();
-  $('.input-phase').hide();
+  $('#landingScreen').hide();
 
-  $('.output-phase').show();
+  $('#gameScreen').show();
   document.getElementById('actionButton').textContent = 'Reshuffle';
 
   const playerCount = getPlayerCount();
@@ -364,7 +364,7 @@ function showOutputView() {
 }
 
 function showInputView() {
-  $('.output-phase').hide();
+  $('#gameScreen').hide();
 }
 
 function show() {
