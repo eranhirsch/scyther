@@ -1,9 +1,9 @@
-@import "./landingPage.css";
-@import "./gamePage.css";
+@import "landingPage.css";
+@import "gamePage.css";
 
 html {
   background-attachment: fixed;
-  background-image: url(./bg.jpg);
+  background-image: url(../bg.jpg);
   background-position: 55% center;
   background-repeat: no-repeat;
   background-size: cover;
