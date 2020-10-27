@@ -9,6 +9,11 @@ function getIntInRange(from, to) {
 }
 
 function extractFromPool(pool, amount = 1, filter = null) {
+	/*
+	console.log('extractFromPool.pool ' +pool);
+	console.log('extractFromPool.amount ' +amount);
+	console.log('extractFromPool.filter ' +filter);
+	*/
   var result = [];
   while (result.length < amount) {
     var idx = getIntInRange(0, pool.length - 1);
@@ -20,12 +25,17 @@ function extractFromPool(pool, amount = 1, filter = null) {
       pool.splice(idx, 1);
     }
   }
+    /*
+	str = JSON.stringify(result);
+	console.log('extractFromPool.result ' +str);
+	*/
   return result;
 }
 
 function pickFromArray(array) {
   // We need to copy the array before we extract from it otherwise we wouldn't
   // be able to reshuffle the results later on...
+  
   return extractFromPool(array.slice())[0];
 }
 
@@ -90,7 +100,7 @@ function getFactions(skipRiseOfFenris = false) {
   return factions;
 }
 
-function getPlayerBoards() {
+function getPlayerBoards() {	
   const baseBoards = Object.values(BASE.playerBoards);
   if (!shouldIncludeInvadersBoards()) {
     return baseBoards.slice();
@@ -100,24 +110,33 @@ function getPlayerBoards() {
 }
 
 function getMechMods() {
-  return multiply(RISE_OF_FENRIS.mechMods.generic, 3).concat(
-    multiply(Object.keys(RISE_OF_FENRIS.mechMods.factionSpecific), 2),
+	var lang = document.getElementById('lang').value;
+	/*
+	console.log('getMechMods ' + RISE_OF_FENRIS.mechMods.generic[lang]);
+	console.log('getMechMods ' + multiply(RISE_OF_FENRIS.mechMods.generic[lang], 3));
+	console.log('getMechMods ' + multiply(Object.keys(RISE_OF_FENRIS.mechMods.factionSpecific), 2));
+	console.log('getMechMods ' + multiply(RISE_OF_FENRIS.mechMods.generic[lang], 3).concat(
+    multiply(Object.keys(RISE_OF_FENRIS.mechMods.factionSpecific), 2)));
+	*/
+  return multiply(RISE_OF_FENRIS.mechMods.generic[lang], 3).concat(
+    multiply(RISE_OF_FENRIS.mechMods.factionSpecificLabels[lang], 2),
   );
 }
 
 function getInfraMods(withAutoma) {
+	  var lang = document.getElementById('lang').value;
   let mods = RISE_OF_FENRIS.infrastructureMods;
   if (withAutoma) {
     mods = mods.filter(mod => mod.supportedByAutoma);
   }
 
-  return multiply(mods.map(mod => mod.label), 4);
+  return multiply(mods.map(mod => mod.labels[lang]), 4);
 }
 
 function selectFaction(factions) {
   const selection = {};
-
   selection.faction = extractFromPool(factions)[0];
+
   if (!selection.faction.location) {
     // Some factions don't have a persistant home-base (Fenris, Vesna). They
     // use a home-base drawn randomly from the remaining bases.
@@ -143,13 +162,21 @@ function pickBoards(playerCount) {
     selection = selectFaction(factions);
 
     // Vesna has a unique set up that requires picking random components too!
-    const vesnaMechAbilities = RISE_OF_FENRIS.factions.VESNA.mechAbilities.slice();
+	var lang = document.getElementById('lang').value;
+    const vesnaMechAbilities = RISE_OF_FENRIS.factions.VESNA.mechAbilities[lang].slice();
     if (selection.faction === RISE_OF_FENRIS.factions.VESNA) {
       selection.mechAbilities = extractFromPool(vesnaMechAbilities, 6);
     }
 
     selection.playerBoard = extractFromPool(playerBoards)[0];
-
+	/*console.log('pickBoards '+RISE_OF_FENRIS.mechMods.factionSpecific);
+	str = JSON.stringify(RISE_OF_FENRIS.mechMods.factionSpecific);
+	console.log('pickBoards factionSpecific '+str);	
+		str = JSON.stringify(RISE_OF_FENRIS.mechMods.factionSpecific);
+	console.log('pickBoards selection.faction '+str);	*/
+	//console.log('pickBoards allMechMods '+allMechMods);	
+	
+	//console.log('#######################################################');
     if (withMechMods()) {
       selection.mechMods = extractFromPool(
         allMechMods,
@@ -166,7 +193,7 @@ function pickBoards(playerCount) {
         const clashes = selection.mechMods.filter(mod =>
           selection.mechAbilities.includes(mod),
         ).length;
-
+		//console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
         let altAbilities = extractFromPool(
           vesnaMechAbilities,
           // The player can only select 2 mech mods, so we only need to replace
@@ -182,6 +209,7 @@ function pickBoards(playerCount) {
     }
 
     if (withInfraMods()) {
+		//console.log('§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§');
       selection.infraMods = extractFromPool(allInfraMods, 4);
     }
 
@@ -204,6 +232,7 @@ function pickBoards(playerCount) {
     if (automa.faction === RISE_OF_FENRIS.factions.VESNA) {
       // Vesna draws 2 random factions (Page 23)
       const allFactions = getFactions(true /* skipRiseOfFenris */);
+	  //console.log('****************************************************************');
       automa.vesnaFactions = extractFromPool(allFactions, 2);
     }
 
@@ -273,11 +302,19 @@ function pickTriumphTrack() {
 function pickGlobals(boards) {
   globals = {ruleBook: []};
 
-  // We always have a building bonus tile
-  globals.buildingBonus = pickFromArray(BASE.buildingBonuses);
+  var building = BASE.buildingBonuses;
+  //console.log(building);
+  var lang = document.getElementById('lang').value;
+  //console.log(building[lang]);
+  globals.buildingBonus = pickFromArray(building[lang]);
 
   if (shouldIncludeResolutions()) {
-    globals.resolution = pickFromArray(WIND_GAMBIT.resolutions);
+	    var lang = document.getElementById('lang').value;
+
+	//console.log(WIND_GAMBIT);
+	//console.log(WIND_GAMBIT.resolutions[lang]);
+	var windGambit = WIND_GAMBIT.resolutions[lang]
+    globals.resolution = pickFromArray(windGambit);
   }
 
   const withAutoma = boards.some(board => board.isAutoma);
@@ -289,9 +326,12 @@ function pickGlobals(boards) {
       aggressive = aggressive.filter(ability => ability.supportedByAutoma);
     }
 
+	//console.log(pickFromArray(aggressive).labels[lang]);
+	var aggressiveLabel = pickFromArray(aggressive).labels[lang];
+	var passiveLabels = WIND_GAMBIT.airshipAbilities.passive[lang];
     globals.airships = {
-      passive: pickFromArray(WIND_GAMBIT.airshipAbilities.passive),
-      aggressive: pickFromArray(aggressive).label,
+      passive: pickFromArray(passiveLabels),
+      aggressive: aggressiveLabel,
     };
   }
 

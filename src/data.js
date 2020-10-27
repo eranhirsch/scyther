@@ -1,31 +1,53 @@
+const ACTION_BUTTON = {
+	labels:{
+		IT:'Nuovo Sorteggio',
+		EN:'Reshuffle'
+	},
+};
+
 const BASE = {
   factions: {
     POLANIA: {
-      label: 'Polania Republic',
+		labels:{
+			IT:'Repubblica di Polania',
+			EN:'Polania Republic'
+		},
       shortName: 'Polania',
       location: 1,
       className: 'polania',
     },
     SAXONY: {
-      label: 'Saxony Empire',
+		labels:{
+			IT:'Impero di Sassonia',
+			EN:'Saxony Empire'
+		},
       shortName: 'Saxony',
       location: 2,
       className: 'saxony',
     },
     CRIMEA: {
-      label: 'Crimean Khanate',
+		labels:{
+			IT:'Khanato di Crimea',
+			EN:'Crimean Khanate'
+		},
       shortName: 'Crimea',
       location: 3,
       className: 'crimea',
     },
     RUSVIET: {
-      label: 'Rusviet Union',
+		labels:{
+			IT:'Unione Rusviet',
+			EN:'Rusviet Union'
+		},
       shortName: 'Rusviet',
       location: 5,
       className: 'rusviet',
     },
     NORDIC: {
-      label: 'Nordic Kingdom',
+		labels:{
+			IT:'Regno Nordico',
+			EN:'Nordic Kingdom'
+		},
       shortName: 'Nordic',
       location: 6,
       className: 'nordic',
@@ -33,33 +55,75 @@ const BASE = {
   },
 
   playerBoards: {
-    INDUSTRIAL: {label: 'Industrial'},
-    ENGINEERING: {label: 'Engineering'},
-    PATRIOTIC: {label: 'Patriotic'},
-    MECHANICAL: {label: 'Mechanical'},
-    AGRICULTURAL: {label: 'Agricultural'},
+    INDUSTRIAL: {
+			labels:{
+				IT:'Industriale',
+				EN:'Industrial'
+			}
+		},
+    ENGINEERING: {
+			labels:{
+				IT:'Ingegneristico',
+				EN:'Engineering'
+			}
+		},
+    PATRIOTIC: {
+			labels:{
+				IT:'Patriottico',
+				EN:'Patriotic'
+			}
+		},
+    MECHANICAL: {
+			labels:{
+				IT:'Meccanico',
+				EN:'Mechanical'
+			}
+		},
+    AGRICULTURAL: {
+			labels:{
+				IT:'Agricolo',
+				EN:'Agricultural'
+			}
+		}
   },
-
-  buildingBonuses: [
-    'Adjacent Tunnels',
-    'Adjacent Lakes',
-    'Adjacent Encounters',
-    'On Tunnels',
-    'In a Row',
-    'On Farms and Tundras',
-  ],
+  
+  buildingBonuses:{
+	  IT:[
+		'Adiacente ai Tunnel',
+		'Adiacente ai Laghi',
+		'Adiacente agli Incontri',
+		'Sopra i Tunnel',
+		'In Liena',
+		'Sopra Fattorie e Tundra',
+	  ],
+	  EN:[
+		'Adjacent Tunnels',
+		'Adjacent Lakes',
+		'Adjacent Encounters',
+		'On Tunnels',
+		'In a Row',
+		'On Farms and Tundras',
+	  ]
+  }
+  
 };
 
 const INVADERS_FROM_AFAR = {
   factions: {
     TOGAWA: {
-      label: 'Togawa Shogunate',
+		labels:{
+			IT:'Shogunato di Togawa',
+			EN:'Togawa Shogunate'
+		},
       shortName: 'Togawa',
       location: 4,
       className: 'togawa',
     },
     ALBION: {
-      label: 'Clan Albion',
+		labels:{
+			IT:'Clan di Albione',
+			EN:'Clan Albion'
+		},
       shortName: 'Albion',
       location: 7,
       className: 'albion',
@@ -67,36 +131,117 @@ const INVADERS_FROM_AFAR = {
   },
 
   playerBoards: {
-    MILITANT: {label: 'Militant'},
-    INNOVATIVE: {label: 'Innovative'},
+    MILITANT: {
+			labels:{
+				IT:'Militante',
+				EN:'Militant'
+			}
+		},
+    INNOVATIVE: {
+			labels:{
+				IT:'Innovativo',
+				EN:'Innovative'
+			}
+		},
   },
 };
 
 const WIND_GAMBIT = {
-  resolutions: [
-    'Spoils of War',
-    'Land Rush',
-    'Deja Vu',
-    'Factory Explosion',
-    'Doomsday Clock',
-    'Mission Possible',
-    'King of the Hill',
-    'Backup Plan',
-  ],
-
+  resolutions: {
+    IT:[
+		'Bottini di Guerra',
+		'La Corsa Alla Terra',
+		'Deja Vu',
+		'Esplosione della Fabbrica',
+		'Orologio dell\'Apocalisse',
+		'Missione Possibile',
+		'Re della Collina',
+		'Piano di Backup'
+	],
+	EN:[
+		'Spoils of War',
+		'Land Rush',
+		'Deja Vu',
+		'Factory Explosion',
+		'Doomsday Clock',
+		'Mission Possible',
+		'King of the Hill',
+		'Backup Plan'
+	],
+  },
+  
   airshipAbilities: {
     aggressive: [
-      {label: 'Bombard', supportedByAutoma: true},
-      {label: 'Bounty', supportedByAutoma: true},
-      {label: 'Siege Engine', supportedByAutoma: true},
-      {label: 'Distract', supportedByAutoma: true},
-      {label: 'Espionage', supportedByAutoma: true},
-      {label: 'Blitzkrieg', supportedByAutoma: true},
-      {label: 'Toll', supportedByAutoma: false},
-      {label: 'War Correspondent', supportedByAutoma: true},
+      {
+			labels:{
+				IT:'Bombardare a Tappeto',
+				EN:'Bombard'
+			},
+		  supportedByAutoma: true
+		  },
+      {
+			labels:{
+				IT:'Premio',
+				EN:'Bounty'
+			},
+		  supportedByAutoma: true
+		  },
+      {
+			labels:{
+				IT:'Macchina d\'Assedio',
+				EN:'Siege Engine'
+			},
+		  upportedByAutoma: true
+		  },
+      {
+			labels:{
+				IT:'Distrarre',
+				EN:'Distract'
+			},
+		  supportedByAutoma: true
+		  },
+      {
+			labels:{
+				IT:'Spionaggio',
+				EN:'Espionage'
+			},
+		  supportedByAutoma: true
+		  },
+      {
+			labels:{
+				IT:'Guerra Lampo',
+				EN:'Blitzkrieg'
+			},
+		  supportedByAutoma: true
+		  },
+      {
+			labels:{
+				IT:'Tributo',
+				EN:'Toll'
+			},
+		  supportedByAutoma: false
+		  },
+      {
+			labels:{
+				IT:'Corrispondente di Guerra',
+				EN:'War Correspondent'
+			},
+		  supportedByAutoma: true
+		  },
     ],
-
-    passive: [
+	
+  passive: {
+    IT:[
+      'Traghetto',
+      'Incoraggiamento',
+      'Perforazione',
+      'Eroe',
+      'Porto Sicuro',
+      'Mietere',
+      'Tecnica',
+      'Negoziare',
+	],
+	EN:[
       'Ferry',
       'Boost',
       'Drill',
@@ -105,23 +250,59 @@ const WIND_GAMBIT = {
       'Reap',
       'Craft',
       'Negotiate',
-    ],
+	],
+  },
   },
 };
 
 const RISE_OF_FENRIS = {
   mechMods: {
-    generic: [
-      'Armor',
-      'Entrenched',
-      'Feint',
-      'Foothold',
-      'Pontoons',
-      'Regroup',
-      'Reinforce',
-      'Stealth',
-      'Tactics',
-    ],
+    generic: {
+		IT:[
+		  'Armatura',
+		  'Trincea',
+		  'Finta',
+		  'Punto d\'Appoggio',
+		  'Ponti Galleggianti',
+		  'Raggrupparsi',
+		  'Rinforzi',
+		  'Stealth',
+		  'Tattica'
+		],
+		EN:[
+		  'Armor',
+		  'Entrenched',
+		  'Feint',
+		  'Foothold',
+		  'Pontoons',
+		  'Regroup',
+		  'Reinforce',
+		  'Stealth',
+		  'Tactics'
+		]
+	},
+	
+	factionSpecificLabels:{
+		IT:[
+			'Artiglieria',
+			'Cameratismo',
+			'Ricognizione',
+			'Suiton',
+			'Spada',
+			'Distretto',
+			'Sottovia',
+		],
+		EN:[
+			'Artillery',
+			'Camaraderie',
+			'Scout',
+			'Suiton',
+			'Sword',
+			'Township',
+			'Underpass',
+		]
+	},
+	
     factionSpecific: {
       Artillery: BASE.factions.NORDIC,
       Camaraderie: BASE.factions.POLANIA,
@@ -133,15 +314,63 @@ const RISE_OF_FENRIS = {
     },
   },
 
-  infrastructureMods: [
-    {label: 'Assembly Line', supportedByAutoma: true},
-    {label: 'Automachines', supportedByAutoma: true},
-    {label: 'Cavalry', supportedByAutoma: true},
-    {label: 'Construction', supportedByAutoma: true},
-    {label: 'Machinery', supportedByAutoma: true},
-    {label: 'Propaganda', supportedByAutoma: true},
-    {label: 'Recruitment Office', supportedByAutoma: true},
-    {label: 'Spy', supportedByAutoma: false},
+infrastructureMods: [
+    {		
+		labels:{
+				IT:'Linea di Assemblaggio',
+				EN:'Assembly Line'
+			},
+		supportedByAutoma: true
+		},
+    {
+		labels:{
+				IT:'Automacchine',
+				EN:'Automachines'
+			},
+		supportedByAutoma: true
+		},
+    {
+		labels:{
+				IT:'Cavalleria',
+				EN:'Cavalry'
+			},
+		supportedByAutoma: true
+		},
+    {
+		labels:{
+				IT:'Fabbricazione',
+				EN:'Construction'
+			},
+		supportedByAutoma: true
+	},
+    {
+		labels:{
+				IT:'Macchinario',
+				EN:'Machinery'
+			},
+		supportedByAutoma: true
+		},
+    {
+		labels:{
+				IT:'Propaganda',
+				EN:'Propaganda'
+			},
+		supportedByAutoma: true
+		},
+    {
+		labels:{
+				IT:'Ufficio Reclutamento',
+				EN:'Recruitment Office'
+			},
+		supportedByAutoma: true
+		},
+    {
+		labels:{
+				IT:'Spia',
+				EN:'Spy'
+			},
+		supportedByAutoma: false
+		},
   ],
 
   triumphTracks: {
@@ -220,32 +449,60 @@ const RISE_OF_FENRIS = {
 
   factions: {
     VESNA: {
-      label: 'Vesna',
+		labels:{
+			IT:'Vesna',
+			EN:'Vesna'
+		},
       shortName: 'Vesna',
       className: 'vesna',
-      mechAbilities: [
-        'Artillery',
-        'Camaraderie',
-        'Disarm',
-        'Feint',
-        'Regroup',
-        'Ronin',
-        'Scout',
-        'Seaworthy',
-        'Shield',
-        'Stealth',
-        'Submerge',
-        'Suiton',
-        'Sword',
-        'Tactics',
-        'Township',
-        'Underpass',
-        'Wayfare',
-        "People's Army",
-      ],
+	  mechAbilities:{
+		  IT:[
+			'Artiglieria',
+			'Cameratismo',
+			'Disarmo',
+			'Finta',
+			'Raggrupparsi',
+			'Ronin',
+			'Ricognizione',
+			'Navigatori',
+			'Scudo',
+			'Stealth',
+			'Immersione',
+			'Suiton',
+			'Spada',
+			'Tattica',
+			'Distretto',
+			'Sottovia',
+			'Viandante',
+			"Esercito del Popolo",
+		  ],
+		  EN:[
+			'Artillery',
+			'Camaraderie',
+			'Disarm',
+			'Feint',
+			'Regroup',
+			'Ronin',
+			'Scout',
+			'Seaworthy',
+			'Shield',
+			'Stealth',
+			'Submerge',
+			'Suiton',
+			'Sword',
+			'Tactics',
+			'Township',
+			'Underpass',
+			'Wayfare',
+			"People's Army",
+		  ]
+	  },
     },
     FENRIS: {
-      label: 'Fenris',
+	  		labels:{
+			IT:'Fenris',
+			EN:'Fenris'
+		},
       shortName: 'Fenris',
       className: 'fenris',
     },
