@@ -18,18 +18,21 @@ const TRIUMPH_TILES_DISPLAY_LABELS = {
 };
 
 function renderPlayerBoard(selection) {
+	
+	  var lang = document.getElementById('lang').value;
   const elem = document.createElement('span');
   elem.className = 'player-board';
   elem.textContent = selection.isAutoma
     ? 'Automa:'
-    : selection.playerBoard.label;
+    : selection.playerBoard.labels[lang];
   return elem;
 }
 
 function renderFaction(selection) {
   const elem = document.createElement('span');
+  var lang = document.getElementById('lang').value;
   elem.className = 'faction';
-  elem.textContent = selection.faction.label.replace(' ', '\xa0');
+  elem.textContent = selection.faction.labels[lang].replace(' ', '\xa0');
 
   const homeBaseFaction = selection.homeBaseFaction;
   if (homeBaseFaction) {
@@ -62,6 +65,7 @@ function renderMods(mods, label) {
 }
 
 function renderInlineItemsList(items, label) {
+	
   const containerElem = document.createElement('div');
   containerElem.className = 'rofMods';
 
@@ -353,7 +357,8 @@ function showOutputView() {
   $('#landingScreen').hide();
 
   $('#gameScreen').show();
-  document.getElementById('actionButton').textContent = 'Reshuffle';
+    var lang = document.getElementById('lang').value;
+  document.getElementById('actionButton').textContent = ACTION_BUTTON.labels[lang];
 
   const playerCount = getPlayerCount();
   const game = generateNewGame(playerCount);
@@ -419,13 +424,15 @@ function registerEventHandlers() {
 function main() {
   readPreviousFormState();
 
-  registerServiceWorker();
+  //registerServiceWorker();
   registerEventHandlers();
 
   // We always start with the input form!
   populatePlayerCountButtons();
   showInputView();
 
+	document.getElementById('lang').getElementsByTagName('option')[0].selected = 'selected'
+	
   // When finished loading all the components, show the view
   show();
 }

@@ -13,6 +13,32 @@
     <title>SCYTHER</title>
   </head>
   <body>
+	  <script>	
+		function changeLang(){
+			lang = document.getElementById('lang').value;
+			langs = document.getElementById('lang').options;
+			for(i=0;i<langs.length;i++){
+				//console.log('langs ' + langs[i].value);
+				
+				if(langs[i].value == lang){
+					document.getElementById(lang+'_lang').hidden = false;
+					document.getElementById(lang+'_player').hidden = false;
+					document.getElementById(lang+'_expansions').hidden = false;
+					document.getElementById(lang+'_advanced').hidden = false;
+					document.getElementById(lang+'_proximity').hidden = false;
+					document.getElementById(lang+'_draw').hidden = false;
+				}
+				else{
+					document.getElementById(langs[i].value+'_lang').hidden = true;
+					document.getElementById(langs[i].value+'_player').hidden = true;
+					document.getElementById(langs[i].value+'_expansions').hidden = true;
+					document.getElementById(langs[i].value+'_advanced').hidden = true;
+					document.getElementById(langs[i].value+'_proximity').hidden = true;
+					document.getElementById(langs[i].value+'_draw').hidden = true;
+				}
+			}		
+		}	
+	  </script>
 
     <!-- Main Structure -->
     <div id="root" class="container hide-all">
@@ -26,9 +52,22 @@
         </div>
         <div class="row">
           <form id="settings" class="col text-left">
+		    <fieldset>
+              <legend class="col-form-label">
+                 <span id="EN_lang">Language</span>
+                <span id="IT_lang" hidden>Lingua</span>
+              </legend>
+              <div class="btn-group btn-group-lg btn-group-toggle shadow">
+				<select id="lang" onchange="changeLang();">
+				<option value="EN" selected="selected">English</option>
+				  <option value="IT">Italiano</option>
+				</select>
+              </div>
+            </fieldset>
             <fieldset>
               <legend class="col-form-label">
-                Players
+                <span id="EN_player">Players</span>
+                <span id="IT_player" hidden>Giocatori</span>
               </legend>
               <div
                 id="input"
@@ -38,7 +77,8 @@
             </fieldset>
             <fieldset>
               <legend class="col-form-label">
-                Expansions
+                <span id="EN_expansions">Expansions</span>
+                <span id="IT_expansions" hidden>Esapnsioni</span>
               </legend>
               <div class="custom-control custom-switch">
                 <input
@@ -73,7 +113,8 @@
             </fieldset>
             <fieldset>
               <legend class="col-form-label">
-                Advanced
+                <span id="EN_advanced">Advanced</span>
+                <span id="IT_advanced" hidden>Avanzato</span>                
               </legend>
               <div class="form-check">
                 <input
@@ -83,7 +124,8 @@
                   id="proximityCheckbox"
                 />
                 <label class="form-check-label" for="proximityCheckbox">
-                  Proximity scores
+					<span id="EN_proximity">Proximity scores</span>
+					<span id="IT_proximity" hidden>Punteggi di prossimità</span>                     
                 </label>
               </div>
             </fieldset>
@@ -112,7 +154,8 @@
             id="actionButton"
             type="button"
             class="btn btn-lg btn-warning">
-            Draw
+				<span id="EN_draw">Draw</span>
+				<span id="IT_draw" hidden>Sorteggio</span>     
           </button>
         </div>
       </div>
